@@ -1,4 +1,5 @@
-﻿using Sporterr.Core.DomainObjects;
+﻿using FluentValidation;
+using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Core.Enums;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Domain
 {
-    public class Empresa : Entity, IAggregateRoot
+    public class Empresa : Entity<Empresa>, IAggregateRoot
     {
         private readonly List<Quadra> _quadras;
         public Guid UsuarioProprietarioId { get; private set; }
@@ -37,6 +38,7 @@ namespace Sporterr.Cadastro.Domain
             HorarioFechamento = horarioFechamento;
             DiasFuncionamento = diasFuncionamento;
             _quadras = new List<Quadra>();
+            Validar();
         }
 
         internal void AdicionarQuadra(Quadra quadra)
@@ -50,6 +52,10 @@ namespace Sporterr.Cadastro.Domain
         }
 
         public bool QuadraPertenceEmpresa(Quadra quadra) => _quadras.Any(q => q.Equals(quadra));
-        
+
+        protected override AbstractValidator<Empresa> ObterValidador()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

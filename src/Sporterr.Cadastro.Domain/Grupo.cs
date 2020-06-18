@@ -1,4 +1,5 @@
-﻿using Sporterr.Core.DomainObjects;
+﻿using FluentValidation;
+using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Domain
 {
-    public class Grupo : Entity, IAggregateRoot
+    public class Grupo : Entity<Grupo>, IAggregateRoot
     {
         private readonly List<Usuario> _membros;
 
@@ -21,11 +22,12 @@ namespace Sporterr.Cadastro.Domain
         {
             UsuarioCriadorId = usuarioCriadorId;
             _membros = new List<Usuario>();
+            Validar();
         }
 
         internal void AssociarMembro(Usuario membro)
         {
-            if (!_membros.Any(u => u.Equals(membro))) _membros.Add(membro); //except dps
+            if (membro.Validar() && !_membros.Any(u => u.Equals(membro))) _membros.Add(membro); //except dps
         }
 
         internal void RemoverMembro(Usuario membro)
@@ -34,5 +36,16 @@ namespace Sporterr.Cadastro.Domain
         }
 
         public bool MembroPertenceGrupo(Usuario membro) => _membros.Any(u => u.Equals(membro));
+
+        protected override AbstractValidator<Grupo> ObterValidador() => new GrupoValidation();
+
+        private class GrupoValidation : AbstractValidator<Grupo>
+        {
+            public GrupoValidation()
+            {
+                RuleFor(g => g.UsuarioCriadorId)
+                    .NotEqual(Guid.Empty);
+            }
+        }
     }
 }
