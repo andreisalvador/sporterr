@@ -28,7 +28,7 @@ namespace Sporterr.Cadastro.Domain
             if (!EmpresaPertenceUsuario(empresa)) _empresas.Add(empresa);
         }
 
-        internal void RemoverQuadra(Empresa empresa)
+        internal void RemoverEmpresa(Empresa empresa)
         {
             if (EmpresaPertenceUsuario(empresa)) _empresas.Remove(empresa);
         }
