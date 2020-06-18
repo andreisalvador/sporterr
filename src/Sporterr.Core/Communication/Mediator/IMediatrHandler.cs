@@ -9,8 +9,8 @@ namespace Sporterr.Core.Communication.Mediator
 {
     public interface IMediatrHandler
     {
-        Task Publish<TEvent>(TEvent evento) where TEvent : Event;
-        Task<bool> Send<TEvent>(TEvent evento) where TEvent : Command;
+        Task Publish<TEvent>(TEvent @event) where TEvent : Event;
+        Task<bool> Send<TCommand>(TCommand command) where TCommand : Command<TCommand>;
         Task Notify<TNotification>(TNotification notification) where TNotification : DomainNotification;
     }
 }
