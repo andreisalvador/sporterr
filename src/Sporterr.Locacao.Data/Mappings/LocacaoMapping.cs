@@ -1,0 +1,38 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Sporterr.Locacoes.Domain;
+
+namespace Sporterr.Locacoes.Data.Mappings
+{
+    public class LocacaoMapping : IEntityTypeConfiguration<Locacao>
+    {
+        public void Configure(EntityTypeBuilder<Locacao> builder)
+        {
+            builder.HasKey(l => l.Id);
+
+            builder.Property(l => l.UsuarioLocatarioId)
+                .IsRequired();
+
+            builder.OwnsOne(l => l.Quadra, q =>
+            {
+                q.Property(p => p.Id)
+                .HasColumnName("QuadraId")
+                .IsRequired();
+
+                q.Property(p => p.EmpresaId)
+                .HasColumnName("EmpresaId")
+                .IsRequired();
+
+                q.Property(p => p.TempoLocacaoQuadra)
+                .HasColumnName("TempoLocacaoQuadra")
+                .IsRequired();
+
+                q.Property(p => p.ValorTempoQuadra)
+                .HasColumnName("ValorTempoQuadra")
+                .IsRequired();
+            });
+
+            builder.ToTable("Locacoes");
+        }
+    }
+}

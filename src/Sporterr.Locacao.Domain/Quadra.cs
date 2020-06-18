@@ -3,21 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sporterr.Locacao.Domain
+namespace Sporterr.Locacoes.Domain
 {
     public class Quadra : IValueObject
     {
         public Guid Id { get; private set; }
         public Guid EmpresaId { get; private set; }
-        public decimal ValorTempoLocado { get; private set; }
-        public TimeSpan TempoLocacao { get; private set; }
-
-        public Quadra(Guid quadraId Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao)
-        {
-            Id = quadraId;
-            EmpresaId = empresaId;
-            ValorTempoLocado = valorTempoLocado;
-            TempoLocacao = tempoLocacao;
-        }
+        public decimal ValorTempoQuadra { get; private set; }
+        public TimeSpan TempoLocacaoQuadra { get; private set; }
     }
 }

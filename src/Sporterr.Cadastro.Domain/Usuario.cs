@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Sporterr.Cadastro.Domain.Resources;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using System;
@@ -15,13 +16,15 @@ namespace Sporterr.Cadastro.Domain
 
         public string Nome { get; private set; }
         public string Email { get; private set; }
+        public string Senha { get; private set; }
         public IReadOnlyCollection<Empresa> Empresas => _empresas.AsReadOnly();
         public IReadOnlyCollection<Grupo> Grupos => _grupos.AsReadOnly();
 
-        public Usuario(string nome, string email)
+        public Usuario(string nome, string email, string senha)
         {
             Nome = nome;
             Email = email;
+            Senha = senha;
             _empresas = new List<Empresa>();
             _grupos = new List<Grupo>();
             Validar();
@@ -87,13 +90,18 @@ namespace Sporterr.Cadastro.Domain
             public UsuarioValidation()
             {
                 RuleFor(u => u.Nome)
-                    .NotEmpty()
-                    .MaximumLength(50)
-                    .MinimumLength(20);
+                    .NotEmpty().WithMessage(MensagensValidacaoCadastro.NomeUsuarioVazio)
+                    .MaximumLength(50).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMaximaCaracteresNome, 50))
+                    .MinimumLength(20).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMinimaCaracteresNome, 20));
 
                 RuleFor(u => u.Email)
-                    .NotEmpty()
-                    .EmailAddress();
+                    .NotEmpty().WithMessage(MensagensValidacaoCadastro.EmailInvadio)
+                    .EmailAddress().WithMessage(MensagensValidacaoCadastro.EmailInvadio);
+
+                RuleFor(u => u.Senha)
+                 .NotEmpty()
+                 .MinimumLength(8).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMinimaCaracteresSenha, 8))
+                 .MaximumLength(20).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMaximaCaracteresSenha, 20));
             }
         }
     }
