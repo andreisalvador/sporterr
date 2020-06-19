@@ -56,7 +56,7 @@ namespace Sporterr.Cadastro.Domain
         {
             if (quadra.Validar() && EmpresaPertenceUsuario(empresa))
             {
-                Empresa empresaExistente = _empresas.FirstOrDefault(e => e.Id.Equals(empresa.Id));
+                Empresa empresaExistente = _empresas.SingleOrDefault(e => e.Id.Equals(empresa.Id));
                 empresaExistente.AdicionarQuadra(quadra);
             }
         }
@@ -65,7 +65,7 @@ namespace Sporterr.Cadastro.Domain
         {
             if (EmpresaPertenceUsuario(empresa) && quadra.Validar())
             {
-                Empresa empresaExistente = _empresas.FirstOrDefault(e => e.Id.Equals(empresa.Id));
+                Empresa empresaExistente = _empresas.SingleOrDefault(e => e.Id.Equals(empresa.Id));
                 empresaExistente.InativarQuadra(quadra);
             }
         }
@@ -82,25 +82,25 @@ namespace Sporterr.Cadastro.Domain
 
         internal void RemoverMembroDoGrupo(Usuario membro, Grupo grupo)
         {
-            if (GrupoPertenceUsuario(grupo) && UsuarioFazParteGrupo(membro, grupo))
+            if (GrupoPertenceUsuario(grupo) && NovoMembroFazParteDoGrupo(membro, grupo))
             {   
-                Grupo grupoExistente = _grupos.FirstOrDefault(g => g.Id == grupo.Id);
+                Grupo grupoExistente = _grupos.SingleOrDefault(g => g.Id == grupo.Id);
                 grupoExistente.RemoverMembro(membro);
             }
         }
 
         internal void AdicionarMembroAoGrupo(Usuario membro, Grupo grupo)
         {
-            if (GrupoPertenceUsuario(grupo) && !UsuarioFazParteGrupo(membro, grupo))
+            if (GrupoPertenceUsuario(grupo) && !NovoMembroFazParteDoGrupo(membro, grupo))
             {
-                Grupo grupoExistente = _grupos.FirstOrDefault(g => g.Id == grupo.Id);
+                Grupo grupoExistente = _grupos.SingleOrDefault(g => g.Id == grupo.Id);
                 grupoExistente.AssociarMembro(membro);
             }
         }
 
         public bool EmpresaPertenceUsuario(Empresa empresa) => _empresas.Any(e => e.Equals(empresa) && empresa.UsuarioProprietarioId.Equals(Id));
         public bool GrupoPertenceUsuario(Grupo grupo) => _grupos.Any(g => g.Equals(grupo) && grupo.UsuarioCriadorId.Equals(Id));
-        public bool UsuarioFazParteGrupo(Usuario usuario, Grupo grupo) => _grupos.Any(g => g.Equals(grupo) && grupo.Membros.Any(m => m.Id.Equals(Id)));
+        public bool NovoMembroFazParteDoGrupo(Usuario usuario, Grupo grupo) => _grupos.Any(g => g.Id.Equals(grupo.Id) && grupo.Membros.Any(m => m.Id.Equals(usuario.Id)));
 
         protected override AbstractValidator<Usuario> ObterValidador() => new UsuarioValidation();
 

@@ -52,7 +52,7 @@ namespace Sporterr.Cadastro.Domain
         {
             if (quadra.Validar() && quadra.Ativo && QuadraPertenceEmpresa(quadra))
             {
-                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                Quadra quadraExistente = _quadras.SingleOrDefault(q => q.Id.Equals(quadra.Id));
                 quadraExistente.Inativar();
             }
         }
@@ -61,7 +61,7 @@ namespace Sporterr.Cadastro.Domain
         {
             if (quadra.Validar() && !quadra.Ativo && QuadraPertenceEmpresa(quadra))
             {
-                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                Quadra quadraExistente = _quadras.SingleOrDefault(q => q.Id.Equals(quadra.Id));
                 quadraExistente.Ativar();
             }
         }
@@ -101,7 +101,7 @@ namespace Sporterr.Cadastro.Domain
         {
             if(!quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
             {
-                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                Quadra quadraExistente = _quadras.SingleOrDefault(q => q.Id.Equals(quadra.Id));
                 quadra.ColocarQuadraEmManutencao();
             }
         }
@@ -110,7 +110,7 @@ namespace Sporterr.Cadastro.Domain
         {
             if (quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
             {
-                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                Quadra quadraExistente = _quadras.SingleOrDefault(q => q.Id.Equals(quadra.Id));
                 quadra.TornarQuadraProntaPraUso();
             }
         }

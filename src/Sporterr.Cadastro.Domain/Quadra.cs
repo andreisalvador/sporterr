@@ -12,6 +12,7 @@ namespace Sporterr.Cadastro.Domain
         public decimal ValorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
         public bool EmManutencao { get; private set; }
+        //adicionar esporte
 
         // Ef rel.
         public Empresa Empresa { get; set; }
