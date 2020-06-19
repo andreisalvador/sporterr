@@ -60,5 +60,8 @@ namespace Sporterr.Core.DomainObjects
         {
             return $"{GetType().Name} [Id={Id}]";
         }
+
+        public void Ativar() => Ativo = true;
+        public void Inativar() => Ativo = false;
     }
 }

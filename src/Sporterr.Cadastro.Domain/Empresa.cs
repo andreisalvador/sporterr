@@ -39,18 +39,83 @@ namespace Sporterr.Cadastro.Domain
             HorarioFechamento = horarioFechamento;
             DiasFuncionamento = diasFuncionamento;
             _quadras = new List<Quadra>();
+            Ativar();
             Validar();
         }
 
         internal void AdicionarQuadra(Quadra quadra)
         {
-            if (!QuadraPertenceEmpresa(quadra)) _quadras.Add(quadra);
+            if (quadra.Validar() && !QuadraPertenceEmpresa(quadra)) _quadras.Add(quadra);
         }
 
-        internal void RemoverQuadra(Quadra quadra)
+        internal void InativarQuadra(Quadra quadra)
         {
-            if (QuadraPertenceEmpresa(quadra)) _quadras.Remove(quadra);
+            if (quadra.Validar() && quadra.Ativo && QuadraPertenceEmpresa(quadra))
+            {
+                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                quadraExistente.Inativar();
+            }
         }
+
+        internal void ReativarQuadra(Quadra quadra)
+        {
+            if (quadra.Validar() && !quadra.Ativo && QuadraPertenceEmpresa(quadra))
+            {
+                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                quadraExistente.Ativar();
+            }
+        }
+
+        internal void AlterarHorarioAbertura(TimeSpan horarioAbertura)
+        {
+            if (HorarioAbertura != horarioAbertura) HorarioAbertura = horarioAbertura;
+        }
+
+        internal void AlterarHorarioFechamento(TimeSpan horarioFechamento)
+        {
+            if (HorarioFechamento != horarioFechamento) HorarioAbertura = horarioFechamento;
+        }
+
+        internal void AlterarHorarioFuncionamento(TimeSpan horarioAbertura, TimeSpan horarioFechamento)
+        {
+            AlterarHorarioAbertura(horarioAbertura);
+            AlterarHorarioFechamento(horarioFechamento);
+        }
+
+        internal void AtivarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamento diasSemanaFuncionamento)
+        {
+            DiasFuncionamento |= diasSemanaFuncionamento;
+        }
+
+        internal void DesativarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamento diasSemanaFuncionamento)
+        {
+            DiasFuncionamento &= ~diasSemanaFuncionamento;
+        }
+
+        internal void AlterarDiasFuncionamento(DiasSemanaFuncionamento diasFuncionamento)
+        {
+            DiasFuncionamento = diasFuncionamento;
+        }
+
+        internal void ColocarQuadraEmManutencao(Quadra quadra)
+        {
+            if(!quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
+            {
+                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                quadra.ColocarQuadraEmManutencao();
+            }
+        }
+
+        internal void RetirarQuadraDeManutencao(Quadra quadra)
+        {
+            if (quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
+            {
+                Quadra quadraExistente = _quadras.FirstOrDefault(q => q.Id.Equals(quadra.Id));
+                quadra.TornarQuadraProntaPraUso();
+            }
+        }
+
+        public bool PossuiQuadras() => _quadras.Any();
 
         public bool QuadraPertenceEmpresa(Quadra quadra) => _quadras.Any(q => q.Equals(quadra));
 

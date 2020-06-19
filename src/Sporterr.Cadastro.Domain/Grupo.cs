@@ -34,7 +34,7 @@ namespace Sporterr.Cadastro.Domain
         internal void RemoverMembro(Usuario membro)
         {
             if (MembroPertenceGrupo(membro)) _membros.Remove(membro);
-        }
+        }        
 
         public bool MembroPertenceGrupo(Usuario membro) => _membros.Any(u => u.Equals(membro));
 

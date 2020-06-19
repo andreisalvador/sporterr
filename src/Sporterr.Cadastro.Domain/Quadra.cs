@@ -22,6 +22,7 @@ namespace Sporterr.Cadastro.Domain
             TempoLocacao = tempoLocacao;
             ValorTempoLocado = valorTempoLocado;
             TornarQuadraProntaPraUso();
+            Ativar();
             Validar();
         }
 
