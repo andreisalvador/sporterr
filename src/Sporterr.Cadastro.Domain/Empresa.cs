@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Core.Enums;
@@ -53,9 +54,6 @@ namespace Sporterr.Cadastro.Domain
 
         public bool QuadraPertenceEmpresa(Quadra quadra) => _quadras.Any(q => q.Equals(quadra));
 
-        protected override AbstractValidator<Empresa> ObterValidador()
-        {
-            throw new NotImplementedException();
-        }
+        protected override AbstractValidator<Empresa> ObterValidador() => new EmpresaValidation();
     }
 }

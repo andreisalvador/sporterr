@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using System;
@@ -38,14 +39,6 @@ namespace Sporterr.Cadastro.Domain
         public bool MembroPertenceGrupo(Usuario membro) => _membros.Any(u => u.Equals(membro));
 
         protected override AbstractValidator<Grupo> ObterValidador() => new GrupoValidation();
-
-        private class GrupoValidation : AbstractValidator<Grupo>
-        {
-            public GrupoValidation()
-            {
-                RuleFor(g => g.UsuarioCriadorId)
-                    .NotEqual(Guid.Empty);
-            }
-        }
+       
     }
 }

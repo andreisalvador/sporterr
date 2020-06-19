@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Sporterr.Cadastro.Domain.Resources;
+using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using System;
@@ -85,24 +86,6 @@ namespace Sporterr.Cadastro.Domain
 
         protected override AbstractValidator<Usuario> ObterValidador() => new UsuarioValidation();
 
-        private class UsuarioValidation : AbstractValidator<Usuario>
-        {
-            public UsuarioValidation()
-            {
-                RuleFor(u => u.Nome)
-                    .NotEmpty().WithMessage(MensagensValidacaoCadastro.NomeUsuarioVazio)
-                    .MaximumLength(50).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMaximaCaracteresNome, 50))
-                    .MinimumLength(20).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMinimaCaracteresNome, 20));
-
-                RuleFor(u => u.Email)
-                    .NotEmpty().WithMessage(MensagensValidacaoCadastro.EmailInvadio)
-                    .EmailAddress().WithMessage(MensagensValidacaoCadastro.EmailInvadio);
-
-                RuleFor(u => u.Senha)
-                 .NotEmpty()
-                 .MinimumLength(8).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMinimaCaracteresSenha, 8))
-                 .MaximumLength(20).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMaximaCaracteresSenha, 20));
-            }
-        }
+       
     }
 }

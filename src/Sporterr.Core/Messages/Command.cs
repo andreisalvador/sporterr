@@ -11,11 +11,11 @@ namespace Sporterr.Core.Messages
     {
         public ValidationResult ValidationResult { get; private set; }
 
-        protected abstract AbstractValidator<TCommand> ObterValidador();
-        protected bool Valido()
+        protected abstract AbstractValidator<TCommand> GetValidator();
+        protected bool IsValid()
         {
-            IValidator<TCommand> validador = ObterValidador();
-            ValidationResult = validador.Validate(this);
+            IValidator<TCommand> validator = GetValidator();
+            ValidationResult = validator.Validate(this);
             return ValidationResult.IsValid;
         }
 

@@ -5,13 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Mappings\" />
     <Folder Include="Repository\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sporterr.Cadastro.Domain\Sporterr.Cadastro.Domain.csproj" />
   </ItemGroup>
 
 </Project>
