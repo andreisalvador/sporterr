@@ -16,7 +16,7 @@ namespace Sporterr.Cadastro.Domain
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
         public string Cnpj { get; private set; } //verificar dps
-        public DiasSemanaFuncionamento DiasFuncionamento { get; private set; }
+        public DiasSemanaFuncionamentoEnum DiasFuncionamento { get; private set; }
         public TimeSpan HorarioAbertura { get; private set; }
         public TimeSpan HorarioFechamento { get; private set; }
         public IReadOnlyCollection<Quadra> Quadras => _quadras.AsReadOnly();
@@ -29,7 +29,7 @@ namespace Sporterr.Cadastro.Domain
                        string cnpj,
                        TimeSpan horarioAbertura,
                        TimeSpan horarioFechamento,
-                       DiasSemanaFuncionamento diasFuncionamento = DiasSemanaFuncionamento.DiasUteis)
+                       DiasSemanaFuncionamentoEnum diasFuncionamento = DiasSemanaFuncionamentoEnum.DiasUteis)
         {
 
             UsuarioProprietarioId = usuarioProprietarioId;
@@ -82,17 +82,17 @@ namespace Sporterr.Cadastro.Domain
             AlterarHorarioFechamento(horarioFechamento);
         }
 
-        internal void AtivarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamento diasSemanaFuncionamento)
+        internal void AtivarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamentoEnum diasSemanaFuncionamento)
         {
             DiasFuncionamento |= diasSemanaFuncionamento;
         }
 
-        internal void DesativarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamento diasSemanaFuncionamento)
+        internal void DesativarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamentoEnum diasSemanaFuncionamento)
         {
             DiasFuncionamento &= ~diasSemanaFuncionamento;
         }
 
-        internal void AlterarDiasFuncionamento(DiasSemanaFuncionamento diasFuncionamento)
+        internal void AlterarDiasFuncionamento(DiasSemanaFuncionamentoEnum diasFuncionamento)
         {
             DiasFuncionamento = diasFuncionamento;
         }
