@@ -29,7 +29,7 @@ namespace Sporterr.Cadastro.Domain
                        string cnpj,
                        TimeSpan horarioAbertura,
                        TimeSpan horarioFechamento,
-                       DiasSemanaFuncionamentoEnum diasFuncionamento = DiasSemanaFuncionamentoEnum.DiasUteis)
+                       DiasSemanaFuncionamento diasFuncionamento = DiasSemanaFuncionamento.DiasUteis)
         {
 
             UsuarioProprietarioId = usuarioProprietarioId;
