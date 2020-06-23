@@ -13,6 +13,7 @@ namespace Sporterr.Cadastro.Domain
     public class Empresa : Entity<Empresa>, IAggregateRoot
     {
         private readonly List<Quadra> _quadras;
+        private readonly List<Solicitacao> _solicitacoes;
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
         public string Cnpj { get; private set; } //verificar dps
@@ -20,6 +21,7 @@ namespace Sporterr.Cadastro.Domain
         public TimeSpan HorarioAbertura { get; private set; }
         public TimeSpan HorarioFechamento { get; private set; }
         public IReadOnlyCollection<Quadra> Quadras => _quadras.AsReadOnly();
+        public IReadOnlyCollection<Solicitacao> Solicitacoes => _solicitacoes.AsReadOnly();
 
         //Ef Rel.
         public Usuario UsuarioProprietario { get; set; }
@@ -39,9 +41,36 @@ namespace Sporterr.Cadastro.Domain
             HorarioFechamento = horarioFechamento;
             DiasFuncionamento = diasFuncionamento;
             _quadras = new List<Quadra>();
+            _solicitacoes = new List<Solicitacao>();
             Ativar();
             Validar();
         }
+
+        public void AdicionarSolicitacao(Solicitacao solicitacao)
+        {
+            if (solicitacao.Validar() && !ExisteSolicitacaoParaEmpresa(solicitacao))
+                _solicitacoes.Add(solicitacao);
+        }
+
+        public void AprovarSolicitacao(Solicitacao solicitacao)
+        {
+            if(solicitacao.Validar() && ExisteSolicitacaoParaEmpresa(solicitacao))
+            {
+                Solicitacao solicitacaoParaAprovar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
+                solicitacaoParaAprovar.Aprovar();
+            }
+        }
+
+        public void RecusarSolicitacao(Solicitacao solicitacao)
+        {
+            if (solicitacao.Validar() && ExisteSolicitacaoParaEmpresa(solicitacao))
+            {
+                Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
+                solicitacaoParaRecusar.Recusar();
+            }
+        }
+
+        private bool ExisteSolicitacaoParaEmpresa(Solicitacao solicitacao) => _solicitacoes.Any(s => s.EmpresaId.Equals(Id) && s.Id.Equals(solicitacao.Id));
 
         public void AdicionarQuadra(Quadra quadra)
         {

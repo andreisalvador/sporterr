@@ -32,6 +32,21 @@ namespace Sporterr.Locacoes.Data.Repository
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public void ExcluirLocacao(Locacao locacao)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ExisteNoPeriodo(DateTime inicio, DateTime fim)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Locacao> ObterNoPeriodo(DateTime inicio, DateTime fim)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Locacao> ObterPorId(Guid locacaoId)
         {
             return await _context.Locacoes.FindAsync(locacaoId);

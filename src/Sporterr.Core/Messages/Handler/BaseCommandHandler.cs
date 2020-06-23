@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Core.Messages.Handler
 {
-    public class BaseCommandHandler<TAggregateRoot> where TAggregateRoot : IAggregateRoot
+    public abstract class BaseCommandHandler<TAggregateRoot> where TAggregateRoot : IAggregateRoot
     {
         private readonly IRepository<TAggregateRoot> _repository;
         private readonly IMediatrHandler _mediatr;

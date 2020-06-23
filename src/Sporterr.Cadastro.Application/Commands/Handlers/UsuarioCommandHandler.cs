@@ -21,13 +21,11 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
         IRequestHandler<AdicionarGrupoUsuarioCommand, bool>,
         IRequestHandler<AdicionarQuadraEmpresaUsuarioCommand, bool>
     {
-        private readonly IUsuarioRepository _repository;
-        private readonly IMediatrHandler _mediatr;
+        private readonly IUsuarioRepository _repository;        
 
         public UsuarioCommandHandler(IUsuarioRepository repository, IMediatrHandler mediatr) : base(repository, mediatr)
         {
-            _repository = repository;
-            _mediatr = mediatr;
+            _repository = repository;            
         }
 
         public async Task<bool> Handle(AdicionarUsuarioCommand message, CancellationToken cancellationToken)

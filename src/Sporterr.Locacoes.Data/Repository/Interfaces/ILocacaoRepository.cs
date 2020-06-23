@@ -12,8 +12,11 @@ namespace Sporterr.Locacoes.Data.Repository.Interfaces
     {
         void AdicionarLocacao(Locacao locacao);
         void AtualizarLocacao(Locacao locacao);
+        void ExcluirLocacao(Locacao locacao);
         Task<IEnumerable<Locacao>> ObterTodas();
         Task<IEnumerable<Locacao>> ObterPorUsuario(Guid usuarioId);
-        Task<Locacao> ObterPorId(Guid locacaoId);       
+        Task<Locacao> ObterPorId(Guid locacaoId);
+        Task<Locacao> ObterNoPeriodo(DateTime inicio, DateTime fim);
+        Task<bool> ExisteNoPeriodo(DateTime inicio, DateTime fim);
     }
 }

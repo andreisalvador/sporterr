@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sporterr.Core\Sporterr.Core.csproj" />
+    <ProjectReference Include="..\Sporterr.Locacoes.Domain\Sporterr.Locacoes.Domain.csproj" />
   </ItemGroup>
 
 </Project>
