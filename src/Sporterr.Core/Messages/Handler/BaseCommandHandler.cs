@@ -1,6 +1,7 @@
 ﻿using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Data;
 using Sporterr.Core.DomainObjects.Interfaces;
+using Sporterr.Core.Messages.CommonMessages.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -21,7 +22,14 @@ namespace Sporterr.Core.Messages.Handler
         }
 
         protected async Task<bool> Salvar() => await _repository.Commit();
-        protected async Task<bool> SalvarPublicandoEvento<TEvent>(TEvent evento) where TEvent : Event
+
+        protected async Task<bool> NotifyAndReturn(string mensagem)
+        {
+            await _mediatr.Notify(new DomainNotification(typeof(TAggregateRoot).Name, mensagem));
+            return false;
+        }
+
+        protected async Task<bool> SaveAndPublish<TEvent>(TEvent evento) where TEvent : Event
         {
             bool salvou = await Salvar();
 

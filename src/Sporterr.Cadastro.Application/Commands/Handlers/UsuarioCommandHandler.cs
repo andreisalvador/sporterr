@@ -38,7 +38,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             _repository.AdicionarUsuario(usuario);
 
-            return await SalvarPublicandoEvento(new UsuarioAdicionadoEvent(usuario.Id, usuario.Nome, usuario.Email, usuario.Senha));
+            return await SaveAndPublish(new UsuarioAdicionadoEvent(usuario.Id, usuario.Nome, usuario.Email, usuario.Senha));
         }
 
         public async Task<bool> Handle(AdicionarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
@@ -47,11 +47,13 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Usuario proprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioProprietarioId);
 
+            if (proprietarioEmpresa == null) return await NotifyAndReturn("Usuário não encontrado.");
+
             Empresa novaEmpresa = new Empresa(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj, message.HorarioAbertura, message.HorarioFechamento);
 
             proprietarioEmpresa.AdicionarEmpresa(novaEmpresa);
 
-            return await SalvarPublicandoEvento(new EmpresaUsuarioAdicionadaEvent(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj,
+            return await SaveAndPublish(new EmpresaUsuarioAdicionadaEvent(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj,
                                                                                     message.DiasFuncionamento, message.HorarioAbertura, message.HorarioFechamento));
         }
 
@@ -61,11 +63,13 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Usuario proprietarioGrupo = await _repository.ObterUsuarioPorId(message.UsuarioCriadorId);
 
+            if (proprietarioGrupo == null) return await NotifyAndReturn("Usuário não encontrado.");
+
             Grupo novoGrupo = new Grupo(message.UsuarioCriadorId, message.NomeGrupo, message.NumeroMaximoMembros);
 
             proprietarioGrupo.AdicionarGrupo(novoGrupo);
 
-            return await SalvarPublicandoEvento(new GrupoUsuarioAdicionadoEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
+            return await SaveAndPublish(new GrupoUsuarioAdicionadoEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
         }
 
         public async Task<bool> Handle(AdicionarQuadraEmpresaUsuarioCommand message, CancellationToken cancellationToken)
@@ -73,18 +77,17 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             if (!message.IsValid()) return false;
 
             Usuario proprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioId);
+
+            if (proprietarioEmpresa == null) return await NotifyAndReturn("Usuário não encontrado.");
+
             Empresa empresa = proprietarioEmpresa.Empresas.SingleOrDefault(empresa => empresa.Id.Equals(message.EmpresaId));
 
-            if(empresa == null)
-            {
-                await _mediatr.Notify(new DomainNotification("usuario", "Empresa não encontrada."));
-                return false;
-            }
+            if (empresa == null) return await NotifyAndReturn("Empresa não encontrada.");
 
             Quadra novaQuadra = new Quadra(message.EmpresaId, message.TempoLocacao, message.ValorTempoLocado, message.TipoEsporteQuadra);
             empresa.AdicionarQuadra(novaQuadra);
 
-            return await SalvarPublicandoEvento(new QuadraEmpresaUsuarioAdicionadaEvent(message.UsuarioId, novaQuadra.EmpresaId, novaQuadra.Id,
+            return await SaveAndPublish(new QuadraEmpresaUsuarioAdicionadaEvent(message.UsuarioId, novaQuadra.EmpresaId, novaQuadra.Id,
                                                             novaQuadra.TempoLocacao, novaQuadra.ValorTempoLocado, novaQuadra.TipoEsporteQuadra));
         }
     }
