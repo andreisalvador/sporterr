@@ -16,9 +16,18 @@ namespace Sporterr.Cadastro.Application.Commands
             EmpresaId = empresaId;
         }
 
-        protected override AbstractValidator<AprovarSolicitacaoLocacaoCommand> GetValidator()
+        protected override AbstractValidator<AprovarSolicitacaoLocacaoCommand> GetValidator() => new AprovarSolicitacaoLocacaoValidation();
+
+        private class AprovarSolicitacaoLocacaoValidation : AbstractValidator<AprovarSolicitacaoLocacaoCommand>
         {
-            throw new NotImplementedException();
+            public AprovarSolicitacaoLocacaoValidation()
+            {
+                RuleFor(a => a.SolicitacaoId)
+                    .NotEqual(Guid.Empty).WithMessage("A solicitação precisa ser informada.");
+
+                RuleFor(a => a.EmpresaId)
+                   .NotEqual(Guid.Empty).WithMessage("A empresa precisa ser informada.");
+            }
         }
     }
 }

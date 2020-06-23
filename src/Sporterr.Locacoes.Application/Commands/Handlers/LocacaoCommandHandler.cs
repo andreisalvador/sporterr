@@ -15,9 +15,11 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
         IRequestHandler<SolicitarCancelamentoLocacaoCommand, bool>
     {
         private readonly ILocacaoRepository _repository;
+        private readonly IMediatrHandler _mediatr;
         public LocacaoCommandHandler(ILocacaoRepository repository, IMediatrHandler mediatr) : base(repository, mediatr)
         {
             _repository = repository;
+            _mediatr = mediatr;
         }
         
         public async Task<bool> Handle(SolicitarLocacaoCommand message, CancellationToken cancellationToken)
@@ -31,9 +33,9 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
             Locacao novaLocacao = new Locacao(message.UsuarioLocatarioId, message.EmpresaId, new Quadra(message.QuadraId, message.ValorTempoQuadra, message.TempoLocacaoQuadra), 
                                                                                                     message.DataHoraInicioLocacao, message.DataHoraFimLocacao);
 
-
             return await SaveAndPublish(new SolicitacaoLocacaoEnviadaEvent(novaLocacao.Id, novaLocacao.Quadra.Id,
-                                        novaLocacao.DataHoraInicioLocacao, novaLocacao.DataHoraFimLocacao, novaLocacao.Valor)); ;
+                                        novaLocacao.DataHoraInicioLocacao, novaLocacao.DataHoraFimLocacao, novaLocacao.Valor),
+                                        new LocacaoStatusAtualizadoEvent(novaLocacao.Id, novaLocacao.EmpresaId, novaLocacao.Quadra.Id, novaLocacao.Status)); ;
         }
 
         public async Task<bool> Handle(SolicitarCancelamentoLocacaoCommand message, CancellationToken cancellationToken)
@@ -46,9 +48,10 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
 
             locacaoParaCancelar.CancelamentoSolicitado();
 
-            _repository.AtualizarLocacao(locacaoParaCancelar); 
+            _repository.AtualizarLocacao(locacaoParaCancelar);          
 
-            return await SaveAndPublish(new SolicitacaoCancelamentoLocacaoEnviadaEvent(locacaoParaCancelar.Id, locacaoParaCancelar.UsuarioLocatarioId, locacaoParaCancelar.Quadra.Id));
+            return await SaveAndPublish(new SolicitacaoCancelamentoLocacaoEnviadaEvent(locacaoParaCancelar.Id, locacaoParaCancelar.UsuarioLocatarioId, locacaoParaCancelar.Quadra.Id),
+                                        new LocacaoStatusAtualizadoEvent(locacaoParaCancelar.Id, locacaoParaCancelar.EmpresaId, locacaoParaCancelar.Quadra.Id, locacaoParaCancelar.Status));
         }
     }
 }

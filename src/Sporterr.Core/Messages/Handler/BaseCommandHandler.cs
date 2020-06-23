@@ -29,11 +29,13 @@ namespace Sporterr.Core.Messages.Handler
             return false;
         }
 
-        protected async Task<bool> SaveAndPublish<TEvent>(TEvent @event) where TEvent : Event
+        protected async Task<bool> SaveAndPublish(params Event[] events)
         {
             bool salvou = await Save();
 
-            if (salvou) await _mediatr.Publish<TEvent>(@event);
+            if (salvou)
+                foreach (Event @event in events)
+                    await _mediatr.Publish(@event);
 
             return salvou;
         }

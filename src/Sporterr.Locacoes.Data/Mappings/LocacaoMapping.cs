@@ -13,14 +13,13 @@ namespace Sporterr.Locacoes.Data.Mappings
             builder.Property(l => l.UsuarioLocatarioId)
                 .IsRequired();
 
+            builder.Property(l => l.EmpresaId)
+                .IsRequired();
+
             builder.OwnsOne(l => l.Quadra, q =>
             {
                 q.Property(p => p.Id)
                 .HasColumnName("QuadraId")
-                .IsRequired();
-
-                q.Property(p => p.EmpresaId)
-                .HasColumnName("EmpresaId")
                 .IsRequired();
 
                 q.Property(p => p.TempoLocacaoQuadra)

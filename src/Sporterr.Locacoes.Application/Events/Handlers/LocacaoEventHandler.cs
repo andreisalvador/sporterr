@@ -34,14 +34,14 @@ namespace Sporterr.Locacoes.Application.Events.Handlers
 
         public async Task Handle(SolicitacaoLocacaoRecusadaEvent message, CancellationToken cancellationToken)
         {
-            Locacao locacaoParaAprovar = await _repository.ObterPorId(message.LocacaoId);
+            Locacao locacaoParaRecusar = await _repository.ObterPorId(message.LocacaoId);
 
-            locacaoParaAprovar.RecusarLocacao();
+            locacaoParaRecusar.RecusarLocacao();
 
-            _repository.AtualizarLocacao(locacaoParaAprovar);
+            _repository.AtualizarLocacao(locacaoParaRecusar);
 
             if (await _repository.Commit())
-                await _mediatr.Publish(new LocacaoStatusAtualizadoEvent(locacaoParaAprovar.Id, locacaoParaAprovar.EmpresaId, locacaoParaAprovar.Quadra.Id, locacaoParaAprovar.Status));
+                await _mediatr.Publish(new LocacaoStatusAtualizadoEvent(locacaoParaRecusar.Id, locacaoParaRecusar.EmpresaId, locacaoParaRecusar.Quadra.Id, locacaoParaRecusar.Status));
         }
     }
 }

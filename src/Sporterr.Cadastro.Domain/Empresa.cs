@@ -14,6 +14,7 @@ namespace Sporterr.Cadastro.Domain
     {
         private readonly List<Quadra> _quadras;
         private readonly List<Solicitacao> _solicitacoes;
+        
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
         public string Cnpj { get; private set; } //verificar dps
@@ -61,12 +62,12 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        public void RecusarSolicitacao(Solicitacao solicitacao)
+        public void RecusarSolicitacao(Solicitacao solicitacao, string motivo)
         {
             if (solicitacao.Validar() && ExisteSolicitacaoParaEmpresa(solicitacao))
             {
                 Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
-                solicitacaoParaRecusar.Recusar();
+                solicitacaoParaRecusar.Recusar(motivo);
             }
         }
 
