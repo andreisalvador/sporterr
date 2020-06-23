@@ -33,7 +33,7 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
             Locacao novaLocacao = new Locacao(message.UsuarioLocatarioId, message.EmpresaId, new Quadra(message.QuadraId, message.ValorTempoQuadra, message.TempoLocacaoQuadra), 
                                                                                                     message.DataHoraInicioLocacao, message.DataHoraFimLocacao);
 
-            return await SaveAndPublish(new SolicitacaoLocacaoEnviadaEvent(novaLocacao.Id, novaLocacao.Quadra.Id,
+            return await SaveAndPublish(new SolicitacaoLocacaoEnviadaEvent(message.UsuarioLocatarioId, novaLocacao.Id, novaLocacao.Quadra.Id,
                                         novaLocacao.DataHoraInicioLocacao, novaLocacao.DataHoraFimLocacao, novaLocacao.Valor),
                                         new LocacaoStatusAtualizadoEvent(novaLocacao.Id, novaLocacao.EmpresaId, novaLocacao.Quadra.Id, novaLocacao.Status)); ;
         }

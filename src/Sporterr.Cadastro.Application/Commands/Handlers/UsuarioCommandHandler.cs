@@ -18,8 +18,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
     public class UsuarioCommandHandler : BaseCommandHandler<Usuario>,
         IRequestHandler<AdicionarUsuarioCommand, bool>,
         IRequestHandler<AdicionarEmpresaUsuarioCommand, bool>,
-        IRequestHandler<AdicionarGrupoUsuarioCommand, bool>,
-        IRequestHandler<AdicionarQuadraEmpresaUsuarioCommand, bool>
+        IRequestHandler<AdicionarGrupoUsuarioCommand, bool>
     {
         private readonly IUsuarioRepository _repository;        
 
@@ -68,25 +67,6 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             proprietarioGrupo.AdicionarGrupo(novoGrupo);
 
             return await SaveAndPublish(new GrupoUsuarioAdicionadoEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
-        }
-
-        public async Task<bool> Handle(AdicionarQuadraEmpresaUsuarioCommand message, CancellationToken cancellationToken)
-        {
-            if (!message.IsValid()) return false;
-
-            Usuario proprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioId);
-
-            if (proprietarioEmpresa == null) return await NotifyAndReturn("Usuário não encontrado.");
-
-            Empresa empresa = proprietarioEmpresa.Empresas.SingleOrDefault(empresa => empresa.Id.Equals(message.EmpresaId));
-
-            if (empresa == null) return await NotifyAndReturn("Empresa não encontrada.");
-
-            Quadra novaQuadra = new Quadra(message.EmpresaId, message.TempoLocacao, message.ValorTempoLocado, message.TipoEsporteQuadra);
-            empresa.AdicionarQuadra(novaQuadra);
-
-            return await SaveAndPublish(new QuadraEmpresaUsuarioAdicionadaEvent(message.UsuarioId, novaQuadra.EmpresaId, novaQuadra.Id,
-                                                            novaQuadra.TempoLocacao, novaQuadra.ValorTempoLocado, novaQuadra.TipoEsporteQuadra));
-        }
+        }      
     }
 }

@@ -9,8 +9,4 @@
     <ProjectReference Include="..\Sporterr.Core\Sporterr.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\Handlers\" />
-  </ItemGroup>
-
 </Project>

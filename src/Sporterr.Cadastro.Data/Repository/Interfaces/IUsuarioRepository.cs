@@ -15,11 +15,7 @@ namespace Sporterr.Cadastro.Data.Repository.Interfaces
 
         void AdicionarEmpresa(Empresa usuario);
         void AtualizarEmpresa(Empresa usuario);
-        Task<Empresa> ObterEmpresaPorId(Guid id);
-
-        void AdicionarQuadra(Quadra usuario);
-        void AtualizarQuadra(Quadra usuario);
-        Task<Quadra> ObterQuadraPorId(Guid id);
+        Task<Empresa> ObterEmpresaPorId(Guid id);     
 
         void AdicionarGrupo(Grupo usuario);
         void AtualizarGrupo(Grupo usuario);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sporterr.Cadastro.Domain.Enumns
+namespace Sporterr.Core.Enums
 {
     public enum StatusSolicitacao
     {

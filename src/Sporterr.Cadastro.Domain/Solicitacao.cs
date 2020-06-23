@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
-using Sporterr.Cadastro.Domain.Enumns;
 using Sporterr.Core.DomainObjects;
+using Sporterr.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sporterr.Cadastro.Domain
 {
