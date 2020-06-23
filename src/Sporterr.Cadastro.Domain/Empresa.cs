@@ -43,12 +43,12 @@ namespace Sporterr.Cadastro.Domain
             Validar();
         }
 
-        internal void AdicionarQuadra(Quadra quadra)
+        public void AdicionarQuadra(Quadra quadra)
         {
             if (quadra.Validar() && !QuadraPertenceEmpresa(quadra)) _quadras.Add(quadra);
         }
 
-        internal void InativarQuadra(Quadra quadra)
+        public void InativarQuadra(Quadra quadra)
         {
             if (quadra.Validar() && quadra.Ativo && QuadraPertenceEmpresa(quadra))
             {
@@ -57,7 +57,7 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        internal void ReativarQuadra(Quadra quadra)
+        public void ReativarQuadra(Quadra quadra)
         {
             if (quadra.Validar() && !quadra.Ativo && QuadraPertenceEmpresa(quadra))
             {
@@ -66,38 +66,38 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        internal void AlterarHorarioAbertura(TimeSpan horarioAbertura)
+        public void AlterarHorarioAbertura(TimeSpan horarioAbertura)
         {
             if (HorarioAbertura != horarioAbertura) HorarioAbertura = horarioAbertura;
         }
 
-        internal void AlterarHorarioFechamento(TimeSpan horarioFechamento)
+        public void AlterarHorarioFechamento(TimeSpan horarioFechamento)
         {
             if (HorarioFechamento != horarioFechamento) HorarioAbertura = horarioFechamento;
         }
 
-        internal void AlterarHorarioFuncionamento(TimeSpan horarioAbertura, TimeSpan horarioFechamento)
+        public void AlterarHorarioFuncionamento(TimeSpan horarioAbertura, TimeSpan horarioFechamento)
         {
             AlterarHorarioAbertura(horarioAbertura);
             AlterarHorarioFechamento(horarioFechamento);
         }
 
-        internal void AtivarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamentoEnum diasSemanaFuncionamento)
+        public void AtivarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamento diasSemanaFuncionamento)
         {
             DiasFuncionamento |= diasSemanaFuncionamento;
         }
 
-        internal void DesativarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamentoEnum diasSemanaFuncionamento)
+        public void DesativarFuncionamentoNoDiaDaSemana(DiasSemanaFuncionamento diasSemanaFuncionamento)
         {
             DiasFuncionamento &= ~diasSemanaFuncionamento;
         }
 
-        internal void AlterarDiasFuncionamento(DiasSemanaFuncionamentoEnum diasFuncionamento)
+        public void AlterarDiasFuncionamento(DiasSemanaFuncionamento diasFuncionamento)
         {
             DiasFuncionamento = diasFuncionamento;
         }
 
-        internal void ColocarQuadraEmManutencao(Quadra quadra)
+        public void ColocarQuadraEmManutencao(Quadra quadra)
         {
             if(!quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
             {
@@ -106,7 +106,7 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        internal void RetirarQuadraDeManutencao(Quadra quadra)
+        public void RetirarQuadraDeManutencao(Quadra quadra)
         {
             if (quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
             {

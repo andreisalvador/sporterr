@@ -14,14 +14,18 @@ namespace Sporterr.Cadastro.Domain
         private readonly List<Usuario> _membros;
 
         public Guid UsuarioCriadorId { get; private set; }
+        public string NomeGrupo { get; private set; }
+        public sbyte NumeroMaximoMembros { get; private set; }
         public IReadOnlyCollection<Usuario> Membros => _membros.AsReadOnly();
 
         //Ef rel.
         public Usuario UsuarioCriador { get; set; }
 
-        public Grupo(Guid usuarioCriadorId)
+        public Grupo(Guid usuarioCriadorId, string nomeGrupo, sbyte numeroMaximoMembros)
         {
             UsuarioCriadorId = usuarioCriadorId;
+            NomeGrupo = nomeGrupo;
+            NumeroMaximoMembros = numeroMaximoMembros;
             _membros = new List<Usuario>();
             Validar();
         }

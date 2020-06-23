@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sporterr.Cadastro.Data\Sporterr.Cadastro.Data.csproj" />
+    <ProjectReference Include="..\Sporterr.Core\Sporterr.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Events\Handlers\" />
+  </ItemGroup>
+
+</Project>

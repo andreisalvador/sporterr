@@ -12,7 +12,7 @@ namespace Sporterr.Core.Messages
         public ValidationResult ValidationResult { get; private set; }
 
         protected abstract AbstractValidator<TCommand> GetValidator();
-        protected bool IsValid()
+        public bool IsValid()
         {
             IValidator<TCommand> validator = GetValidator();
             ValidationResult = validator.Validate(this);

@@ -32,11 +32,11 @@ namespace Sporterr.Cadastro.Domain
         }
 
 
-        internal void AdicionarEmpresa(Empresa empresa)
+        public void AdicionarEmpresa(Empresa empresa)
         {
             if (empresa.Validar() && !EmpresaPertenceUsuario(empresa)) _empresas.Add(empresa);
         }
-        internal void InativarEmpresa(Empresa empresa)
+        public void InativarEmpresa(Empresa empresa)
         {
             if (EmpresaPertenceUsuario(empresa))
             {
@@ -52,7 +52,7 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        internal void AdicionarQuadra(Empresa empresa, Quadra quadra)
+        public void AdicionarQuadra(Empresa empresa, Quadra quadra)
         {
             if (quadra.Validar() && EmpresaPertenceUsuario(empresa))
             {
@@ -61,7 +61,7 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        internal void InativarQuadra(Empresa empresa, Quadra quadra)
+        public void InativarQuadra(Empresa empresa, Quadra quadra)
         {
             if (EmpresaPertenceUsuario(empresa) && quadra.Validar())
             {
@@ -70,17 +70,17 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        internal void AdicionarGrupo(Grupo grupo)
+        public void AdicionarGrupo(Grupo grupo)
         {
             if(grupo.Validar() && !GrupoPertenceUsuario(grupo))  _grupos.Add(grupo);
         }
 
-        internal void RemoverGrupo(Grupo grupo)
+        public void RemoverGrupo(Grupo grupo)
         {
             if (grupo.Validar() && GrupoPertenceUsuario(grupo)) _grupos.Remove(grupo);
         }
 
-        internal void RemoverMembroDoGrupo(Usuario membro, Grupo grupo)
+        public void RemoverMembroDoGrupo(Usuario membro, Grupo grupo)
         {
             if (GrupoPertenceUsuario(grupo) && NovoMembroFazParteDoGrupo(membro, grupo))
             {   
@@ -89,7 +89,7 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        internal void AdicionarMembroAoGrupo(Usuario membro, Grupo grupo)
+        public void AdicionarMembroAoGrupo(Usuario membro, Grupo grupo)
         {
             if (GrupoPertenceUsuario(grupo) && !NovoMembroFazParteDoGrupo(membro, grupo))
             {
@@ -98,9 +98,9 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        public bool EmpresaPertenceUsuario(Empresa empresa) => _empresas.Any(e => e.Equals(empresa) && empresa.UsuarioProprietarioId.Equals(Id));
-        public bool GrupoPertenceUsuario(Grupo grupo) => _grupos.Any(g => g.Equals(grupo) && grupo.UsuarioCriadorId.Equals(Id));
-        public bool NovoMembroFazParteDoGrupo(Usuario usuario, Grupo grupo) => _grupos.Any(g => g.Id.Equals(grupo.Id) && grupo.Membros.Any(m => m.Id.Equals(usuario.Id)));
+        internal bool EmpresaPertenceUsuario(Empresa empresa) => _empresas.Any(e => e.Equals(empresa) && empresa.UsuarioProprietarioId.Equals(Id));
+        internal bool GrupoPertenceUsuario(Grupo grupo) => _grupos.Any(g => g.Equals(grupo) && grupo.UsuarioCriadorId.Equals(Id));
+        internal bool NovoMembroFazParteDoGrupo(Usuario usuario, Grupo grupo) => _grupos.Any(g => g.Id.Equals(grupo.Id) && grupo.Membros.Any(m => m.Id.Equals(usuario.Id)));
 
         protected override AbstractValidator<Usuario> ObterValidador() => new UsuarioValidation();
 

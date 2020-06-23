@@ -2,8 +2,6 @@
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sporterr.Cadastro.Domain
 {
