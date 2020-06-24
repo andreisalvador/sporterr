@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Domain
 {
-    public class Grupo : Entity<Grupo>, IAggregateRoot
+    public class Grupo : Entity<Grupo>
     {
         private readonly List<Usuario> _membros;
 
@@ -21,14 +21,15 @@ namespace Sporterr.Cadastro.Domain
         //Ef rel.
         public Usuario UsuarioCriador { get; set; }
 
-        public Grupo(Guid usuarioCriadorId, string nomeGrupo, sbyte numeroMaximoMembros)
-        {
-            UsuarioCriadorId = usuarioCriadorId;
+        public Grupo(string nomeGrupo, sbyte numeroMaximoMembros)
+        {            
             NomeGrupo = nomeGrupo;
             NumeroMaximoMembros = numeroMaximoMembros;
             _membros = new List<Usuario>();
             Validar();
         }
+
+        internal void AssociarUsuarioCriador(Guid usuarioCriadorId) => UsuarioCriadorId = usuarioCriadorId;
 
         internal void AssociarMembro(Usuario membro)
         {

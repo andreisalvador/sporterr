@@ -3,7 +3,7 @@ using System;
 
 namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
 { 
-    public class SolicitacaoAbertaEvent : Event
+    public class SolicitacaoAbertaEvent : IntegrationEvent
     {
         public Guid LocaocaId { get; private set; }
         public Guid SolicitacaoId { get; private set; }

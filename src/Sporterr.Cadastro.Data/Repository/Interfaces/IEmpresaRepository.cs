@@ -17,9 +17,8 @@ namespace Sporterr.Cadastro.Data.Repository.Interfaces
         void AtualizarQuadra(Quadra quadra);
         Task<Quadra> ObterQuadraPorId(Guid id);
 
-
         void AdicionarSolicitacao(Solicitacao solicitacao);
-        void AtualizarSolicitacao(Quadra usuario);
+        void AtualizarSolicitacao(Solicitacao usuario);
         Task<Solicitacao> ObterSolicitacaoPorId(Guid id);
     }
 }

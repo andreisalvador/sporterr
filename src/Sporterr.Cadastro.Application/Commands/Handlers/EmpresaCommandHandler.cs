@@ -37,7 +37,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             if (empresa == null) return await NotifyAndReturn("Empresa não encontrada.");
 
-            Quadra novaQuadra = new Quadra(message.EmpresaId, message.TempoLocacao, message.ValorTempoLocado, message.TipoEsporteQuadra);
+            Quadra novaQuadra = new Quadra(message.TipoEsporteQuadra, message.TempoLocacao, message.ValorTempoLocado);
             empresa.AdicionarQuadra(novaQuadra);
 
             return await SaveAndPublish(new QuadraEmpresaUsuarioAdicionadaEvent(message.UsuarioId, novaQuadra.EmpresaId, novaQuadra.Id,
@@ -52,7 +52,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             if (empresa == null) return await NotifyAndReturn("Empresa não encontrada.");
 
-            Solicitacao novaSolicitacao = new Solicitacao(message.LocacaoId, empresa.Id, message.QuadraId);
+            Solicitacao novaSolicitacao = new Solicitacao(message.LocacaoId, message.QuadraId);
 
             empresa.AdicionarSolicitacao(novaSolicitacao);
 

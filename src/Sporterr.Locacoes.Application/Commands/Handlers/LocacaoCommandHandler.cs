@@ -37,7 +37,7 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
 
             return await SaveAndPublish(new LocacaoSolicitadaEvent(message.UsuarioLocatarioId, novaLocacao.Id, novaLocacao.Quadra.Id,
                                         novaLocacao.DataHoraInicioLocacao, novaLocacao.DataHoraFimLocacao, novaLocacao.Valor),
-                                        new LocacaoStatusAtualizadoEvent(novaLocacao.Id, novaLocacao.EmpresaId, novaLocacao.Quadra.Id, novaLocacao.Status)); ;
+                                        new LocacaoStatusAtualizadoEvent(novaLocacao.Id, novaLocacao.EmpresaId, novaLocacao.Quadra.Id, novaLocacao.Status)); 
         }
 
         public async Task<bool> Handle(SolicitarCancelamentoLocacaoCommand message, CancellationToken cancellationToken)

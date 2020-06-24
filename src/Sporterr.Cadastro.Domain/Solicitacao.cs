@@ -17,14 +17,15 @@ namespace Sporterr.Cadastro.Domain
         public IReadOnlyCollection<HistoricoSolicitacao> Historicos => _historicos.AsReadOnly();
         //Ef rel.
         public Empresa Empresa { get; set; }
-        public Solicitacao(Guid locacaoId, Guid empresaId, Guid quadraId)
+        public Solicitacao(Guid locacaoId, Guid quadraId)
         {
-            LocacaoId = locacaoId;
-            EmpresaId = empresaId;
+            LocacaoId = locacaoId;            
             QuadraId = quadraId;
             Status = StatusSolicitacao.AguardandoAprovacao;
             _historicos = new List<HistoricoSolicitacao>() { new HistoricoSolicitacao(Id, Status) };
         }
+
+        internal void AssociarEmpresaSolicitacao(Guid empresaId) => EmpresaId = empresaId;
 
         public void Aprovar()
         {
@@ -51,6 +52,7 @@ namespace Sporterr.Cadastro.Domain
         private void IncluirHistoricoSolicitacao(string? descricao = null) =>
             _historicos.Add(new HistoricoSolicitacao(Id, Status, descricao));
 
+        public bool EstaPendente() => Status == StatusSolicitacao.AguardandoAprovacao || Status == StatusSolicitacao.AguardandoCancelamento;
 
         protected override AbstractValidator<Solicitacao> ObterValidador()
         {

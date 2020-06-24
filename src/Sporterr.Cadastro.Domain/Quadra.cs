@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
 using Sporterr.Core.DomainObjects;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.Enums;
 using System;
+using System.Linq;
 
 namespace Sporterr.Cadastro.Domain
 {
@@ -17,9 +19,8 @@ namespace Sporterr.Cadastro.Domain
         // Ef rel.
         public Empresa Empresa { get; set; }
 
-        public Quadra(Guid empresaId, TimeSpan tempoLocacao, decimal valorTempoLocado, Esporte tipoEsporteQuadra)
-        {
-            EmpresaId = empresaId;
+        public Quadra(Esporte tipoEsporteQuadra, TimeSpan tempoLocacao, decimal valorTempoLocado)
+        {            
             TempoLocacao = tempoLocacao;
             ValorTempoLocado = valorTempoLocado;
             TipoEsporteQuadra = tipoEsporteQuadra;
@@ -28,8 +29,30 @@ namespace Sporterr.Cadastro.Domain
             Validar();
         }
 
-        internal void ColocarQuadraEmManutencao() => EmManutencao = true;
-        internal void TornarQuadraProntaPraUso() => EmManutencao = false;
+        internal void AssociarEmpresaProprietaria(Guid empresaProprietariaId) => EmpresaId = empresaProprietariaId;
+
+        public void ColocarQuadraEmManutencao()
+        {
+            if (PossuiSolicitacaoDeLocacaoPendente())
+                throw new DomainException("Não é possível colocar uma quadra em manutenção com processos de locação pendentes.");
+
+            EmManutencao = true;
+        }
+
+        public void TornarQuadraProntaPraUso() => EmManutencao = false;
+
+        public bool JaPassouPorProcessoLocacao() => Empresa.Solicitacoes.Any(s => s.QuadraId.Equals(Id));
+
+        public bool PossuiSolicitacaoDeLocacaoPendente() =>
+            Empresa.Solicitacoes.Any(s => s.QuadraId.Equals(Id) && s.EstaPendente());
+
+        public override void Inativar()
+        {
+            if (PossuiSolicitacaoDeLocacaoPendente())
+                throw new DomainException("Não é possível inativar uma quadra com processos de locação pendentes.");
+
+            base.Inativar();
+        }
 
         protected override AbstractValidator<Quadra> ObterValidador()
         {

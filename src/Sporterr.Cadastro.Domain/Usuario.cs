@@ -34,7 +34,11 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarEmpresa(Empresa empresa)
         {
-            if (empresa.Validar() && !EmpresaPertenceUsuario(empresa)) _empresas.Add(empresa);
+            if (empresa.Validar() && !EmpresaPertenceUsuario(empresa))
+            {
+                empresa.AssociarUsuarioProprietario(Id);
+                _empresas.Add(empresa);
+            }
         }
         public void InativarEmpresa(Empresa empresa)
         {
@@ -52,27 +56,13 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
-        public void AdicionarQuadra(Empresa empresa, Quadra quadra)
-        {
-            if (quadra.Validar() && EmpresaPertenceUsuario(empresa))
-            {
-                Empresa empresaExistente = _empresas.SingleOrDefault(e => e.Id.Equals(empresa.Id));
-                empresaExistente.AdicionarQuadra(quadra);
-            }
-        }
-
-        public void InativarQuadra(Empresa empresa, Quadra quadra)
-        {
-            if (EmpresaPertenceUsuario(empresa) && quadra.Validar())
-            {
-                Empresa empresaExistente = _empresas.SingleOrDefault(e => e.Id.Equals(empresa.Id));
-                empresaExistente.InativarQuadra(quadra);
-            }
-        }
-
         public void AdicionarGrupo(Grupo grupo)
         {
-            if(grupo.Validar() && !GrupoPertenceUsuario(grupo))  _grupos.Add(grupo);
+            if (grupo.Validar() && !GrupoPertenceUsuario(grupo))
+            {
+                grupo.AssociarUsuarioCriador(Id);
+                _grupos.Add(grupo);
+            }
         }
 
         public void RemoverGrupo(Grupo grupo)
@@ -83,7 +73,7 @@ namespace Sporterr.Cadastro.Domain
         public void RemoverMembroDoGrupo(Usuario membro, Grupo grupo)
         {
             if (GrupoPertenceUsuario(grupo) && NovoMembroFazParteDoGrupo(membro, grupo))
-            {   
+            {
                 Grupo grupoExistente = _grupos.SingleOrDefault(g => g.Id == grupo.Id);
                 grupoExistente.RemoverMembro(membro);
             }
@@ -104,6 +94,6 @@ namespace Sporterr.Cadastro.Domain
 
         protected override AbstractValidator<Usuario> ObterValidador() => new UsuarioValidation();
 
-       
+
     }
 }

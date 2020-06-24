@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Core.Enums;
 using System;
@@ -14,7 +15,7 @@ namespace Sporterr.Cadastro.Domain
     {
         private readonly List<Quadra> _quadras;
         private readonly List<Solicitacao> _solicitacoes;
-        
+
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
         public string Cnpj { get; private set; } //verificar dps
@@ -27,15 +28,12 @@ namespace Sporterr.Cadastro.Domain
         //Ef Rel.
         public Usuario UsuarioProprietario { get; set; }
 
-        public Empresa(Guid usuarioProprietarioId,
-                       string razaoSocial,
+        public Empresa(string razaoSocial,
                        string cnpj,
                        TimeSpan horarioAbertura,
                        TimeSpan horarioFechamento,
                        DiasSemanaFuncionamento diasFuncionamento = DiasSemanaFuncionamento.DiasUteis)
         {
-
-            UsuarioProprietarioId = usuarioProprietarioId;
             RazaoSocial = razaoSocial;
             Cnpj = cnpj;
             HorarioAbertura = horarioAbertura;
@@ -47,15 +45,20 @@ namespace Sporterr.Cadastro.Domain
             Validar();
         }
 
+        internal void AssociarUsuarioProprietario(Guid usuarioProprietarioId) => UsuarioProprietarioId = usuarioProprietarioId;
+
         public void AdicionarSolicitacao(Solicitacao solicitacao)
         {
             if (solicitacao.Validar() && !ExisteSolicitacaoParaEmpresa(solicitacao))
+            {
+                solicitacao.AssociarEmpresaSolicitacao(Id);
                 _solicitacoes.Add(solicitacao);
+            }
         }
 
         public void AprovarSolicitacao(Solicitacao solicitacao)
         {
-            if(solicitacao.Validar() && ExisteSolicitacaoParaEmpresa(solicitacao))
+            if (solicitacao.Validar() && ExisteSolicitacaoParaEmpresa(solicitacao))
             {
                 Solicitacao solicitacaoParaAprovar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
                 solicitacaoParaAprovar.Aprovar();
@@ -85,7 +88,11 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarQuadra(Quadra quadra)
         {
-            if (quadra.Validar() && !QuadraPertenceEmpresa(quadra)) _quadras.Add(quadra);
+            if (quadra.Validar() && !QuadraPertenceEmpresa(quadra))
+            {
+                quadra.AssociarEmpresaProprietaria(Id);
+                _quadras.Add(quadra);
+            }
         }
 
         public void InativarQuadra(Quadra quadra)
@@ -139,7 +146,7 @@ namespace Sporterr.Cadastro.Domain
 
         public void ColocarQuadraEmManutencao(Quadra quadra)
         {
-            if(!quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
+            if (!quadra.EmManutencao && QuadraPertenceEmpresa(quadra) && quadra.Validar())
             {
                 Quadra quadraExistente = _quadras.SingleOrDefault(q => q.Id.Equals(quadra.Id));
                 quadra.ColocarQuadraEmManutencao();
@@ -156,8 +163,17 @@ namespace Sporterr.Cadastro.Domain
         }
 
         public bool PossuiQuadras() => _quadras.Any();
+        public bool PossuiSolicitacoesPendentes() => _solicitacoes.Any(s => s.EstaPendente());
 
         public bool QuadraPertenceEmpresa(Quadra quadra) => _quadras.Any(q => q.Equals(quadra));
+
+        public override void Inativar()
+        {
+            if (PossuiSolicitacoesPendentes())
+                throw new DomainException("Não é possível inativar empresas com solicitações pendentes");
+
+            base.Inativar();
+        }
 
         protected override AbstractValidator<Empresa> ObterValidador() => new EmpresaValidation();
     }

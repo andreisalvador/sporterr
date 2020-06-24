@@ -4,7 +4,7 @@ using System;
 
 namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
 {
-    public class CancelamentoLocacaoSolicitadoEvent : Event
+    public class CancelamentoLocacaoSolicitadoEvent : IntegrationEvent
     {
         public Guid LocacaoId { get; private set; }      
         public Guid EmpresaId { get; private set; }

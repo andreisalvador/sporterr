@@ -46,7 +46,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             if (proprietarioEmpresa == null) return await NotifyAndReturn("Usuário não encontrado.");
 
-            Empresa novaEmpresa = new Empresa(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj, message.HorarioAbertura, message.HorarioFechamento);
+            Empresa novaEmpresa = new Empresa(message.RazaoSocial, message.Cnpj, message.HorarioAbertura, message.HorarioFechamento);
 
             proprietarioEmpresa.AdicionarEmpresa(novaEmpresa);
 
@@ -62,7 +62,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             if (proprietarioGrupo == null) return await NotifyAndReturn("Usuário não encontrado.");
 
-            Grupo novoGrupo = new Grupo(message.UsuarioCriadorId, message.NomeGrupo, message.NumeroMaximoMembros);
+            Grupo novoGrupo = new Grupo(message.NomeGrupo, message.NumeroMaximoMembros);
 
             proprietarioGrupo.AdicionarGrupo(novoGrupo);
 
