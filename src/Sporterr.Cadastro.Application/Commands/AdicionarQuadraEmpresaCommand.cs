@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class AdicionarQuadraEmpresaUsuarioCommand : Command<AdicionarQuadraEmpresaUsuarioCommand>
+    public class AdicionarQuadraEmpresaCommand : Command<AdicionarQuadraEmpresaCommand>
     {
         public Guid UsuarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
@@ -15,7 +15,7 @@ namespace Sporterr.Cadastro.Application.Commands
         public TimeSpan TempoLocacao { get; private set; }
         public Esporte TipoEsporteQuadra { get; private set; }
 
-        public AdicionarQuadraEmpresaUsuarioCommand(Guid usuarioId, Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao, Esporte tipoEsporteQuadra)
+        public AdicionarQuadraEmpresaCommand(Guid usuarioId, Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao, Esporte tipoEsporteQuadra)
         {
             UsuarioId = usuarioId;
             EmpresaId = empresaId;
@@ -25,9 +25,9 @@ namespace Sporterr.Cadastro.Application.Commands
         }
 
 
-        protected override AbstractValidator<AdicionarQuadraEmpresaUsuarioCommand> GetValidator() => new AdicionarQuadraEmpresaUsuarioValidation();
+        protected override AbstractValidator<AdicionarQuadraEmpresaCommand> GetValidator() => new AdicionarQuadraEmpresaUsuarioValidation();
 
-        private class AdicionarQuadraEmpresaUsuarioValidation : AbstractValidator<AdicionarQuadraEmpresaUsuarioCommand>
+        private class AdicionarQuadraEmpresaUsuarioValidation : AbstractValidator<AdicionarQuadraEmpresaCommand>
         {
             public AdicionarQuadraEmpresaUsuarioValidation()
             {

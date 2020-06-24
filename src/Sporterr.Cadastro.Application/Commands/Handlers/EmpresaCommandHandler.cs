@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 namespace Sporterr.Cadastro.Application.Commands.Handlers
 {
     public class EmpresaCommandHandler : BaseCommandHandler<Empresa>,
-        IRequestHandler<AdicionarQuadraEmpresaUsuarioCommand, bool>,
+        IRequestHandler<AdicionarQuadraEmpresaCommand, bool>,
         IRequestHandler<AbrirSolicitacaoLocacaoParaEmpresaCommand, bool>,
-        IRequestHandler<AprovarSolicitacaoLocacaoCommand,bool>,
+        IRequestHandler<AprovarSolicitacaoEmpresaCommand,bool>,
         IRequestHandler<RecusarSolicitacaoLocacaoCommand, bool>,        
         IRequestHandler<CancelarSolicitacaoLocacaoEmpresaCommand, bool>
     {
@@ -29,7 +29,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             _empresaRepository = empresaRepository;
         }
 
-        public async Task<bool> Handle(AdicionarQuadraEmpresaUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AdicionarQuadraEmpresaCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return false;
 
@@ -61,7 +61,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await SaveAndPublish(new SolicitacaoAbertaEvent(novaSolicitacao.LocacaoId, novaSolicitacao.Id, novaSolicitacao.EmpresaId, novaSolicitacao.QuadraId, novaSolicitacao.Status));
         }
 
-        public async Task<bool> Handle(AprovarSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AprovarSolicitacaoEmpresaCommand message, CancellationToken cancellationToken)
         {
             Empresa empresa = await _empresaRepository.ObterEmpresaPorId(message.EmpresaId);
 

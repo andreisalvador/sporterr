@@ -6,19 +6,19 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class AprovarSolicitacaoLocacaoCommand : Command<AprovarSolicitacaoLocacaoCommand>
+    public class AprovarSolicitacaoEmpresaCommand : Command<AprovarSolicitacaoEmpresaCommand>
     {
         public Guid SolicitacaoId { get; private set; }
         public Guid EmpresaId { get; private set; }
-        public AprovarSolicitacaoLocacaoCommand(Guid solicitacaoId, Guid empresaId)
+        public AprovarSolicitacaoEmpresaCommand(Guid solicitacaoId, Guid empresaId)
         {
             SolicitacaoId = solicitacaoId;
             EmpresaId = empresaId;
         }
 
-        protected override AbstractValidator<AprovarSolicitacaoLocacaoCommand> GetValidator() => new AprovarSolicitacaoLocacaoValidation();
+        protected override AbstractValidator<AprovarSolicitacaoEmpresaCommand> GetValidator() => new AprovarSolicitacaoLocacaoValidation();
 
-        private class AprovarSolicitacaoLocacaoValidation : AbstractValidator<AprovarSolicitacaoLocacaoCommand>
+        private class AprovarSolicitacaoLocacaoValidation : AbstractValidator<AprovarSolicitacaoEmpresaCommand>
         {
             public AprovarSolicitacaoLocacaoValidation()
             {
