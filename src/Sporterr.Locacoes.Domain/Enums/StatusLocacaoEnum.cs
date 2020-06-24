@@ -6,7 +6,8 @@ namespace Sporterr.Locacoes.Domain.Enums
 {
     public enum StatusLocacao
     {
-        AguardandoAprovacao = 1,
+        EmAberto = 1,
+        AguardandoAprovacao,
         Recusada,
         Aprovada,
         AguardandoCancelamento,

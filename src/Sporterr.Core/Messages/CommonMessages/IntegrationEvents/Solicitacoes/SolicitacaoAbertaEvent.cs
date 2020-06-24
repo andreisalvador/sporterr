@@ -3,15 +3,17 @@ using System;
 
 namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
 { 
-    public class SolicitacaoAdicionadaEvent : Event
+    public class SolicitacaoAbertaEvent : Event
     {
+        public Guid LocaocaId { get; private set; }
         public Guid SolicitacaoId { get; private set; }
         public Guid EmpresaId { get; private set; }
         public Guid QuadraId { get; private set; }
         public StatusSolicitacao Status { get; private set; }
-        public SolicitacaoAdicionadaEvent(Guid solicitacaoId, Guid empresaId, Guid quadraId, StatusSolicitacao status)
+        public SolicitacaoAbertaEvent(Guid locacaoId, Guid solicitacaoId, Guid empresaId, Guid quadraId, StatusSolicitacao status)
         {
             AggregateId = solicitacaoId;
+            LocaocaId = locacaoId;
             SolicitacaoId = solicitacaoId;
             EmpresaId = empresaId;
             QuadraId = quadraId;

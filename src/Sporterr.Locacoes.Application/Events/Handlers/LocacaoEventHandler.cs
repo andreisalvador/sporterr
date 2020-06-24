@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Sporterr.Core.Communication.Mediator;
+using Sporterr.Core.Messages;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
 using Sporterr.Locacoes.Data.Repository.Interfaces;
 using Sporterr.Locacoes.Domain;
@@ -9,8 +10,11 @@ using System.Threading.Tasks;
 namespace Sporterr.Locacoes.Application.Events.Handlers
 {
     public class LocacaoEventHandler :
+        INotificationHandler<SolicitacaoAbertaEvent>,
         INotificationHandler<SolicitacaoLocacaoAprovadaEvent>,
-        INotificationHandler<SolicitacaoLocacaoRecusadaEvent>
+        INotificationHandler<SolicitacaoLocacaoRecusadaEvent>,
+        INotificationHandler<SolicitacaoLocacaoCanceladaEvent>,
+        INotificationHandler<CancelamentoLocacaoSolicitadoEvent>
     {
         private readonly ILocacaoRepository _repository;
         private readonly IMediatrHandler _mediatr;
@@ -42,6 +46,42 @@ namespace Sporterr.Locacoes.Application.Events.Handlers
 
             if (await _repository.Commit())
                 await _mediatr.Publish(new LocacaoStatusAtualizadoEvent(locacaoParaRecusar.Id, locacaoParaRecusar.EmpresaId, locacaoParaRecusar.Quadra.Id, locacaoParaRecusar.Status));
+        }
+
+        public async Task Handle(CancelamentoLocacaoSolicitadoEvent message, CancellationToken cancellationToken)
+        {
+            Locacao locacaoParaAguardarCancelamento = await _repository.ObterPorId(message.LocacaoId);
+
+            locacaoParaAguardarCancelamento.AguardarCancelamento();
+
+            _repository.AtualizarLocacao(locacaoParaAguardarCancelamento);
+
+            if (await _repository.Commit())
+                await _mediatr.Publish(new LocacaoStatusAtualizadoEvent(locacaoParaAguardarCancelamento.Id, locacaoParaAguardarCancelamento.EmpresaId, locacaoParaAguardarCancelamento.Quadra.Id, locacaoParaAguardarCancelamento.Status));
+        }
+
+        public async Task Handle(SolicitacaoLocacaoCanceladaEvent message, CancellationToken cancellationToken)
+        {
+            Locacao locacaoParaCancelar = await _repository.ObterPorId(message.LocacaoId);
+
+            locacaoParaCancelar.CancelarLocacao();
+
+            _repository.AtualizarLocacao(locacaoParaCancelar);
+
+            if (await _repository.Commit())
+                await _mediatr.Publish(new LocacaoStatusAtualizadoEvent(locacaoParaCancelar.Id, locacaoParaCancelar.EmpresaId, locacaoParaCancelar.Quadra.Id, locacaoParaCancelar.Status));
+        }
+
+        public async Task Handle(SolicitacaoAbertaEvent message, CancellationToken cancellationToken)
+        {
+            Locacao locacaoParaAguardarAprovacao = await _repository.ObterPorId(message.LocaocaId);
+
+            locacaoParaAguardarAprovacao.AguardarAprovacao();
+
+            _repository.AtualizarLocacao(locacaoParaAguardarAprovacao);
+
+            if (await _repository.Commit())
+                await _mediatr.Publish(new LocacaoStatusAtualizadoEvent(locacaoParaAguardarAprovacao.Id, locacaoParaAguardarAprovacao.EmpresaId, locacaoParaAguardarAprovacao.Quadra.Id, locacaoParaAguardarAprovacao.Status));
         }
     }
 }

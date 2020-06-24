@@ -71,6 +71,16 @@ namespace Sporterr.Cadastro.Domain
             }
         }
 
+        public void CancelarSolicitacao(Solicitacao solicitacao, string motivo)
+        {
+            if (solicitacao.Validar() && ExisteSolicitacaoParaEmpresa(solicitacao))
+            {
+                Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
+                solicitacaoParaRecusar.Cancelar(motivo);
+            }
+        }
+
+
         private bool ExisteSolicitacaoParaEmpresa(Solicitacao solicitacao) => _solicitacoes.Any(s => s.EmpresaId.Equals(Id) && s.Id.Equals(solicitacao.Id));
 
         public void AdicionarQuadra(Quadra quadra)

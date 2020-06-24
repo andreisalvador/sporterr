@@ -9,22 +9,16 @@ namespace Sporterr.Locacoes.Application.Commands
     public class SolicitarCancelamentoLocacaoCommand : Command<SolicitarCancelamentoLocacaoCommand>
     {
         public Guid LocacaoId { get; private set; }
-        public Guid UsuarioId { get; private set; }
-        public SolicitarCancelamentoLocacaoCommand(Guid locacaoId, Guid usuarioId)
+        public string Motivo { get; private set; }
+        public SolicitarCancelamentoLocacaoCommand(Guid locacaoId, string motivo)
         {
             LocacaoId = locacaoId;
-            UsuarioId = usuarioId;
+            Motivo = motivo;
         }
 
-        protected override AbstractValidator<SolicitarCancelamentoLocacaoCommand> GetValidator() => new SolicitarCancelamentoLocacaoValidation();
-
-        private class SolicitarCancelamentoLocacaoValidation : AbstractValidator<SolicitarCancelamentoLocacaoCommand>
+        protected override AbstractValidator<SolicitarCancelamentoLocacaoCommand> GetValidator()
         {
-            public SolicitarCancelamentoLocacaoValidation()
-            {
-                RuleFor(s => s.LocacaoId)
-                    .NotEqual(Guid.Empty).WithMessage("A locação precisa ser informada.");
-            }
+            throw new NotImplementedException();
         }
     }
 }

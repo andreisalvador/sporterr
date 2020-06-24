@@ -14,6 +14,7 @@ namespace Sporterr.Locacoes.Application.Events
         public StatusLocacao Status { get; private set; }
         public LocacaoStatusAtualizadoEvent(Guid locacaoId, Guid empresaId, Guid quadraId, StatusLocacao status)
         {
+            AggregateId = locacaoId;
             LocacaoId = locacaoId;
             EmpresaId = empresaId;
             QuadraId = quadraId;

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Sporterr.Locacoes.Application.Commands.Handlers
 {
     public class LocacaoCommandHandler : BaseCommandHandler<Locacao>,
-        IRequestHandler<SolicitarLocacaoCommand, bool>,
+        IRequestHandler<AbrirSolicitacaoLocacaoCommand, bool>,
         IRequestHandler<SolicitarCancelamentoLocacaoCommand, bool>
     {
         private readonly ILocacaoRepository _repository;
@@ -22,18 +22,20 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
             _mediatr = mediatr;
         }
         
-        public async Task<bool> Handle(SolicitarLocacaoCommand message, CancellationToken cancellationToken)
+        public async Task<bool> Handle(AbrirSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return false;
 
             bool locacaoExistenteNoPeriodo = await _repository.ExisteNoPeriodo(message.DataHoraInicioLocacao, message.DataHoraFimLocacao);
 
-            if (locacaoExistenteNoPeriodo) return await NotifyAndReturn("O período informado já foi locado, favor escolher outro período.");
+            if (locacaoExistenteNoPeriodo) return await NotifyAndReturn("O período informado já foi locado, favor escolher outro período.");            
 
             Locacao novaLocacao = new Locacao(message.UsuarioLocatarioId, message.EmpresaId, new Quadra(message.QuadraId, message.ValorTempoQuadra, message.TempoLocacaoQuadra), 
                                                                                                     message.DataHoraInicioLocacao, message.DataHoraFimLocacao);
+            
+            _repository.AdicionarLocacao(novaLocacao);
 
-            return await SaveAndPublish(new SolicitacaoLocacaoEnviadaEvent(message.UsuarioLocatarioId, novaLocacao.Id, novaLocacao.Quadra.Id,
+            return await SaveAndPublish(new LocacaoSolicitadaEvent(message.UsuarioLocatarioId, novaLocacao.Id, novaLocacao.Quadra.Id,
                                         novaLocacao.DataHoraInicioLocacao, novaLocacao.DataHoraFimLocacao, novaLocacao.Valor),
                                         new LocacaoStatusAtualizadoEvent(novaLocacao.Id, novaLocacao.EmpresaId, novaLocacao.Quadra.Id, novaLocacao.Status)); ;
         }
@@ -42,16 +44,15 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
         {
             if (!message.IsValid()) return false;
 
-            Locacao locacaoParaCancelar = await _repository.ObterPorId(message.LocacaoId);
+            Locacao locacaoParaSolicitarCancelamento = await _repository.ObterPorId(message.LocacaoId);
 
-            if (locacaoParaCancelar == null) return await NotifyAndReturn("Locação não encontrada.");
+            if (locacaoParaSolicitarCancelamento == null) return await NotifyAndReturn("Locação não encontarada.");
 
-            locacaoParaCancelar.CancelamentoSolicitado();
+            locacaoParaSolicitarCancelamento.AguardarCancelamento();
 
-            _repository.AtualizarLocacao(locacaoParaCancelar);          
+            _repository.AtualizarLocacao(locacaoParaSolicitarCancelamento);
 
-            return await SaveAndPublish(new SolicitacaoCancelamentoLocacaoEnviadaEvent(locacaoParaCancelar.Id, locacaoParaCancelar.UsuarioLocatarioId, locacaoParaCancelar.Quadra.Id),
-                                        new LocacaoStatusAtualizadoEvent(locacaoParaCancelar.Id, locacaoParaCancelar.EmpresaId, locacaoParaCancelar.Quadra.Id, locacaoParaCancelar.Status));
+            return await SaveAndPublish(new CancelamentoLocacaoSolicitadoEvent(locacaoParaSolicitarCancelamento.Id, locacaoParaSolicitarCancelamento.EmpresaId, message.Motivo));
         }
     }
 }

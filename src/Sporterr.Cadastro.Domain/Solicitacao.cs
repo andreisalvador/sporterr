@@ -2,16 +2,19 @@
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace Sporterr.Cadastro.Domain
 {
     public class Solicitacao : Entity<Solicitacao>
     {
+        private readonly List<HistoricoSolicitacao> _historicos;
+
         public Guid LocacaoId { get; private set; }
         public Guid EmpresaId { get; private set; }
         public Guid QuadraId { get; private set; }
         public StatusSolicitacao Status { get; private set; }
-        public string? Motivo { get; private set; }
+        public IReadOnlyCollection<HistoricoSolicitacao> Historicos => _historicos.AsReadOnly();
         //Ef rel.
         public Empresa Empresa { get; set; }
         public Solicitacao(Guid locacaoId, Guid empresaId, Guid quadraId)
@@ -20,20 +23,34 @@ namespace Sporterr.Cadastro.Domain
             EmpresaId = empresaId;
             QuadraId = quadraId;
             Status = StatusSolicitacao.AguardandoAprovacao;
+            _historicos = new List<HistoricoSolicitacao>() { new HistoricoSolicitacao(Id, Status) };
         }
 
-        public void Aprovar() => Status = StatusSolicitacao.Aprovada;
-        public void Recusar(string motivo)
+        public void Aprovar()
+        {
+            Status = StatusSolicitacao.Aprovada;
+            IncluirHistoricoSolicitacao();
+        }
+        public void Cancelar(string motivoCancelamento)
+        {
+            Status = StatusSolicitacao.Cancelada;
+            IncluirHistoricoSolicitacao(motivoCancelamento);
+        }
+        public void Recusar(string motivoRecusa)
         {
             Status = StatusSolicitacao.Recusada;
-            AplicarMotivo(motivo);
+            IncluirHistoricoSolicitacao(motivoRecusa);
         }
 
-        private void AplicarMotivo(string motivo)
+        public void AguardarCancelamento(string motivoCancelamento)
         {
-            if (Status != StatusSolicitacao.AguardandoAprovacao)
-                Motivo = motivo;
+            Status = StatusSolicitacao.AguardandoCancelamento;
+            IncluirHistoricoSolicitacao(motivoCancelamento);
         }
+
+        private void IncluirHistoricoSolicitacao(string? descricao = null) =>
+            _historicos.Add(new HistoricoSolicitacao(Id, Status, descricao));
+
 
         protected override AbstractValidator<Solicitacao> ObterValidador()
         {

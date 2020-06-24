@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Sporterr.Locacoes.Application.Commands
 {
-    public class SolicitarLocacaoCommand : Command<SolicitarLocacaoCommand>
+    public class AbrirSolicitacaoLocacaoCommand : Command<AbrirSolicitacaoLocacaoCommand>
     {
         public Guid UsuarioLocatarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
@@ -17,7 +17,7 @@ namespace Sporterr.Locacoes.Application.Commands
         public DateTime DataHoraFimLocacao { get; private set; }
 
 
-        public SolicitarLocacaoCommand(Guid usuarioLocatarioId, Guid empresaId, Guid quadraId, decimal valorTempoQuadra, TimeSpan tempoLocacaoQuadra, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
+        public AbrirSolicitacaoLocacaoCommand(Guid usuarioLocatarioId, Guid empresaId, Guid quadraId, decimal valorTempoQuadra, TimeSpan tempoLocacaoQuadra, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
         {
             UsuarioLocatarioId = usuarioLocatarioId;
             EmpresaId = empresaId;
@@ -29,9 +29,9 @@ namespace Sporterr.Locacoes.Application.Commands
         }
 
 
-        protected override AbstractValidator<SolicitarLocacaoCommand> GetValidator() => new SolicitarLocacaoValidation();
+        protected override AbstractValidator<AbrirSolicitacaoLocacaoCommand> GetValidator() => new SolicitarLocacaoValidation();
 
-        private class SolicitarLocacaoValidation : AbstractValidator<SolicitarLocacaoCommand>
+        private class SolicitarLocacaoValidation : AbstractValidator<AbrirSolicitacaoLocacaoCommand>
         {
             public SolicitarLocacaoValidation()
             {

@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 namespace Sporterr.Cadastro.Application.Events.Handlers
 {
     public class EmpresaEventHandler :
-        INotificationHandler<SolicitacaoLocacaoEnviadaEvent>
+        INotificationHandler<LocacaoSolicitadaEvent>,
+        INotificationHandler<CancelamentoLocacaoSolicitadoEvent>
     {
         private readonly IEmpresaRepository _repository;
         private readonly IMediatrHandler _mediatr;
@@ -24,9 +25,14 @@ namespace Sporterr.Cadastro.Application.Events.Handlers
             _mediatr = mediatr;
         }
 
-        public async Task Handle(SolicitacaoLocacaoEnviadaEvent message, CancellationToken cancellationToken)
+        public async Task Handle(LocacaoSolicitadaEvent message, CancellationToken cancellationToken)
         {
-            await _mediatr.Send(new AdicionarSolicitacaoEmpresaCommand(message.LocacaoId, message.EmpresaId, message.QuadraId));
+            await _mediatr.Send(new AbrirSolicitacaoLocacaoParaEmpresaCommand(message.LocacaoId, message.EmpresaId, message.QuadraId));
+        }
+
+        public async Task Handle(CancelamentoLocacaoSolicitadoEvent message, CancellationToken cancellationToken)
+        {
+            await _mediatr.Send(new CancelarSolicitacaoLocacaoEmpresaCommand(message.EmpresaId, message.LocacaoId, message.MotivoCancelamento));
         }
     }
 }
