@@ -18,34 +18,27 @@ namespace Sporterr.Locacoes.Data.Repository
 
         public void AdicionarLocacao(Locacao locacao)
         {
-            //_context.Locacoes.Add(locacao);
+            _context.Locacoes.Add(locacao);
         }
 
         public void AtualizarLocacao(Locacao locacao)
         {
-            //_context.Locacoes.Update(locacao);
+            _context.Locacoes.Update(locacao);
         }
 
         public async Task<bool> Commit()
         {
-            //Por enquanto vai ficar assimr.
-            //return await _context.SaveChangesAsync() > 0;
-            return await Task.FromResult(true);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public void ExcluirLocacao(Locacao locacao)
+        public async Task<bool> ExisteNoPeriodo(DateTime inicio, DateTime fim)
         {
-            throw new NotImplementedException();
+            return await _context.Locacoes.AsNoTracking().Where(locacao => locacao.DataHoraInicioLocacao >= inicio && fim <= locacao.DataHoraFimLocacao).AsQueryable().CountAsync() > 0;
         }
 
-        public Task<bool> ExisteNoPeriodo(DateTime inicio, DateTime fim)
+        public async Task<Locacao> ObterNoPeriodo(DateTime inicio, DateTime fim)
         {
-            return Task.FromResult(true);
-        }
-
-        public Task<Locacao> ObterNoPeriodo(DateTime inicio, DateTime fim)
-        {
-            throw new NotImplementedException();
+            return await _context.Locacoes.AsNoTracking().Where(locacao => locacao.DataHoraInicioLocacao >= inicio && fim <= locacao.DataHoraFimLocacao).AsQueryable().SingleOrDefaultAsync();
         }
 
         public async Task<Locacao> ObterPorId(Guid locacaoId)
@@ -61,6 +54,10 @@ namespace Sporterr.Locacoes.Data.Repository
         public async Task<IEnumerable<Locacao>> ObterTodas()
         {
             return await _context.Locacoes.AsNoTracking().ToListAsync();
-        }        
+        }
+        public void Dispose()
+        {
+            _context?.Dispose();
+        }
     }
 }

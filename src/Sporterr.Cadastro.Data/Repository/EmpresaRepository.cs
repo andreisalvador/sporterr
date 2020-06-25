@@ -1,7 +1,9 @@
-﻿using Sporterr.Cadastro.Data.Repository.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,59 +11,71 @@ namespace Sporterr.Cadastro.Data.Repository
 {
     public class EmpresaRepository : IEmpresaRepository
     {
-        public void AdicionarEmpresa(Empresa usuario)
+        private readonly CadastroContext _context;
+
+        public EmpresaRepository(CadastroContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public void AdicionarEmpresa(Empresa empresa)
+        {
+            _context.Empresas.Add(empresa);
         }
 
         public void AdicionarQuadra(Quadra quadra)
         {
-            throw new NotImplementedException();
+            _context.Quadras.Add(quadra);
         }
 
         public void AdicionarSolicitacao(Solicitacao solicitacao)
         {
-            throw new NotImplementedException();
+            _context.Solicitacoes.Add(solicitacao);
         }
 
-        public void AtualizarEmpresa(Empresa usuario)
+        public void AtualizarEmpresa(Empresa empresa)
         {
-            throw new NotImplementedException();
+            _context.Empresas.Update(empresa);
         }
 
         public void AtualizarQuadra(Quadra quadra)
         {
-            throw new NotImplementedException();
+            _context.Quadras.Update(quadra);
         }
 
-        public void AtualizarSolicitacao(Solicitacao usuario)
+        public void AtualizarSolicitacao(Solicitacao solicitacao)
         {
-            throw new NotImplementedException();
+            _context.Solicitacoes.Update(solicitacao);
         }
 
-        public Task<bool> Commit()
+        public async Task<bool> Commit()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<Empresa> ObterEmpresaPorId(Guid id)
+        public async Task<Empresa> ObterEmpresaPorId(Guid empresaId)
         {
-            throw new NotImplementedException();
+            return await _context.Empresas.AsQueryable().SingleOrDefaultAsync(empresa => empresa.Id.Equals(empresaId));
         }
 
-        public Task<Quadra> ObterQuadraPorId(Guid id)
+        public async Task<Quadra> ObterQuadraPorId(Guid quadraId)
         {
-            throw new NotImplementedException();
+            return await _context.Quadras.AsQueryable().SingleOrDefaultAsync(quadra => quadra.Id.Equals(quadraId));
         }
 
-        public Task<Solicitacao> ObterSolicitacaoPorId(Guid id)
+        public async Task<Solicitacao> ObterSolicitacaoPorId(Guid solicitacaoId)
         {
-            throw new NotImplementedException();
+            return await _context.Solicitacoes.AsQueryable().SingleOrDefaultAsync(solicitacao => solicitacao.Id.Equals(solicitacaoId));
         }
 
-        public Task<Solicitacao> ObterSolicitacaoPorLocacaoEmpresa(Guid locacaoId, Guid empresaId)
+        public async Task<Solicitacao> ObterSolicitacaoPorLocacaoEmpresa(Guid locacaoId, Guid empresaId)
         {
-            throw new NotImplementedException();
+            return await _context.Solicitacoes.Where(solicitacao => solicitacao.LocacaoId.Equals(locacaoId) && solicitacao.EmpresaId.Equals(empresaId)).AsQueryable().SingleOrDefaultAsync();
+        }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }

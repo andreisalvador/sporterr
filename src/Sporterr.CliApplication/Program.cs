@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Sporterr.Cadastro.Application.Commands;
 using Sporterr.Cadastro.Application.Commands.Handlers;
@@ -22,6 +23,8 @@ namespace Sporterr.CliApplication
     {
         static void Main(string[] args)
         {
+            const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=postgres;Port=5432;Database={0};Integrated Security=true;Pooling=true";
+
             IServiceProvider provider = new ServiceCollection()
                 .AddScoped<IRequestHandler<AbrirSolicitacaoLocacaoCommand, bool>, LocacaoCommandHandler>()
                 .AddScoped<IRequestHandler<SolicitarCancelamentoLocacaoCommand, bool>, LocacaoCommandHandler>()
@@ -41,8 +44,8 @@ namespace Sporterr.CliApplication
                 .AddScoped<IUsuarioRepository, UsuarioRepository>()
                 .AddScoped<ILocacaoRepository, LocacaoRepository>()
                 .AddScoped<IMediatrHandler, MediatrHandler>()
-                .AddDbContext<LocacoesContext>()
-                .AddDbContext<CadastroContext>()
+                .AddDbContext<LocacoesContext>(options => options.UseNpgsql(string.Format(CONNECTION_STRING_POSTGRES, "LocacoesDb")))
+                .AddDbContext<CadastroContext>(options => options.UseNpgsql(string.Format(CONNECTION_STRING_POSTGRES, "CadastroDb")))
                 .AddMediatR(typeof(Program))
                 .BuildServiceProvider();
 

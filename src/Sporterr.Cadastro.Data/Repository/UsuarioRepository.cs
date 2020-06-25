@@ -1,4 +1,5 @@
-﻿using Sporterr.Cadastro.Data.Repository.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using System;
 using System.Collections.Generic;
@@ -9,54 +10,64 @@ namespace Sporterr.Cadastro.Data.Repository
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        public void AdicionarEmpresa(Empresa usuario)
+        private readonly CadastroContext _context;
+        public UsuarioRepository(CadastroContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public void AdicionarGrupo(Grupo usuario)
+        public void AdicionarEmpresa(Empresa empresa)
         {
-            throw new NotImplementedException();
+            _context.Empresas.Add(empresa);
+        }
+
+        public void AdicionarGrupo(Grupo grupo)
+        {
+            _context.Grupos.Add(grupo);
         }
 
         public void AdicionarUsuario(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _context.Usuarios.Add(usuario);
         }
 
-        public void AtualizarEmpresa(Empresa usuario)
+        public void AtualizarEmpresa(Empresa empresa)
         {
-            throw new NotImplementedException();
+            _context.Empresas.Update(empresa);
         }
 
-        public void AtualizarGrupo(Grupo usuario)
+        public void AtualizarGrupo(Grupo grupo)
         {
-            throw new NotImplementedException();
+            _context.Grupos.Update(grupo);
         }
 
         public void AtualizarUsuario(Usuario usuario)
         {
-            throw new NotImplementedException();
+            _context.Usuarios.Update(usuario);
         }
 
-        public Task<bool> Commit()
+        public async Task<bool> Commit()
         {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<Empresa> ObterEmpresaPorId(Guid id)
+        public async Task<Empresa> ObterEmpresaPorId(Guid empresaId)
         {
-            throw new NotImplementedException();
+            return await _context.Empresas.SingleOrDefaultAsync(e => e.Id.Equals(empresaId));
         }
 
-        public Task<Grupo> ObterGrupoPorId(Guid id)
+        public async Task<Grupo> ObterGrupoPorId(Guid grupoId)
         {
-            throw new NotImplementedException();
+            return await _context.Grupos.SingleOrDefaultAsync(g => g.Id.Equals(grupoId));
         }
 
-        public Task<Usuario> ObterUsuarioPorId(Guid id)
+        public async Task<Usuario> ObterUsuarioPorId(Guid usuarioId)
         {
-            throw new NotImplementedException();
+            return await _context.Usuarios.SingleOrDefaultAsync(u => u.Id.Equals(usuarioId));
+        }
+        public void Dispose()
+        {
+            _context?.Dispose();
         }
     }
 }

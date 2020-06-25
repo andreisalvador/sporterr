@@ -9,15 +9,15 @@ namespace Sporterr.Cadastro.Data.Repository.Interfaces
     {
         void AdicionarUsuario(Usuario usuario);
         void AtualizarUsuario(Usuario usuario);
-        Task<Usuario> ObterUsuarioPorId(Guid id);
+        Task<Usuario> ObterUsuarioPorId(Guid usuarioId);
 
-        void AdicionarEmpresa(Empresa usuario);
-        void AtualizarEmpresa(Empresa usuario);
-        Task<Empresa> ObterEmpresaPorId(Guid id);     
+        void AdicionarEmpresa(Empresa empresa);
+        void AtualizarEmpresa(Empresa empresa);
+        Task<Empresa> ObterEmpresaPorId(Guid empresaId);     
 
-        void AdicionarGrupo(Grupo usuario);
-        void AtualizarGrupo(Grupo usuario);
-        Task<Grupo> ObterGrupoPorId(Guid id);
+        void AdicionarGrupo(Grupo grupo);
+        void AtualizarGrupo(Grupo grupo);
+        Task<Grupo> ObterGrupoPorId(Guid grupoId);
 
     }
 }
