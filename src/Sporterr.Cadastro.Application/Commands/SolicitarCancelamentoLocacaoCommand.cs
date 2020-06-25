@@ -10,13 +10,12 @@ namespace Sporterr.Cadastro.Application.Commands
         public Guid LocacaoId { get; private set; }
         public Guid UsuarioId { get; private set; }
         public SolicitarCancelamentoLocacaoCommand(Guid solicitacaoId, Guid locacaoId, Guid usuarioId)
+            : base(new SolicitarCancelamentoLocacaoValidation())
         {
             SolicitacaoId = solicitacaoId;
             LocacaoId = locacaoId;
             UsuarioId = usuarioId;
         }
-
-        protected override AbstractValidator<SolicitarCancelamentoLocacaoCommand> GetValidator() => new SolicitarCancelamentoLocacaoValidation();
 
         private class SolicitarCancelamentoLocacaoValidation : AbstractValidator<SolicitarCancelamentoLocacaoCommand>
         {

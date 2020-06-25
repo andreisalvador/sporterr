@@ -13,14 +13,12 @@ namespace Sporterr.Cadastro.Application.Commands
         public string NomeGrupo { get; private set; }
         public sbyte NumeroMaximoMembros { get; private set; }
 
-        public AdicionarGrupoUsuarioCommand(Guid usuarioCriadorId, string nomeGrupo, sbyte numeroMaximoMembros)
+        public AdicionarGrupoUsuarioCommand(Guid usuarioCriadorId, string nomeGrupo, sbyte numeroMaximoMembros) : base(new AdicionarGrupoUsuarioValidation())
         {
             UsuarioCriadorId = usuarioCriadorId;
             NomeGrupo = nomeGrupo;
             NumeroMaximoMembros = numeroMaximoMembros;
         }
-
-        protected override AbstractValidator<AdicionarGrupoUsuarioCommand> GetValidator() => new AdicionarGrupoUsuarioValidation();
         
         private class AdicionarGrupoUsuarioValidation : AbstractValidator<AdicionarGrupoUsuarioCommand>
         {

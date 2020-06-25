@@ -14,16 +14,29 @@ namespace Sporterr.Cadastro.Application.Commands
         public string MotivoCancelamento { get; private set; }
 
         public CancelarSolicitacaoLocacaoEmpresaCommand(Guid solicitacaoId, Guid empresaId, Guid locacaoId, string motivoCancelamento)
+            :base(new CancelarSolicitacaoLocacaoEmpresaValidation())
         {
             SolicitacaoId = solicitacaoId;
             EmpresaId = empresaId;
             LocacaoId = locacaoId;
             MotivoCancelamento = motivoCancelamento;
         }
-
-        protected override AbstractValidator<CancelarSolicitacaoLocacaoEmpresaCommand> GetValidator()
+        private class CancelarSolicitacaoLocacaoEmpresaValidation : AbstractValidator<CancelarSolicitacaoLocacaoEmpresaCommand>
         {
-            throw new NotImplementedException();
+            public CancelarSolicitacaoLocacaoEmpresaValidation()
+            {
+                RuleFor(a => a.SolicitacaoId)
+                    .NotEqual(Guid.Empty).WithMessage("A solicitação precisa ser informada.");
+
+                RuleFor(a => a.EmpresaId)
+                   .NotEqual(Guid.Empty).WithMessage("A empresa precisa ser informada.");
+
+                RuleFor(a => a.LocacaoId)
+                   .NotEqual(Guid.Empty).WithMessage("A locação precisa ser informada.");
+
+                RuleFor(a => a.MotivoCancelamento)
+                    .NotEmpty().WithMessage("O motivo do cancelamento precisa ser informado.");
+            }
         }
     }
 }

@@ -13,16 +13,13 @@ namespace Sporterr.Cadastro.Application.Commands
         public Guid EmpresaId { get; private set; }
         public string Motivo { get; private set; }
         public RecusarSolicitacaoLocacaoCommand(Guid locacaoId, Guid solicitacaoId, Guid empresaId, string motivo)
+            : base(new RecusarSolicitacaoLocacaoValidation())
         {
             LocacaoId = locacaoId;
             SolicitacaoId = solicitacaoId;
             EmpresaId = empresaId;
             Motivo = motivo;
         }
-
-
-        protected override AbstractValidator<RecusarSolicitacaoLocacaoCommand> GetValidator() => new RecusarSolicitacaoLocacaoValidation();
-
         private class RecusarSolicitacaoLocacaoValidation : AbstractValidator<RecusarSolicitacaoLocacaoCommand>
         {
             public RecusarSolicitacaoLocacaoValidation()

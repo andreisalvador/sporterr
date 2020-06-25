@@ -17,6 +17,7 @@ namespace Sporterr.Cadastro.Application.Commands
         public TimeSpan HorarioFechamento { get; private set; }
 
         public AdicionarEmpresaUsuarioCommand(Guid usuarioProprietarioId, string razaoSocial, string cnpj, DiasSemanaFuncionamento diasFuncionamento, TimeSpan horarioAbertura, TimeSpan horarioFechamento)
+            : base(new AdicionarEmpresaUsuarioValidation())
         {
             UsuarioProprietarioId = usuarioProprietarioId;
             RazaoSocial = razaoSocial;
@@ -24,9 +25,7 @@ namespace Sporterr.Cadastro.Application.Commands
             DiasFuncionamento = diasFuncionamento;
             HorarioAbertura = horarioAbertura;
             HorarioFechamento = horarioFechamento;
-        }
-
-        protected override AbstractValidator<AdicionarEmpresaUsuarioCommand> GetValidator() => new AdicionarEmpresaUsuarioValidation();
+        }        
 
         private class AdicionarEmpresaUsuarioValidation : AbstractValidator<AdicionarEmpresaUsuarioCommand>
         {

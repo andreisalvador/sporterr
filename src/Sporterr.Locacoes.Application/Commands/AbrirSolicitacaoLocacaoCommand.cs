@@ -11,13 +11,15 @@ namespace Sporterr.Locacoes.Application.Commands
         public Guid UsuarioLocatarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
         public Guid QuadraId { get; private set; }
-        public decimal  ValorTempoQuadra { get; private set; }
+        public decimal ValorTempoQuadra { get; private set; }
         public TimeSpan TempoLocacaoQuadra { get; private set; }
         public DateTime DataHoraInicioLocacao { get; private set; }
         public DateTime DataHoraFimLocacao { get; private set; }
 
 
-        public AbrirSolicitacaoLocacaoCommand(Guid usuarioLocatarioId, Guid empresaId, Guid quadraId, decimal valorTempoQuadra, TimeSpan tempoLocacaoQuadra, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
+        public AbrirSolicitacaoLocacaoCommand(Guid usuarioLocatarioId, Guid empresaId, Guid quadraId, decimal valorTempoQuadra, 
+                                              TimeSpan tempoLocacaoQuadra, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
+            : base(new AbrirSolicitacaoLocacaoValidation())
         {
             UsuarioLocatarioId = usuarioLocatarioId;
             EmpresaId = empresaId;
@@ -28,12 +30,9 @@ namespace Sporterr.Locacoes.Application.Commands
             DataHoraFimLocacao = dataHoraFimLocacao;
         }
 
-
-        protected override AbstractValidator<AbrirSolicitacaoLocacaoCommand> GetValidator() => new SolicitarLocacaoValidation();
-
-        private class SolicitarLocacaoValidation : AbstractValidator<AbrirSolicitacaoLocacaoCommand>
+        private class AbrirSolicitacaoLocacaoValidation : AbstractValidator<AbrirSolicitacaoLocacaoCommand>
         {
-            public SolicitarLocacaoValidation()
+            public AbrirSolicitacaoLocacaoValidation()
             {
                 RuleFor(s => s.UsuarioLocatarioId)
                     .NotEqual(Guid.Empty).WithMessage("O usuário locatário precisa ser informado.");

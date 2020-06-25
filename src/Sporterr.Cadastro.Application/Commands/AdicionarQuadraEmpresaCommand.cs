@@ -16,6 +16,7 @@ namespace Sporterr.Cadastro.Application.Commands
         public Esporte TipoEsporteQuadra { get; private set; }
 
         public AdicionarQuadraEmpresaCommand(Guid usuarioId, Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao, Esporte tipoEsporteQuadra)
+            : base(new AdicionarQuadraEmpresaUsuarioValidation())
         {
             UsuarioId = usuarioId;
             EmpresaId = empresaId;
@@ -23,9 +24,6 @@ namespace Sporterr.Cadastro.Application.Commands
             TempoLocacao = tempoLocacao;
             TipoEsporteQuadra = tipoEsporteQuadra;
         }
-
-
-        protected override AbstractValidator<AdicionarQuadraEmpresaCommand> GetValidator() => new AdicionarQuadraEmpresaUsuarioValidation();
 
         private class AdicionarQuadraEmpresaUsuarioValidation : AbstractValidator<AdicionarQuadraEmpresaCommand>
         {
@@ -45,7 +43,7 @@ namespace Sporterr.Cadastro.Application.Commands
 
                 RuleFor(q => q.TipoEsporteQuadra)
                     .IsInEnum().WithMessage("O tipo de esporte informado não é válido.");
-            }   
+            }
         }
     }
 }

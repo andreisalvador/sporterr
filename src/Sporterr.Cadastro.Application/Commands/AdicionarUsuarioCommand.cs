@@ -4,18 +4,17 @@ using Sporterr.Core.Messages;
 namespace Sporterr.Cadastro.Application.Commands
 {
     public class AdicionarUsuarioCommand : Command<AdicionarUsuarioCommand>
-    {   
-        public string NomeUsuario{ get; private set; }
+    {
+        public string NomeUsuario { get; private set; }
         public string EmailUsuario { get; private set; }
         public string SenhaUsuario { get; set; }
         public AdicionarUsuarioCommand(string nomeUsuario, string emailUsuario, string senhaUsuario)
-        {            
+            : base(new AdicionarUsuarioValidation())
+        {
             NomeUsuario = nomeUsuario;
             EmailUsuario = emailUsuario;
             SenhaUsuario = senhaUsuario;
         }
-
-        protected override AbstractValidator<AdicionarUsuarioCommand> GetValidator() => new AdicionarUsuarioValidation();
 
         private class AdicionarUsuarioValidation : AbstractValidator<AdicionarUsuarioCommand>
         {

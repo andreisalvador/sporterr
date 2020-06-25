@@ -9,13 +9,15 @@ namespace Sporterr.Core.Messages
 {
     public abstract class Command<TCommand> : Message, IRequest<bool>
     {
-        public ValidationResult ValidationResult { get; private set; }
-
-        protected abstract AbstractValidator<TCommand> GetValidator();
-        public bool IsValid()
+        private readonly IValidator _commandValidator;
+        public Command(AbstractValidator<TCommand> commandValidator)
         {
-            IValidator<TCommand> validator = GetValidator();
-            ValidationResult = validator.Validate(this);
+            _commandValidator = commandValidator;
+        }
+        public ValidationResult ValidationResult { get; private set; }
+        public bool IsValid()
+        {            
+            ValidationResult = _commandValidator.Validate(this);
             return ValidationResult.IsValid;
         }
 

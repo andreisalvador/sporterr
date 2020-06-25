@@ -11,14 +11,22 @@ namespace Sporterr.Cadastro.Application.Commands
         public Guid EmpresaId { get; private set; }
         public Guid QuadraId { get; private set; }
         public InativarQuadraEmpresaCommand(Guid empresaId, Guid quadraId)
+            : base(new InativarQuadraEmpresaValidation())
         {
             EmpresaId = empresaId;
             QuadraId = quadraId;
         }
 
-        protected override AbstractValidator<InativarQuadraEmpresaCommand> GetValidator()
+        private class InativarQuadraEmpresaValidation : AbstractValidator<InativarQuadraEmpresaCommand>
         {
-            throw new NotImplementedException();
+            public InativarQuadraEmpresaValidation()
+            {
+                RuleFor(q => q.EmpresaId)
+                    .NotEqual(Guid.Empty).WithMessage("A empresa precisa ser informada.");
+
+                RuleFor(q => q.QuadraId)
+                    .NotEqual(Guid.Empty).WithMessage("A quadra precisa ser informada.");
+            }
         }
     }
 }
