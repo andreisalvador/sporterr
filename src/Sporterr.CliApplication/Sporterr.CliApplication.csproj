@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sporterr.Cadastro.Application\Sporterr.Cadastro.Application.csproj" />
+    <ProjectReference Include="..\Sporterr.Cadastro.Data\Sporterr.Cadastro.Data.csproj" />
+    <ProjectReference Include="..\Sporterr.Locacoes.Application\Sporterr.Locacoes.Application.csproj" />
+    <ProjectReference Include="..\Sporterr.Locacoes.Data\Sporterr.Locacoes.Data.csproj" />
+  </ItemGroup>
+
+</Project>

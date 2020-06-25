@@ -26,8 +26,8 @@ namespace Sporterr.Locacoes.Data.Mappings
                 .HasColumnName("TempoLocacaoQuadra")
                 .IsRequired();
 
-                q.Property(p => p.ValorTempoQuadra)
-                .HasColumnName("ValorTempoQuadra")
+                q.Property(p => p.ValorPorTempoLocadoQuadra)
+                .HasColumnName("ValorPorTempoLocadoQuadra")
                 .IsRequired();
             });
 

@@ -18,18 +18,19 @@ namespace Sporterr.Locacoes.Data.Repository
 
         public void AdicionarLocacao(Locacao locacao)
         {
-            _context.Locacoes.Add(locacao);
+            //_context.Locacoes.Add(locacao);
         }
 
         public void AtualizarLocacao(Locacao locacao)
         {
-            _context.Locacoes.Update(locacao);
+            //_context.Locacoes.Update(locacao);
         }
 
         public async Task<bool> Commit()
         {
             //Por enquanto vai ficar assimr.
-            return await _context.SaveChangesAsync() > 0;
+            //return await _context.SaveChangesAsync() > 0;
+            return await Task.FromResult(true);
         }
 
         public void ExcluirLocacao(Locacao locacao)
@@ -39,7 +40,7 @@ namespace Sporterr.Locacoes.Data.Repository
 
         public Task<bool> ExisteNoPeriodo(DateTime inicio, DateTime fim)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
         public Task<Locacao> ObterNoPeriodo(DateTime inicio, DateTime fim)

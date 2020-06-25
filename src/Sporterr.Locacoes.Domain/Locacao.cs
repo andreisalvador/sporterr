@@ -23,7 +23,7 @@ namespace Sporterr.Locacoes.Domain
             UsuarioLocatarioId = usuarioLocatarioId;
             EmpresaId = empresaId;
             Quadra = quadra;
-            Valor = CalcularValorLocacao(Quadra.ValorTempoQuadra, Quadra.TempoLocacaoQuadra);
+            Valor = CalcularValorLocacao(Quadra.ValorPorTempoLocadoQuadra, Quadra.TempoLocacaoQuadra);
             DataHoraInicioLocacao = dataHoraInicioLocacao;
             DataHoraFimLocacao = dataHoraFimLocacao;
             Status = StatusLocacao.EmAberto;
@@ -32,7 +32,7 @@ namespace Sporterr.Locacoes.Domain
 
         public void CalcularValorLocacao()
         {
-            Valor = CalcularValorLocacao(Quadra.ValorTempoQuadra, Quadra.TempoLocacaoQuadra);
+            Valor = CalcularValorLocacao(Quadra.ValorPorTempoLocadoQuadra, Quadra.TempoLocacaoQuadra);
         }
 
         public void AguardarAprovacao(Guid solicitacaoId)
