@@ -3,6 +3,7 @@ using Sporterr.Cadastro.Application.Events;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Communication.Mediator;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.Messages;
 using Sporterr.Core.Messages.CommonMessages.Notifications;
 using Sporterr.Core.Messages.Handler;
@@ -18,7 +19,8 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
     public class UsuarioCommandHandler : BaseCommandHandler<Usuario>,
         IRequestHandler<AdicionarUsuarioCommand, bool>,
         IRequestHandler<AdicionarEmpresaUsuarioCommand, bool>,
-        IRequestHandler<AdicionarGrupoUsuarioCommand, bool>
+        IRequestHandler<AdicionarGrupoUsuarioCommand, bool>,
+        IRequestHandler<InativarEmpresaUsuarioCommand, bool>
     {
         private readonly IUsuarioRepository _repository;        
 
@@ -50,7 +52,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             proprietarioEmpresa.AdicionarEmpresa(novaEmpresa);
 
-            return await SaveAndPublish(new EmpresaUsuarioAdicionadaEvent(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj,
+            _repository.AtualizarUsuario(proprietarioEmpresa);
+
+            return await SaveAndPublish(new EmpresaAdicionadaUsuarioEvent(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj,
                                                                                     message.DiasFuncionamento, message.HorarioAbertura, message.HorarioFechamento));
         }
 
@@ -66,7 +70,35 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             proprietarioGrupo.AdicionarGrupo(novoGrupo);
 
-            return await SaveAndPublish(new GrupoUsuarioAdicionadoEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
-        }      
+            _repository.AtualizarUsuario(proprietarioGrupo);
+
+            return await SaveAndPublish(new GrupoAdicionadoUsuarioEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
+        }
+
+        public async Task<bool> Handle(InativarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
+        {
+            if (!message.IsValid()) return false;
+
+            Usuario usuarioProprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioProprietarioEmpresaId);
+
+            if (usuarioProprietarioEmpresa == null) return await NotifyAndReturn("Usuário não encontrado.");
+
+            Empresa empresaParaInativar = await _repository.ObterEmpresaPorId(message.EmpresaId);
+
+            if (empresaParaInativar == null) return await NotifyAndReturn("Empresa não encontrada.");
+
+            try
+            {
+                usuarioProprietarioEmpresa.InativarEmpresa(empresaParaInativar);
+                _repository.AtualizarEmpresa(empresaParaInativar);
+                _repository.AtualizarUsuario(usuarioProprietarioEmpresa);
+            }
+            catch (DomainException exception)
+            {
+                return await NotifyAndReturn(exception.Message);
+            }
+
+            return await SaveAndPublish(new EmpresaInativadaEvent(empresaParaInativar.Id, empresaParaInativar.UsuarioProprietarioId));
+        }
     }
 }

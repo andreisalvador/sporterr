@@ -11,7 +11,7 @@ namespace Sporterr.Cadastro.Application.Commands
     {
         public Guid UsuarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
-        public decimal ValorTempoLocado { get; private set; }
+        public decimal ValorPorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
         public Esporte TipoEsporteQuadra { get; private set; }
 
@@ -19,7 +19,7 @@ namespace Sporterr.Cadastro.Application.Commands
         {
             UsuarioId = usuarioId;
             EmpresaId = empresaId;
-            ValorTempoLocado = valorTempoLocado;
+            ValorPorTempoLocado = valorTempoLocado;
             TempoLocacao = tempoLocacao;
             TipoEsporteQuadra = tipoEsporteQuadra;
         }
@@ -40,7 +40,7 @@ namespace Sporterr.Cadastro.Application.Commands
                 RuleFor(q => q.TempoLocacao)
                     .NotEqual(TimeSpan.MinValue).WithMessage("O tempo de locação da quadra não pode ser vazio.");
 
-                RuleFor(q => q.ValorTempoLocado)
+                RuleFor(q => q.ValorPorTempoLocado)
                     .GreaterThan(0).WithMessage("O valor do tempo de locação precisa ser maior que zero.");
 
                 RuleFor(q => q.TipoEsporteQuadra)

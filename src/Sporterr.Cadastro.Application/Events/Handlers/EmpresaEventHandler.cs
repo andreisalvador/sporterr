@@ -32,7 +32,7 @@ namespace Sporterr.Cadastro.Application.Events.Handlers
 
         public async Task Handle(CancelamentoLocacaoSolicitadoEvent message, CancellationToken cancellationToken)
         {
-            await _mediatr.Send(new CancelarSolicitacaoLocacaoEmpresaCommand(message.EmpresaId, message.LocacaoId, message.MotivoCancelamento));
+            await _mediatr.Send(new CancelarSolicitacaoLocacaoEmpresaCommand(message.SolicitacaoId, message.EmpresaId, message.LocacaoId, message.MotivoCancelamento));
         }
     }
 }

@@ -20,5 +20,6 @@ namespace Sporterr.Cadastro.Data.Repository.Interfaces
         void AdicionarSolicitacao(Solicitacao solicitacao);
         void AtualizarSolicitacao(Solicitacao usuario);
         Task<Solicitacao> ObterSolicitacaoPorId(Guid id);
+        Task<Solicitacao> ObterSolicitacaoPorLocacaoEmpresa(Guid locacaoId, Guid empresaId);
     }
 }

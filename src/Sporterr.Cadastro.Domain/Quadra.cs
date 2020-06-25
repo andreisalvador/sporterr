@@ -10,7 +10,7 @@ namespace Sporterr.Cadastro.Domain
     public class Quadra : Entity<Quadra>
     {
         public Guid EmpresaId { get; private set; }
-        public decimal ValorTempoLocado { get; private set; }
+        public decimal ValorPorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
         public bool EmManutencao { get; private set; }
         public Esporte TipoEsporteQuadra { get; private set; }
@@ -19,10 +19,10 @@ namespace Sporterr.Cadastro.Domain
         // Ef rel.
         public Empresa Empresa { get; set; }
 
-        public Quadra(Esporte tipoEsporteQuadra, TimeSpan tempoLocacao, decimal valorTempoLocado)
+        public Quadra(Esporte tipoEsporteQuadra, TimeSpan tempoLocacao, decimal valorPorTempoLocado)
         {            
             TempoLocacao = tempoLocacao;
-            ValorTempoLocado = valorTempoLocado;
+            ValorPorTempoLocado = valorPorTempoLocado;
             TipoEsporteQuadra = tipoEsporteQuadra;
             TornarQuadraProntaPraUso();
             Ativar();

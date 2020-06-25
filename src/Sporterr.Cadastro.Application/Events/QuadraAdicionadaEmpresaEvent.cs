@@ -4,7 +4,7 @@ using System;
 
 namespace Sporterr.Cadastro.Application.Events
 {
-    public class QuadraEmpresaUsuarioAdicionadaEvent : Event
+    public class QuadraAdicionadaEmpresaEvent : Event
     {
         public Guid UsuarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
@@ -13,7 +13,7 @@ namespace Sporterr.Cadastro.Application.Events
         public decimal ValorTempoLocado { get; private set; }
         public Esporte TipoEsporteQuadra { get; private set; }
 
-        public QuadraEmpresaUsuarioAdicionadaEvent(Guid usuarioId, Guid empresaId, Guid id, TimeSpan tempoLocacao, decimal valorTempoLocado, Esporte tipoEsporteQuadra)
+        public QuadraAdicionadaEmpresaEvent(Guid usuarioId, Guid empresaId, Guid id, TimeSpan tempoLocacao, decimal valorTempoLocado, Esporte tipoEsporteQuadra)
         {
             AggregateId = empresaId;
             UsuarioId = usuarioId;

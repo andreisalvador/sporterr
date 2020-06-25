@@ -12,7 +12,7 @@ namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
         public StatusSolicitacao Status { get; private set; }
         public SolicitacaoAbertaEvent(Guid locacaoId, Guid solicitacaoId, Guid empresaId, Guid quadraId, StatusSolicitacao status)
         {
-            AggregateId = solicitacaoId;
+            AggregateId = empresaId;
             LocaocaId = locacaoId;
             SolicitacaoId = solicitacaoId;
             EmpresaId = empresaId;

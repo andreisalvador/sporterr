@@ -7,9 +7,11 @@ namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
     public class SolicitacaoLocacaoAprovadaEvent : IntegrationEvent
     {
         public Guid LocacaoId { get; private set; }
-        public SolicitacaoLocacaoAprovadaEvent(Guid locacaoId)
+        public Guid EmpresaId { get; private set; }
+        public SolicitacaoLocacaoAprovadaEvent(Guid empresaId, Guid locacaoId)
         {
-            AggregateId = locacaoId;
+            AggregateId = empresaId;
+            EmpresaId = empresaId;
             LocacaoId = locacaoId;
         }
     }

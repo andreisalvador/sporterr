@@ -52,7 +52,7 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
 
             _repository.AtualizarLocacao(locacaoParaSolicitarCancelamento);
 
-            return await SaveAndPublish(new CancelamentoLocacaoSolicitadoEvent(locacaoParaSolicitarCancelamento.Id, locacaoParaSolicitarCancelamento.EmpresaId, message.Motivo));
+            return await SaveAndPublish(new CancelamentoLocacaoSolicitadoEvent(locacaoParaSolicitarCancelamento.SolicitacaoId.GetValueOrDefault(), locacaoParaSolicitarCancelamento.Id, locacaoParaSolicitarCancelamento.EmpresaId, message.Motivo));
         }
     }
 }

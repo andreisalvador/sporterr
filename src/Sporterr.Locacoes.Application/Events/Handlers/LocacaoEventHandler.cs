@@ -76,7 +76,7 @@ namespace Sporterr.Locacoes.Application.Events.Handlers
         {
             Locacao locacaoParaAguardarAprovacao = await _repository.ObterPorId(message.LocaocaId);
 
-            locacaoParaAguardarAprovacao.AguardarAprovacao();
+            locacaoParaAguardarAprovacao.AguardarAprovacao(message.SolicitacaoId);
 
             _repository.AtualizarLocacao(locacaoParaAguardarAprovacao);
 

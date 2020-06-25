@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Application.Events
 {
-    public class EmpresaUsuarioAdicionadaEvent : Event
+    public class EmpresaAdicionadaUsuarioEvent : Event
     {
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
@@ -15,7 +15,7 @@ namespace Sporterr.Cadastro.Application.Events
         public TimeSpan HorarioAbertura { get; private set; }
         public TimeSpan HorarioFechamento { get; private set; }
 
-        public EmpresaUsuarioAdicionadaEvent(Guid usuarioProprietarioId, string razaoSocial, string cnpj, DiasSemanaFuncionamento diasFuncionamento, TimeSpan horarioAbertura, TimeSpan horarioFechamento)
+        public EmpresaAdicionadaUsuarioEvent(Guid usuarioProprietarioId, string razaoSocial, string cnpj, DiasSemanaFuncionamento diasFuncionamento, TimeSpan horarioAbertura, TimeSpan horarioFechamento)
         {
             AggregateId = usuarioProprietarioId;
             UsuarioProprietarioId = usuarioProprietarioId;
