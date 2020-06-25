@@ -1,11 +1,8 @@
 ﻿using FluentValidation;
-using Sporterr.Cadastro.Domain.Resources;
 using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace Sporterr.Cadastro.Domain

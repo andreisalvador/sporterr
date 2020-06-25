@@ -1,7 +1,5 @@
 ﻿using Sporterr.Core.DomainObjects.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sporterr.Locacoes.Domain
 {

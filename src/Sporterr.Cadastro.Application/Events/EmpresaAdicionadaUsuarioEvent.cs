@@ -1,8 +1,6 @@
 ﻿using Sporterr.Core.Enums;
 using Sporterr.Core.Messages;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sporterr.Cadastro.Application.Events
 {

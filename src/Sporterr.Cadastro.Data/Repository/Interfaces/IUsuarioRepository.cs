@@ -1,8 +1,6 @@
 ﻿using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sporterr.Cadastro.Data.Repository.Interfaces

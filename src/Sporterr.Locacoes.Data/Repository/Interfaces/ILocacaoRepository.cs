@@ -1,9 +1,7 @@
 ﻿using Sporterr.Core.Data;
 using Sporterr.Locacoes.Domain;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 
 namespace Sporterr.Locacoes.Data.Repository.Interfaces

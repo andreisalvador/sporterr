@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
-using Sporterr.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace Sporterr.Cadastro.Domain.Validations
 {

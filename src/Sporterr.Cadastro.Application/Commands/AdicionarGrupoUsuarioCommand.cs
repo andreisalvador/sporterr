@@ -1,9 +1,6 @@
 ﻿using FluentValidation;
 using Sporterr.Core.Messages;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
 
 namespace Sporterr.Cadastro.Application.Commands
 {

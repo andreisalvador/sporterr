@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Sporterr.Core.Communication.Mediator;
-using Sporterr.Core.Messages;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
 using Sporterr.Locacoes.Data.Repository.Interfaces;
 using Sporterr.Locacoes.Domain;

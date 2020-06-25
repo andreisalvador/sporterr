@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
 using Sporterr.Core.Messages;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sporterr.Locacoes.Application.Commands
 {

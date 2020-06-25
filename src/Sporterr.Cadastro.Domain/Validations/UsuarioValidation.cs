@@ -1,8 +1,5 @@
 ﻿using FluentValidation;
 using Sporterr.Cadastro.Domain.Resources;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sporterr.Cadastro.Domain.Validations
 {

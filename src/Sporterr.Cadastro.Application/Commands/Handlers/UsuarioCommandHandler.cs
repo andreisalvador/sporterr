@@ -4,13 +4,7 @@ using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.DomainObjects.Exceptions;
-using Sporterr.Core.Messages;
-using Sporterr.Core.Messages.CommonMessages.Notifications;
 using Sporterr.Core.Messages.Handler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

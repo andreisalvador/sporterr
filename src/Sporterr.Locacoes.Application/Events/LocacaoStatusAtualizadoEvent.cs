@@ -1,8 +1,6 @@
 ﻿using Sporterr.Core.Messages;
 using Sporterr.Locacoes.Domain.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sporterr.Locacoes.Application.Events
 {
