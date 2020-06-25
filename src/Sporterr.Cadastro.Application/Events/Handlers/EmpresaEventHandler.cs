@@ -1,12 +1,8 @@
 ﻿using MediatR;
 using Sporterr.Cadastro.Application.Commands;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
-using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
