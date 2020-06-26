@@ -68,24 +68,6 @@ namespace Sporterr.Cadastro.Domain
             if (grupo.Validar() && GrupoPertenceUsuario(grupo)) _grupos.Remove(grupo);
         }
 
-        public void RemoverMembroDoGrupo(Usuario membro, Grupo grupo)
-        {
-            if (GrupoPertenceUsuario(grupo) && NovoMembroFazParteDoGrupo(membro, grupo))
-            {
-                Grupo grupoExistente = _grupos.SingleOrDefault(g => g.Id == grupo.Id);
-                grupoExistente.RemoverMembro(membro);
-            }
-        }
-
-        public void AdicionarMembroAoGrupo(Usuario membro, Grupo grupo)
-        {
-            if (GrupoPertenceUsuario(grupo) && !NovoMembroFazParteDoGrupo(membro, grupo))
-            {
-                Grupo grupoExistente = _grupos.SingleOrDefault(g => g.Id == grupo.Id);
-                grupoExistente.AssociarMembro(membro);
-            }
-        }
-
         internal bool EmpresaPertenceUsuario(Empresa empresa) => _empresas.Any(e => e.Equals(empresa) && empresa.UsuarioProprietarioId.Equals(Id));
         internal bool GrupoPertenceUsuario(Grupo grupo) => _grupos.Any(g => g.Equals(grupo) && grupo.UsuarioCriadorId.Equals(Id));
         internal bool NovoMembroFazParteDoGrupo(Usuario usuario, Grupo grupo) => _grupos.Any(g => g.Id.Equals(grupo.Id) && grupo.Membros.Any(m => m.Id.Equals(usuario.Id)));

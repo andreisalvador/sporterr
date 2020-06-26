@@ -18,6 +18,7 @@ namespace Sporterr.Cadastro.Domain
         public IReadOnlyCollection<HistoricoSolicitacao> Historicos => _historicos.AsReadOnly();
         //Ef rel.
         public Empresa Empresa { get; set; }
+        public Quadra Quadra { get; set; }
         public Solicitacao(Guid locacaoId, Guid quadraId)
         {
             LocacaoId = locacaoId;            

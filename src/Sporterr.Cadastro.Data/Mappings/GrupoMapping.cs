@@ -14,6 +14,10 @@ namespace Sporterr.Cadastro.Data.Mappings
                    .WithMany(g => g.Grupos)
                    .HasForeignKey(g => g.UsuarioCriadorId);
 
+            builder.HasMany(m => m.Membros)
+                .WithOne(g => g.Grupo)
+                .HasForeignKey(m => m.GrupoId);
+
             builder.ToTable("Grupos");
         }
     }

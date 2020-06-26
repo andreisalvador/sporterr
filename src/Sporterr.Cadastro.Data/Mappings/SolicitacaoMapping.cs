@@ -14,7 +14,6 @@ namespace Sporterr.Cadastro.Data.Mappings
                 .WithMany(e => e.Solicitacoes)
                 .HasForeignKey(s => s.EmpresaId);
 
-
             builder.ToTable("Solicitacoes");
         }
     }

@@ -14,6 +14,7 @@ namespace Sporterr.Cadastro.Data
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
         public DbSet<Grupo> Grupos { get; set; }
+        public DbSet<Membro> Membros { get; set; }
         public DbSet<Quadra> Quadras { get; set; }
         public DbSet<Solicitacao> Solicitacoes { get; set; }
         public DbSet<HistoricoSolicitacao> HistoricosSolicitacoes { get; set; }
