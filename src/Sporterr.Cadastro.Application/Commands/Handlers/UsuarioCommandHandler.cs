@@ -46,7 +46,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             proprietarioEmpresa.AdicionarEmpresa(novaEmpresa);
 
-            _repository.AtualizarUsuario(proprietarioEmpresa);
+            _repository.AdicionarEmpresa(novaEmpresa);
 
             return await SaveAndPublish(new EmpresaAdicionadaUsuarioEvent(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj,
                                                                                     message.DiasFuncionamento, message.HorarioAbertura, message.HorarioFechamento));
@@ -64,7 +64,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             proprietarioGrupo.AdicionarGrupo(novoGrupo);
 
-            _repository.AtualizarUsuario(proprietarioGrupo);
+            _repository.AdicionarGrupo(novoGrupo);
 
             return await SaveAndPublish(new GrupoAdicionadoUsuarioEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
         }

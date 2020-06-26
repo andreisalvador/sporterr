@@ -8,6 +8,8 @@ namespace Sporterr.Locacoes.Domain
         public Guid Id { get; private set; }
         public decimal ValorPorTempoLocadoQuadra { get; private set; }
         public TimeSpan TempoLocacaoQuadra { get; private set; }
+
+        protected Quadra() { /*Ef core*/ }
         public Quadra(Guid id, decimal valorTempoQuadra, TimeSpan tempoLocacaoQuadra)
         {
             Id = id;

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.Enums;
 using System;
@@ -54,9 +55,6 @@ namespace Sporterr.Cadastro.Domain
 
         public bool EstaPendente() => Status == StatusSolicitacao.AguardandoAprovacao || Status == StatusSolicitacao.AguardandoCancelamento;
 
-        protected override AbstractValidator<Solicitacao> ObterValidador()
-        {
-            throw new NotImplementedException();
-        }
+        protected override AbstractValidator<Solicitacao> ObterValidador() => new SolicitacaoValidation();
     }
 }

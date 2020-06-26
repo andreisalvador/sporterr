@@ -7,9 +7,6 @@ namespace Sporterr.Cadastro.Domain.Validations
     {
         public EmpresaValidation()
         {
-            RuleFor(e => e.UsuarioProprietarioId)
-                .NotEqual(Guid.Empty);
-
             RuleFor(e => e.Cnpj)
                 .NotEmpty();
 

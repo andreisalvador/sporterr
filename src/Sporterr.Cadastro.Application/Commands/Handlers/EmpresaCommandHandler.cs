@@ -43,6 +43,8 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             empresa.AdicionarQuadra(novaQuadra);
 
+            _empresaRepository.AdicionarQuadra(novaQuadra);
+
             return await SaveAndPublish(new QuadraAdicionadaEmpresaEvent(message.UsuarioId, novaQuadra.EmpresaId, novaQuadra.Id,
                                                             novaQuadra.TempoLocacao, novaQuadra.ValorPorTempoLocado, novaQuadra.TipoEsporteQuadra));
         }
@@ -59,7 +61,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             empresa.AdicionarSolicitacao(novaSolicitacao);
 
-            _empresaRepository.AtualizarEmpresa(empresa);
+            _empresaRepository.AdicionarSolicitacao(novaSolicitacao);
 
             return await SaveAndPublish(new SolicitacaoAbertaEvent(novaSolicitacao.LocacaoId, novaSolicitacao.Id, novaSolicitacao.EmpresaId, novaSolicitacao.QuadraId, novaSolicitacao.Status));
         }
@@ -117,7 +119,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             empresa.CancelarSolicitacao(solicitacaoParaCancelar, message.MotivoCancelamento);
 
-            _empresaRepository.AtualizarEmpresa(empresa);
+            _empresaRepository.AtualizarSolicitacao(solicitacaoParaCancelar);
 
             return await SaveAndPublish(new SolicitacaoLocacaoCanceladaEvent(solicitacaoParaCancelar.Id, message.LocacaoId));
         }

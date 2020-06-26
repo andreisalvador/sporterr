@@ -9,10 +9,11 @@ namespace Sporterr.Locacoes.Application.Commands
         public Guid SolicitacaoId { get; private set; }
         public Guid LocacaoId { get; private set; }
         public string Motivo { get; private set; }
-        public SolicitarCancelamentoLocacaoCommand(Guid locacaoId, string motivo)
+        public SolicitarCancelamentoLocacaoCommand(Guid solicitacaoId, Guid locacaoId, string motivo)
             : base(new SolicitarCancelamentoLocacaoValidation())
         {
             LocacaoId = locacaoId;
+            SolicitacaoId = solicitacaoId;
             Motivo = motivo;
         }
 

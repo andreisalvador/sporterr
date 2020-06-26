@@ -3,7 +3,7 @@ using Sporterr.Core.Messages;
 using System;
 
 namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
-{ 
+{
     public class LocacaoSolicitadaEvent : IntegrationEvent
     {
         public Guid UsuarioLocatarioId { get; private set; }
@@ -15,10 +15,11 @@ namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
         public decimal Valor { get; private set; }
         public StatusSolicitacao Status { get; private set; }
 
-        public LocacaoSolicitadaEvent(Guid usuarioLocatarioId, Guid locacaoId, Guid quadraId, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao, decimal valor)
+        public LocacaoSolicitadaEvent(Guid usuarioLocatarioId, Guid empresaId, Guid locacaoId, Guid quadraId, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao, decimal valor)
         {
             AggregateId = locacaoId;
             UsuarioLocatarioId = usuarioLocatarioId;
+            EmpresaId = empresaId;
             LocacaoId = locacaoId;
             QuadraId = quadraId;
             DataHoraInicioLocacao = dataHoraInicioLocacao;

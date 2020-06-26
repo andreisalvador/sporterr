@@ -28,7 +28,7 @@ namespace Sporterr.Locacoes.Data.Repository
 
         public async Task<bool> Commit()
         {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.CommitAsync();
         }
 
         public async Task<bool> ExisteNoPeriodo(DateTime inicio, DateTime fim)

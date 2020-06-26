@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sporterr.Core.DomainObjects
 {
@@ -9,6 +10,8 @@ namespace Sporterr.Core.DomainObjects
         public Guid Id { get; private set; }
         public bool Ativo { get; private set; }
         public DateTime DataCriacao { get; private set; }
+
+        [NotMapped]
         public ValidationResult ResultadosValidacao { get; private set; }
 
         public Entity()

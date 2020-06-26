@@ -25,6 +25,7 @@ namespace Sporterr.Cadastro.Domain
             Senha = senha;
             _empresas = new List<Empresa>();
             _grupos = new List<Grupo>();
+            Ativar();
             Validar();
         }
 

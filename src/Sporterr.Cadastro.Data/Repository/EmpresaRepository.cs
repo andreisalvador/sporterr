@@ -45,12 +45,17 @@ namespace Sporterr.Cadastro.Data.Repository
 
         public void AtualizarSolicitacao(Solicitacao solicitacao)
         {
+            HistoricoSolicitacao historicoSolicitacao = solicitacao.Historicos.OrderByDescending(s => s.DataCriacao).FirstOrDefault();
+
+            if (historicoSolicitacao != null)
+                _context.HistoricosSolicitacoes.Add(historicoSolicitacao);
+
             _context.Solicitacoes.Update(solicitacao);
         }
 
         public async Task<bool> Commit()
         {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.CommitAsync();
         }
 
         public async Task<Empresa> ObterEmpresaPorId(Guid empresaId)

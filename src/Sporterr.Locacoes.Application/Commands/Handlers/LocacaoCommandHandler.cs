@@ -35,7 +35,7 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
             
             _repository.AdicionarLocacao(novaLocacao);
 
-            return await SaveAndPublish(new LocacaoSolicitadaEvent(message.UsuarioLocatarioId, novaLocacao.Id, novaLocacao.Quadra.Id,
+            return await SaveAndPublish(new LocacaoSolicitadaEvent(message.UsuarioLocatarioId, message.EmpresaId, novaLocacao.Id, novaLocacao.Quadra.Id,
                                         novaLocacao.DataHoraInicioLocacao, novaLocacao.DataHoraFimLocacao, novaLocacao.Valor),
                                         new LocacaoStatusAtualizadoEvent(novaLocacao.Id, novaLocacao.EmpresaId, novaLocacao.Quadra.Id, novaLocacao.Status)); 
         }

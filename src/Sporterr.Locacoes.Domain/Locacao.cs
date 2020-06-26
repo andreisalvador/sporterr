@@ -2,6 +2,7 @@
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Locacoes.Domain.Enums;
+using Sporterr.Locacoes.Domain.Validations;
 using System;
 
 namespace Sporterr.Locacoes.Domain
@@ -17,6 +18,8 @@ namespace Sporterr.Locacoes.Domain
         public StatusLocacao Status { get; private set; }
         public Guid? SolicitacaoId { get; private set; }
 
+
+        protected Locacao() { /*Ef core.*/}
 
         public Locacao(Guid usuarioLocatarioId, Guid empresaId, Quadra quadra, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
         {
@@ -50,11 +53,6 @@ namespace Sporterr.Locacoes.Domain
             return 0m;
         }
 
-
-
-        protected override AbstractValidator<Locacao> ObterValidador()
-        {
-            throw new NotImplementedException();
-        }
+        protected override AbstractValidator<Locacao> ObterValidador() => new LocacaoValidation();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.Enums;
@@ -13,8 +14,7 @@ namespace Sporterr.Cadastro.Domain
         public decimal ValorPorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
         public bool EmManutencao { get; private set; }
-        public Esporte TipoEsporteQuadra { get; private set; }
-        //adicionar esporte
+        public Esporte TipoEsporteQuadra { get; private set; }        
 
         // Ef rel.
         public Empresa Empresa { get; set; }
@@ -54,9 +54,6 @@ namespace Sporterr.Cadastro.Domain
             base.Inativar();
         }
 
-        protected override AbstractValidator<Quadra> ObterValidador()
-        {
-            throw new NotImplementedException();
-        }
+        protected override AbstractValidator<Quadra> ObterValidador() => new QuadraValidation();
     }
 }

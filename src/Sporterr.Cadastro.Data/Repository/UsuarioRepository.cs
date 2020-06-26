@@ -63,7 +63,7 @@ namespace Sporterr.Cadastro.Data.Repository
 
         public async Task<Usuario> ObterUsuarioPorId(Guid usuarioId)
         {
-            return await _context.Usuarios.SingleOrDefaultAsync(u => u.Id.Equals(usuarioId));
+            return await _context.Usuarios.AsQueryable().SingleOrDefaultAsync(u => u.Id.Equals(usuarioId));
         }
         public void Dispose()
         {

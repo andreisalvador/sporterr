@@ -18,6 +18,7 @@ namespace Sporterr.Cadastro.Domain
             SolicitacaoId = solicitacaoId;
             StatusSolicitacao = statusSolicitacao;
             Descricao = descricao;
+            Ativar();
         }
         //Ef Rel.
         protected override AbstractValidator<HistoricoSolicitacao> ObterValidador()
