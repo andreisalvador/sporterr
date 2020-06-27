@@ -11,9 +11,6 @@ namespace Sporterr.Cadastro.Domain.Validations
         {
             RuleFor(m => m.UsuarioId)
                 .NotEqual(Guid.Empty).WithMessage("O usuário é obrigatório.");
-
-            RuleFor(m => m.GrupoId)
-                .NotEqual(Guid.Empty).WithMessage("O grupo é obrigatório.");
         }
     }
 }

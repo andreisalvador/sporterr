@@ -7,8 +7,8 @@ namespace Sporterr.Cadastro.Domain.Validations
     {
         public GrupoValidation()
         {
-            RuleFor(g => g.UsuarioCriadorId)
-                .NotEqual(Guid.Empty);
+            RuleFor(g => g.NomeGrupo)
+                .NotEmpty().WithMessage("Nome do grupo precisa ser informado");
         }
     }
 }

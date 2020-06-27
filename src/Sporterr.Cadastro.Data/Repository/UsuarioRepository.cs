@@ -48,7 +48,7 @@ namespace Sporterr.Cadastro.Data.Repository
 
         public async Task<bool> Commit()
         {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.CommitAsync();
         }
 
         public async Task<Empresa> ObterEmpresaPorId(Guid empresaId)

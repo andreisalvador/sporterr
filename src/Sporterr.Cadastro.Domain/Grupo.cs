@@ -21,7 +21,7 @@ namespace Sporterr.Cadastro.Domain
         //Ef rel.
         public Usuario UsuarioCriador { get; set; }
 
-        public Grupo(string nomeGrupo, sbyte numeroMaximoMembros)
+        public Grupo(string nomeGrupo, sbyte numeroMaximoMembros = 5)
         {            
             NomeGrupo = nomeGrupo;
             NumeroMaximoMembros = numeroMaximoMembros;

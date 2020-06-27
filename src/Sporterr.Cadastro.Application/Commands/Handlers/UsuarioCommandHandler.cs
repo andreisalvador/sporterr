@@ -16,11 +16,11 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
         IRequestHandler<AdicionarGrupoUsuarioCommand, bool>,
         IRequestHandler<InativarEmpresaUsuarioCommand, bool>
     {
-        private readonly IUsuarioRepository _repository;        
+        private readonly IUsuarioRepository _repository;
 
         public UsuarioCommandHandler(IUsuarioRepository repository, IMediatrHandler mediatr) : base(repository, mediatr)
         {
-            _repository = repository;            
+            _repository = repository;
         }
 
         public async Task<bool> Handle(AdicionarUsuarioCommand message, CancellationToken cancellationToken)
@@ -65,6 +65,8 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             proprietarioGrupo.AdicionarGrupo(novoGrupo);
 
             _repository.AdicionarGrupo(novoGrupo);
+
+            _repository.AtualizarUsuario(proprietarioGrupo);
 
             return await SaveAndPublish(new GrupoAdicionadoUsuarioEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
         }
