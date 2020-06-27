@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Sporterr.Core.DomainObjects;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Locacoes.Domain.Enums;
 using Sporterr.Locacoes.Domain.Validations;
@@ -40,17 +41,51 @@ namespace Sporterr.Locacoes.Domain
 
         public void AguardarAprovacao(Guid solicitacaoId)
         {
+            if (Status == StatusLocacao.EmAberto) throw new DomainException("Não é possível aplicar o status de aguardando aprovação em uma locação que não estava 'em aberto'.");
+
+            if (Status == StatusLocacao.Aprovada) throw new DomainException("Não é possível solicitar aprovação de locações já aprovadas.");
+
             Status = StatusLocacao.AguardandoAprovacao;
             SolicitacaoId = solicitacaoId;
         }
-        public void AprovarLocacao() => Status = StatusLocacao.Aprovada;
-        public void RecusarLocacao() => Status = StatusLocacao.Recusada;
-        public void CancelarLocacao() => Status = StatusLocacao.Cancelada;
-        public void AguardarCancelamento() => Status = StatusLocacao.AguardandoCancelamento;
+        public void AprovarLocacao()
+        {
+            if (Status != StatusLocacao.AguardandoAprovacao) throw new DomainException("Não é possível aprovar locações que não estavam aguardando aprovação.");
+
+            ValidarStatus(StatusLocacao.AguardandoAprovacao, "aprovar");
+
+            Status = StatusLocacao.Aprovada;
+        }
+        public void RecusarLocacao()
+        {
+            ValidarStatus(StatusLocacao.AguardandoAprovacao, "recusar");
+
+            Status = StatusLocacao.Recusada;
+        }       
+
+        public void CancelarLocacao()
+        {
+            ValidarStatus(StatusLocacao.AguardandoCancelamento, "aprovar");
+
+            Status = StatusLocacao.Cancelada;
+        }
+        public void AguardarCancelamento() 
+        {
+            if (Status == StatusLocacao.Cancelada) throw new DomainException("Não é possível solicitar cancelamento de locações já canceladas.");
+
+            Status = StatusLocacao.AguardandoCancelamento;
+        }
         // TODO: Realizar calculo
         private decimal CalcularValorLocacao(decimal valorTempoLocacaoQuadra, TimeSpan tempoLocacaoQuadra)
         {
             return 0m;
+        }
+
+        private void ValidarStatus(StatusLocacao status, string processo)
+        {
+            string tipoAguardo = status == StatusLocacao.AguardandoAprovacao ? "aprovação" : "cancelamento";
+
+            if (Status != status) throw new DomainException($"Não é possível {processo} locações que não estavam aguardando {tipoAguardo}.");
         }
 
         protected override AbstractValidator<Locacao> ObterValidador() => new LocacaoValidation();

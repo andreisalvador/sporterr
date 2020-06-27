@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.DomainObjects.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,43 +30,45 @@ namespace Sporterr.Cadastro.Domain
             Validar();
         }
 
-
         public void AdicionarEmpresa(Empresa empresa)
         {
-            if (empresa.Validar() && !EmpresaPertenceUsuario(empresa))
-            {
-                empresa.AssociarUsuarioProprietario(Id);
-                _empresas.Add(empresa);
-            }
+            if (EmpresaPertenceUsuario(empresa))
+                throw new DomainException($"A empresa informada ja pertence ao usuário '{Nome}'.");
+
+            empresa.AssociarUsuarioProprietario(Id);
+            _empresas.Add(empresa);
         }
         public void InativarEmpresa(Empresa empresa)
         {
-            if (EmpresaPertenceUsuario(empresa))
+            if (!EmpresaPertenceUsuario(empresa))
+                throw new DomainException($"A empresa informada não pertence ao usuário '{Nome}'.");
+
+            Empresa empresaExistente = _empresas.SingleOrDefault(e => e.Id.Equals(empresa.Id));
+
+            if (empresaExistente.PossuiQuadras())
             {
-                Empresa empresaExistente = _empresas.SingleOrDefault(e => e.Id.Equals(empresa.Id));
-
-                if (empresaExistente.PossuiQuadras())
-                {
-                    foreach (Quadra quadra in empresaExistente.Quadras)
-                        empresaExistente.InativarQuadra(quadra);
-
-                    empresaExistente.Inativar();
-                }
+                foreach (Quadra quadra in empresaExistente.Quadras)
+                    empresaExistente.InativarQuadra(quadra);
             }
+
+            empresaExistente.Inativar();
         }
 
         public void AdicionarGrupo(Grupo grupo)
         {
-            if (grupo.Validar() && !GrupoPertenceUsuario(grupo))
-            {
-                grupo.AssociarUsuarioCriador(Id);
-                _grupos.Add(grupo);
-            }
+            if (GrupoPertenceUsuario(grupo))
+                throw new DomainException($"O grupo informado já pertence ao usuário '{Nome}'.");
+
+            grupo.AssociarUsuarioCriador(Id);
+            _grupos.Add(grupo);
         }
 
         public void RemoverGrupo(Grupo grupo)
         {
-            if (grupo.Validar() && GrupoPertenceUsuario(grupo)) _grupos.Remove(grupo);
+            if (!GrupoPertenceUsuario(grupo))
+                throw new DomainException($"O grupo informado não pertence ao usuário '{Nome}'.");
+
+            _grupos.Remove(grupo);
         }
 
         internal bool EmpresaPertenceUsuario(Empresa empresa) => _empresas.Any(e => e.Equals(empresa) && empresa.UsuarioProprietarioId.Equals(Id));

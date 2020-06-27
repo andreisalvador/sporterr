@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.DomainObjects.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Sporterr.Cadastro.Domain
         public Usuario UsuarioCriador { get; set; }
 
         public Grupo(string nomeGrupo, sbyte numeroMaximoMembros = 5)
-        {            
+        {
             NomeGrupo = nomeGrupo;
             NumeroMaximoMembros = numeroMaximoMembros;
             _membros = new List<Membro>();
@@ -35,27 +36,28 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarMembro(Membro membro)
         {
-            if (!GrupoEstaCheio() && !MembroPertenceGrupo(membro) && membro.Validar())
-            {
-                membro.AssociarGrupo(Id);
-                _membros.Add(membro); //except dps
-                QuantidadeMembros++;
-            }
+            if (GrupoEstaCheio())
+                throw new DomainException($"Não é possível adicionar um novo membro ao grupo '{NomeGrupo}' pois o número máximo ({NumeroMaximoMembros}) de participantes do grupo foi atingido.");
+
+            if (MembroPertenceGrupo(membro)) throw new DomainException($"Não é possível adicionar o novo membro pois ele já faz parte do grupo '{NomeGrupo}'.");
+
+            membro.AssociarGrupo(Id);
+            _membros.Add(membro);
+            QuantidadeMembros++;
         }
 
         public void RemoverMembro(Membro membro)
         {
-            if (MembroPertenceGrupo(membro))
-            {
-                _membros.Remove(membro);
-                QuantidadeMembros--;
-            }
-        }        
+            if (MembroPertenceGrupo(membro)) throw new DomainException($"Não é possível remover o membro pois ele não faz parte do grupo '{NomeGrupo}'.");
+
+            _membros.Remove(membro);
+            QuantidadeMembros--;
+        }
 
         public bool MembroPertenceGrupo(Membro membro) => _membros.Any(u => u.Equals(membro));
 
         public bool GrupoEstaCheio() => QuantidadeMembros == NumeroMaximoMembros;
         protected override AbstractValidator<Grupo> ObterValidador() => new GrupoValidation();
-       
+
     }
 }
