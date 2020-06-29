@@ -48,6 +48,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarSolicitacao(Solicitacao solicitacao)
         {
+            solicitacao.Validate();
+
             if (ExisteSolicitacaoParaEmpresa(solicitacao))
                 throw new DomainException($"Esta solicitação ja está aberta para a empresa '{RazaoSocial}'");
 
@@ -57,6 +59,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void AprovarSolicitacao(Solicitacao solicitacao)
         {
+            solicitacao.Validate();
+
             ValidarSeExisteSolicitacao(solicitacao, "aprovar");
 
             Solicitacao solicitacaoParaAprovar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
@@ -65,6 +69,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void RecusarSolicitacao(Solicitacao solicitacao, string motivo)
         {
+            solicitacao.Validate();
+
             ValidarSeExisteSolicitacao(solicitacao, "recusar");
 
             Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
@@ -73,6 +79,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void CancelarSolicitacao(Solicitacao solicitacao, string motivo)
         {
+            solicitacao.Validate();
+
             ValidarSeExisteSolicitacao(solicitacao, "cancelar");
 
             Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
@@ -81,8 +89,7 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarQuadra(Quadra quadra)
         {
-            //TODO: criar um resultado de validacao padrao pra isso
-            //  if (quadra.Validar()) 
+            quadra.Validate();
 
             if (QuadraPertenceEmpresa(quadra))
                 throw new DomainException($"A quadra informada ja pertence a empresa '{RazaoSocial}'");
@@ -93,6 +100,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void InativarQuadra(Quadra quadra)
         {
+            quadra.Validate();
+
             if (!quadra.Ativo)
                 throw new DomainException("A quadra informada ja está inativa.");
 
@@ -105,6 +114,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void ReativarQuadra(Quadra quadra)
         {
+            quadra.Validate();
+
             if (quadra.Ativo)
                 throw new DomainException("A quadra informada ja está ativa.");
 
@@ -147,6 +158,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void ColocarQuadraEmManutencao(Quadra quadra)
         {
+            quadra.Validate();
+
             if (quadra.EmManutencao)
                 throw new DomainException("A quadra já se encontra em manutenção.");
 
@@ -158,6 +171,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void RetirarQuadraDeManutencao(Quadra quadra)
         {
+            quadra.Validate();
+
             if (!quadra.EmManutencao)
                 throw new DomainException("A quadra não se encontra em manutenção.");
 

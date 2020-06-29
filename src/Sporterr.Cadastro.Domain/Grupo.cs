@@ -36,6 +36,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarMembro(Membro membro)
         {
+            membro.Validate();
+
             if (GrupoEstaCheio())
                 throw new DomainException($"Não é possível adicionar um novo membro ao grupo '{NomeGrupo}' pois o número máximo ({NumeroMaximoMembros}) de participantes do grupo foi atingido.");
 
@@ -48,6 +50,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void RemoverMembro(Membro membro)
         {
+            membro.Validate();
+
             if (MembroPertenceGrupo(membro)) throw new DomainException($"Não é possível remover o membro pois ele não faz parte do grupo '{NomeGrupo}'.");
 
             _membros.Remove(membro);

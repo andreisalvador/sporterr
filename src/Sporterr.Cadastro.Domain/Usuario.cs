@@ -32,6 +32,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarEmpresa(Empresa empresa)
         {
+            empresa.Validate();
+
             if (EmpresaPertenceUsuario(empresa))
                 throw new DomainException($"A empresa informada ja pertence ao usuário '{Nome}'.");
 
@@ -40,6 +42,8 @@ namespace Sporterr.Cadastro.Domain
         }
         public void InativarEmpresa(Empresa empresa)
         {
+            empresa.Validate();
+
             if (!EmpresaPertenceUsuario(empresa))
                 throw new DomainException($"A empresa informada não pertence ao usuário '{Nome}'.");
 
@@ -56,6 +60,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void AdicionarGrupo(Grupo grupo)
         {
+            grupo.Validate();
+
             if (GrupoPertenceUsuario(grupo))
                 throw new DomainException($"O grupo informado já pertence ao usuário '{Nome}'.");
 
@@ -65,6 +71,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void RemoverGrupo(Grupo grupo)
         {
+            grupo.Validate();
+
             if (!GrupoPertenceUsuario(grupo))
                 throw new DomainException($"O grupo informado não pertence ao usuário '{Nome}'.");
 
