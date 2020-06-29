@@ -45,7 +45,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             _empresaRepository.AdicionarQuadra(novaQuadra);
 
-            return await SaveAndPublish(new QuadraAdicionadaEmpresaEvent(message.UsuarioId, novaQuadra.EmpresaId, novaQuadra.Id,
+            return await SaveAndPublish(new QuadraAdicionadaEmpresaEvent(novaQuadra.Id, message.UsuarioId, novaQuadra.EmpresaId, novaQuadra.Id,
                                                             novaQuadra.TempoLocacao, novaQuadra.ValorPorTempoLocado, novaQuadra.TipoEsporteQuadra));
         }
 
@@ -83,7 +83,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             _empresaRepository.AtualizarSolicitacao(solicitacaoParaAprovar);
             _empresaRepository.AtualizarEmpresa(empresa);
 
-            return await SaveAndPublish(new SolicitacaoLocacaoAprovadaEvent(empresa.Id, solicitacaoParaAprovar.LocacaoId));
+            return await SaveAndPublish(new SolicitacaoLocacaoAprovadaEvent(solicitacaoParaAprovar.Id, empresa.Id, solicitacaoParaAprovar.LocacaoId));
         }
 
         public async Task<bool> Handle(RecusarSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
@@ -102,7 +102,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             _empresaRepository.AtualizarEmpresa(empresa);
 
-            return await SaveAndPublish(new SolicitacaoLocacaoRecusadaEvent(solicitacaoParaRecusar.LocacaoId));
+            return await SaveAndPublish(new SolicitacaoLocacaoRecusadaEvent(solicitacaoParaRecusar.Id, solicitacaoParaRecusar.LocacaoId));
         }
 
         public async Task<bool> Handle(CancelarSolicitacaoLocacaoEmpresaCommand message, CancellationToken cancellationToken)

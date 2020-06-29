@@ -10,7 +10,7 @@ namespace Sporterr.Cadastro.Application.Events
 
         public QuadraInativadaEmpresaEvent(Guid quadraId, Guid empresaId)
         {
-            AggregateId = empresaId;
+            AggregateId = quadraId;
             EmpresaId = empresaId;
             QuadraId = quadraId;
         }

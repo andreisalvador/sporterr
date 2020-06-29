@@ -48,7 +48,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             _repository.AdicionarEmpresa(novaEmpresa);
 
-            return await SaveAndPublish(new EmpresaAdicionadaUsuarioEvent(message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj,
+            return await SaveAndPublish(new EmpresaAdicionadaUsuarioEvent(novaEmpresa.Id, message.UsuarioProprietarioId, message.RazaoSocial, message.Cnpj,
                                                                                     message.DiasFuncionamento, message.HorarioAbertura, message.HorarioFechamento));
         }
 

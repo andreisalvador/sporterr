@@ -12,7 +12,7 @@ namespace Sporterr.Cadastro.Application.Events
 
         public GrupoAdicionadoUsuarioEvent(Guid usuarioCriadorId, Guid grupoId, string nomeGrupo, sbyte numeroMaximoMembros)
         {
-            AggregateId = usuarioCriadorId;
+            AggregateId = grupoId;
             UsuarioCriadorId = usuarioCriadorId;
             GrupoId = grupoId;
             NomeGrupo = nomeGrupo;

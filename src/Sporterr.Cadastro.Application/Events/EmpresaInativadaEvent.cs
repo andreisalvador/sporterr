@@ -9,7 +9,7 @@ namespace Sporterr.Cadastro.Application.Events
         public Guid UsuarioProprietarioEmpresaId { get; private set; }
         public EmpresaInativadaEvent(Guid empresaId, Guid usuarioProprietarioEmpresaId)
         {
-            AggregateId = usuarioProprietarioEmpresaId;
+            AggregateId = empresaId;
             EmpresaId = empresaId;
             UsuarioProprietarioEmpresaId = usuarioProprietarioEmpresaId;
         }
