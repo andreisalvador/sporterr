@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Sporterr.Cadastro.Domain
 {
-    public class Usuario : Entity<Usuario>, IAggregateRoot
+    public class Usuario : Entity<Usuario>, IActivationEntity, IAggregateRoot
     {
         private readonly List<Empresa> _empresas;
         private readonly List<Grupo> _grupos;
@@ -16,6 +16,7 @@ namespace Sporterr.Cadastro.Domain
         public string Nome { get; private set; }
         public string Email { get; private set; }
         public string Senha { get; private set; }
+        public bool Ativo { get; private set; }
         public IReadOnlyCollection<Empresa> Empresas => _empresas.AsReadOnly();
         public IReadOnlyCollection<Grupo> Grupos => _grupos.AsReadOnly();
 
@@ -29,7 +30,6 @@ namespace Sporterr.Cadastro.Domain
             Ativar();
             Validate();
         }
-
         public void AdicionarEmpresa(Empresa empresa)
         {
             empresa.Validate();
@@ -84,5 +84,17 @@ namespace Sporterr.Cadastro.Domain
         internal bool NovoMembroFazParteDoGrupo(Usuario usuario, Grupo grupo) => _grupos.Any(g => g.Id.Equals(grupo.Id) && grupo.Membros.Any(m => m.Id.Equals(usuario.Id)));
 
         public override void Validate() => Validate(this, new UsuarioValidation());
+
+        public void Ativar()
+        {
+            Ativo = true;
+        }
+
+        public void Inativar()
+        {
+
+            //verificar
+            Ativo = false;
+        }
     }
 }

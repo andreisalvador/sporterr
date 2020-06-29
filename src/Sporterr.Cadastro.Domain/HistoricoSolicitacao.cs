@@ -18,8 +18,7 @@ namespace Sporterr.Cadastro.Domain
         {
             SolicitacaoId = solicitacaoId;
             StatusSolicitacao = statusSolicitacao;
-            Descricao = descricao;
-            Ativar();
+            Descricao = descricao;            
             Validate();
         }
 

@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Sporterr.Cadastro.Domain
 {
-    public class Grupo : Entity<Grupo>, IAggregateRoot
+    public class Grupo : Entity<Grupo>, IActivationEntity, IAggregateRoot
     {
         private readonly List<Membro> _membros;
 
@@ -18,9 +18,11 @@ namespace Sporterr.Cadastro.Domain
         public sbyte NumeroMaximoMembros { get; private set; }
         public sbyte QuantidadeMembros { get; private set; }
         public IReadOnlyCollection<Membro> Membros => _membros.AsReadOnly();
+        public bool Ativo { get; private set; }
 
         //Ef rel.
         public Usuario UsuarioCriador { get; set; }
+
 
         public Grupo(string nomeGrupo, sbyte numeroMaximoMembros = 5)
         {
@@ -60,9 +62,18 @@ namespace Sporterr.Cadastro.Domain
 
         public bool MembroPertenceGrupo(Membro membro) => _membros.Any(u => u.Equals(membro));
 
-        public bool GrupoEstaCheio() => QuantidadeMembros == NumeroMaximoMembros;     
+        public bool GrupoEstaCheio() => QuantidadeMembros == NumeroMaximoMembros;
 
         public override void Validate() => Validate(this, new GrupoValidation());
-        
+
+        public void Ativar()
+        {
+            Ativo = true;
+        }
+
+        public void Inativar()
+        {
+            Ativo = false;
+        }
     }
 }

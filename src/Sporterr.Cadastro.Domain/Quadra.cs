@@ -2,19 +2,21 @@
 using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Exceptions;
+using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Core.Enums;
 using System;
 using System.Linq;
 
 namespace Sporterr.Cadastro.Domain
 {
-    public class Quadra : Entity<Quadra>
+    public class Quadra : Entity<Quadra>, IActivationEntity
     {
         public Guid EmpresaId { get; private set; }
         public decimal ValorPorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
         public bool EmManutencao { get; private set; }
-        public Esporte TipoEsporteQuadra { get; private set; }        
+        public Esporte TipoEsporteQuadra { get; private set; }
+        public bool Ativo { get; private set; }
 
         // Ef rel.
         public Empresa Empresa { get; set; }
@@ -46,14 +48,19 @@ namespace Sporterr.Cadastro.Domain
         public bool PossuiSolicitacaoDeLocacaoPendente() =>
             Empresa.Solicitacoes.Any(s => s.QuadraId.Equals(Id) && s.EstaPendente());
 
-        public override void Inativar()
+        public void Ativar()
+        {
+            Ativo = true;
+        }
+
+        public void Inativar()
         {
             if (PossuiSolicitacaoDeLocacaoPendente())
                 throw new DomainException("Não é possível inativar uma quadra com processos de locação pendentes.");
-
-            base.Inativar();
         }
 
         public override void Validate() => Validate(this, new QuadraValidation());
+
+        
     }
 }

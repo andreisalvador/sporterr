@@ -10,22 +10,24 @@ using System.Linq;
 
 namespace Sporterr.Cadastro.Domain
 {
-    public class Empresa : Entity<Empresa>, IAggregateRoot
+    public class Empresa : Entity<Empresa>, IActivationEntity, IAggregateRoot
     {
         private readonly List<Quadra> _quadras;
         private readonly List<Solicitacao> _solicitacoes;
 
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
-        public string Cnpj { get; private set; } //verificar dps
+        public string Cnpj { get; private set; } 
         public DiasSemanaFuncionamento DiasFuncionamento { get; private set; }
         public TimeSpan HorarioAbertura { get; private set; }
         public TimeSpan HorarioFechamento { get; private set; }
+        public bool Ativo { get; private set; }
         public IReadOnlyCollection<Quadra> Quadras => _quadras.AsReadOnly();
         public IReadOnlyCollection<Solicitacao> Solicitacoes => _solicitacoes.AsReadOnly();
 
         //Ef Rel.
         public Usuario UsuarioProprietario { get; set; }
+
 
         public Empresa(string razaoSocial,
                        string cnpj,
@@ -199,12 +201,16 @@ namespace Sporterr.Cadastro.Domain
 
         private bool ExisteSolicitacaoParaEmpresa(Solicitacao solicitacao) => _solicitacoes.Any(s => s.EmpresaId.Equals(Id) && s.Id.Equals(solicitacao.Id));
 
-        public override void Inativar()
+        public void Ativar()
+        {
+            Ativo = true;
+        }
+        public void Inativar()
         {
             if (PossuiSolicitacoesPendentes())
                 throw new DomainException("Não é possível inativar empresas com solicitações pendentes");
 
-            base.Inativar();
+            Ativo = false;
         }
 
         public override void Validate() => Validate(this, new EmpresaValidation());

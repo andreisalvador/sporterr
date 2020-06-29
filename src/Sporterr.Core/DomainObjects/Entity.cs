@@ -1,14 +1,11 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sporterr.Core.DomainObjects
 {
     public abstract class Entity<T> where T : class
     {
-        public Guid Id { get; private set; }
-        public bool Ativo { get; private set; }
+        public Guid Id { get; private set; }        
         public DateTime DataCriacao { get; private set; }
 
         public Entity()
@@ -56,8 +53,5 @@ namespace Sporterr.Core.DomainObjects
         {
             return $"{GetType().Name} [Id={Id}]";
         }
-
-        public virtual void Ativar() => Ativo = true;
-        public virtual void Inativar() => Ativo = false;
     }
 }
