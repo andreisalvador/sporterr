@@ -31,7 +31,7 @@ namespace Sporterr.Locacoes.Domain
             DataHoraInicioLocacao = dataHoraInicioLocacao;
             DataHoraFimLocacao = dataHoraFimLocacao;
             Status = StatusLocacao.EmAberto;
-            Validar();
+            Validate();
         }
 
         public void CalcularValorLocacao()
@@ -88,6 +88,6 @@ namespace Sporterr.Locacoes.Domain
             if (Status != status) throw new DomainException($"Não é possível {processo} locações que não estavam aguardando {tipoAguardo}.");
         }
 
-        protected override AbstractValidator<Locacao> ObterValidador() => new LocacaoValidation();
+        public override void Validate() => Validate(this, new LocacaoValidation());
     }
 }

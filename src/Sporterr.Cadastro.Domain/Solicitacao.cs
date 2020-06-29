@@ -25,6 +25,7 @@ namespace Sporterr.Cadastro.Domain
             QuadraId = quadraId;
             Status = StatusSolicitacao.AguardandoAprovacao;
             _historicos = new List<HistoricoSolicitacao>() { new HistoricoSolicitacao(Id, Status) };
+            Validate();
         }
 
         internal void AssociarEmpresaSolicitacao(Guid empresaId) => EmpresaId = empresaId;
@@ -56,6 +57,6 @@ namespace Sporterr.Cadastro.Domain
 
         public bool EstaPendente() => Status == StatusSolicitacao.AguardandoAprovacao || Status == StatusSolicitacao.AguardandoCancelamento;
 
-        protected override AbstractValidator<Solicitacao> ObterValidador() => new SolicitacaoValidation();
+        public override void Validate() => Validate(this, new SolicitacaoValidation());
     }
 }

@@ -29,7 +29,7 @@ namespace Sporterr.Cadastro.Domain
             _membros = new List<Membro>();
             QuantidadeMembros = 0;
             Ativar();
-            Validar();
+            Validate();
         }
 
         internal void AssociarUsuarioCriador(Guid usuarioCriadorId) => UsuarioCriadorId = usuarioCriadorId;
@@ -56,8 +56,9 @@ namespace Sporterr.Cadastro.Domain
 
         public bool MembroPertenceGrupo(Membro membro) => _membros.Any(u => u.Equals(membro));
 
-        public bool GrupoEstaCheio() => QuantidadeMembros == NumeroMaximoMembros;
-        protected override AbstractValidator<Grupo> ObterValidador() => new GrupoValidation();
+        public bool GrupoEstaCheio() => QuantidadeMembros == NumeroMaximoMembros;     
 
+        public override void Validate() => Validate(this, new GrupoValidation());
+        
     }
 }

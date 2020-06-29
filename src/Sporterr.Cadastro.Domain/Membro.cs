@@ -15,11 +15,12 @@ namespace Sporterr.Cadastro.Domain
         public Usuario Usuario { get; set; }
         public Membro(Guid usuarioId)
         {
-            UsuarioId = usuarioId;            
+            UsuarioId = usuarioId;
+            Validate();
         }
 
         internal void AssociarGrupo(Guid grupoId) => GrupoId = grupoId;
 
-        protected override AbstractValidator<Membro> ObterValidador() => new MembroValidation();
+        public override void Validate() => Validate(this, new MembroValidation());
     }
 }

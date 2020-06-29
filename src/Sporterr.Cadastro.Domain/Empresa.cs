@@ -41,7 +41,7 @@ namespace Sporterr.Cadastro.Domain
             _quadras = new List<Quadra>();
             _solicitacoes = new List<Solicitacao>();
             Ativar();
-            Validar();
+            Validate();
         }
 
         internal void AssociarUsuarioProprietario(Guid usuarioProprietarioId) => UsuarioProprietarioId = usuarioProprietarioId;
@@ -192,6 +192,7 @@ namespace Sporterr.Cadastro.Domain
             base.Inativar();
         }
 
-        protected override AbstractValidator<Empresa> ObterValidador() => new EmpresaValidation();
+        public override void Validate() => Validate(this, new EmpresaValidation());
+
     }
 }

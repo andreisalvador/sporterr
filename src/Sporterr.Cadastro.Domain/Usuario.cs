@@ -27,7 +27,7 @@ namespace Sporterr.Cadastro.Domain
             _empresas = new List<Empresa>();
             _grupos = new List<Grupo>();
             Ativar();
-            Validar();
+            Validate();
         }
 
         public void AdicionarEmpresa(Empresa empresa)
@@ -75,8 +75,6 @@ namespace Sporterr.Cadastro.Domain
         internal bool GrupoPertenceUsuario(Grupo grupo) => _grupos.Any(g => g.Equals(grupo) && grupo.UsuarioCriadorId.Equals(Id));
         internal bool NovoMembroFazParteDoGrupo(Usuario usuario, Grupo grupo) => _grupos.Any(g => g.Id.Equals(grupo.Id) && grupo.Membros.Any(m => m.Id.Equals(usuario.Id)));
 
-        protected override AbstractValidator<Usuario> ObterValidador() => new UsuarioValidation();
-
-
+        public override void Validate() => Validate(this, new UsuarioValidation());
     }
 }

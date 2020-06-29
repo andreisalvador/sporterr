@@ -11,21 +11,16 @@ namespace Sporterr.Core.DomainObjects
         public bool Ativo { get; private set; }
         public DateTime DataCriacao { get; private set; }
 
-        [NotMapped]
-        public ValidationResult ResultadosValidacao { get; private set; }
-
         public Entity()
         {
             Id = Guid.NewGuid();            
         }
 
-        protected abstract AbstractValidator<T> ObterValidador();
-        public bool Validar()
-        {
-            IValidator<T> validador = ObterValidador();
-            ResultadosValidacao = validador.Validate(this);
-            return ResultadosValidacao.IsValid;
-        }
+        public abstract void Validate();
+
+        protected void Validate(T entity, AbstractValidator<T> validator) =>
+            validator.ValidateAndThrow<T>(entity);
+
         public override bool Equals(object obj)
         {
             var compareTo = obj as Entity<T>;

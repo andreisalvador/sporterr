@@ -26,7 +26,7 @@ namespace Sporterr.Cadastro.Domain
             TipoEsporteQuadra = tipoEsporteQuadra;
             TornarQuadraProntaPraUso();
             Ativar();
-            Validar();
+            Validate();
         }
 
         internal void AssociarEmpresaProprietaria(Guid empresaProprietariaId) => EmpresaId = empresaProprietariaId;
@@ -54,6 +54,6 @@ namespace Sporterr.Cadastro.Domain
             base.Inativar();
         }
 
-        protected override AbstractValidator<Quadra> ObterValidador() => new QuadraValidation();
+        public override void Validate() => Validate(this, new QuadraValidation());
     }
 }

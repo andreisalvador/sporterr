@@ -19,7 +19,7 @@ namespace Sporterr.Cadastro.Data.Repository
         }
 
         public void AdicionarEmpresa(Empresa empresa)
-        {
+        {   
             _context.Empresas.Add(empresa);
         }
 

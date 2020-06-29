@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Sporterr.Cadastro.Domain.Validations;
 using Sporterr.Core.DomainObjects;
 using Sporterr.Core.Enums;
 using System;
@@ -19,11 +20,9 @@ namespace Sporterr.Cadastro.Domain
             StatusSolicitacao = statusSolicitacao;
             Descricao = descricao;
             Ativar();
+            Validate();
         }
-        //Ef Rel.
-        protected override AbstractValidator<HistoricoSolicitacao> ObterValidador()
-        {
-            throw new NotImplementedException();
-        }
+
+        public override void Validate() => Validate(this, new HistoricoSolicitacaoValidation());
     }
 }
