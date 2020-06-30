@@ -10,7 +10,9 @@ using Sporterr.Cadastro.Data.Repository;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Communication.Mediator;
+using Sporterr.Core.Data.EventSourcing;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
+using Sporterr.EventSourcing.Repository;
 using Sporterr.Locacoes.Application.Commands;
 using Sporterr.Locacoes.Application.Commands.Handlers;
 using Sporterr.Locacoes.Application.Events.Handlers;
@@ -35,7 +37,7 @@ namespace Sporterr.CliApplication
 
                 //Grupo
                 .AddScoped<IRequestHandler<AdicionarMembroGrupoCommand, bool>, GrupoCommandHandler>()
-                .AddScoped<IRequestHandler<RemoverMembroGrupoCommand, bool>, GrupoCommandHandler>()                
+                .AddScoped<IRequestHandler<RemoverMembroGrupoCommand, bool>, GrupoCommandHandler>()
 
                 //Empresa
                 .AddScoped<IRequestHandler<AdicionarQuadraEmpresaCommand, bool>, EmpresaCommandHandler>()
@@ -63,6 +65,7 @@ namespace Sporterr.CliApplication
                 .AddScoped<ILocacaoRepository, LocacaoRepository>()
                 .AddScoped<IGrupoRepository, GrupoRepository>()
                 .AddScoped<IMediatrHandler, MediatrHandler>()
+                .AddSingleton<IEventSourcingRepository, EventSourcingRepository>()
                 .AddDbContext<LocacoesContext>()
                 .AddDbContext<CadastroContext>()
                 .AddMediatR(typeof(Program))

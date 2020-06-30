@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sporterr.Cadastro.Application\Sporterr.Cadastro.Application.csproj" />
     <ProjectReference Include="..\Sporterr.Cadastro.Data\Sporterr.Cadastro.Data.csproj" />
+    <ProjectReference Include="..\Sporterr.EventSourcing\Sporterr.EventSourcing.csproj" />
     <ProjectReference Include="..\Sporterr.Locacoes.Application\Sporterr.Locacoes.Application.csproj" />
     <ProjectReference Include="..\Sporterr.Locacoes.Data\Sporterr.Locacoes.Data.csproj" />
   </ItemGroup>
