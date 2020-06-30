@@ -10,10 +10,10 @@ namespace Sporterr.Core.Communication.Mediator
     {
         private readonly IMediator _mediator;
         private readonly IEventSourcingRepository _eventSourcingRepository;
-        public MediatrHandler(IMediator mediator)
+        public MediatrHandler(IMediator mediator, IEventSourcingRepository eventSourcingRepository)
         {
             _mediator = mediator;
-            //_eventSourcingRepository = eventSourcingRepository;
+            _eventSourcingRepository = eventSourcingRepository;
         }
 
         public async Task Notify<TNotification>(TNotification notification) where TNotification : DomainNotification
@@ -22,7 +22,7 @@ namespace Sporterr.Core.Communication.Mediator
         public async Task Publish<TEvent>(TEvent @event) where TEvent : Event
         {
             await _mediator.Publish(@event);
-            //await _eventSourcingRepository.SaveEvent(@event);
+            await _eventSourcingRepository.SaveEvent(@event);
         }
 
         public async Task<bool> Send<TCommand>(TCommand command) where TCommand : Command<TCommand>

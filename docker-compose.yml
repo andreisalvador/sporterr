@@ -1,4 +1,7 @@
 version: '3'
+networks:
+  eventsourcing-network:
+  postgres-network:
 services:
   postgresdb:
     image: postgres:13-alpine
@@ -8,11 +11,48 @@ services:
       - POSTGRES_USER=user
     ports:
       - "5432:5432" 
-  eventstore:
-    image: eventstore/eventstore
-    container_name: eventstore
+    networks:
+      - postgres-network
+    
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-server
     environment:
-      - DEV=true
+      - PGADMIN_DEFAULT_EMAIL=andrei.salvador@teste.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadminpass
     ports:
-      - "2113:2113"
-      - "1113:1113"
+      - "16543:80"
+    networks:
+      - postgres-network
+    depends_on:
+      - postgresdb
+      
+  mongo-eventstore:
+    image: mongo    
+    container_name: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=event-store
+      - MONGO_INITDB_ROOT_USERNAME=andrei.salvador
+      - MONGO_INITDB_ROOT_PASSWORD=mongopass
+    ports:
+      - "27017:27017"
+    networks:
+      - eventsourcing-network
+
+  mongo-express:
+    image: mongo-express 
+    container_name: mongo-express-server    
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:   
+      - ME_CONFIG_BASICAUTH_USERNAME=andrei.admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=mongopass
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=andrei.salvador
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=mongopass
+    depends_on:
+      - mongo-eventstore
+    networks:
+      - eventsourcing-network  
+    

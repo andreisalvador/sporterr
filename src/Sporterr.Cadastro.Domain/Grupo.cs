@@ -54,7 +54,7 @@ namespace Sporterr.Cadastro.Domain
         {
             membro.Validate();
 
-            if (MembroPertenceGrupo(membro)) throw new DomainException($"Não é possível remover o membro pois ele não faz parte do grupo '{NomeGrupo}'.");
+            if (!MembroPertenceGrupo(membro)) throw new DomainException($"Não é possível remover o membro pois ele não faz parte do grupo '{NomeGrupo}'.");
 
             _membros.Remove(membro);
             QuantidadeMembros--;
