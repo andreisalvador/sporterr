@@ -11,6 +11,7 @@ using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Data.EventSourcing;
+using Sporterr.Core.Data.Reading;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
 using Sporterr.EventSourcing;
 using Sporterr.EventSourcing.Repository;
@@ -20,6 +21,8 @@ using Sporterr.Locacoes.Application.Events.Handlers;
 using Sporterr.Locacoes.Data;
 using Sporterr.Locacoes.Data.Repository;
 using Sporterr.Locacoes.Data.Repository.Interfaces;
+using Sporterr.Reading;
+using Sporterr.Reading.Repository;
 using System;
 using System.Threading.Tasks;
 
@@ -70,15 +73,18 @@ namespace Sporterr.CliApplication
                 .AddScoped<IEventSourcingRepository, EventSourcingRepository>()
                 .AddDbContext<LocacoesContext>()
                 .AddDbContext<CadastroContext>()
+                .AddScoped<IReadOnlyRepository, ReadOnlyRepository>()
+                .AddSingleton<RavenDocumentStore>()
                 .AddMediatR(typeof(Program))
                 .BuildServiceProvider();
 
 
-            var mediatr = provider.GetService<IMediatrHandler>();
+            var mediatr = provider.GetService<IReadOnlyRepository>();
 
 
             Task.WaitAll(
-                mediatr.Send(new AdicionarUsuarioCommand("Pedro", "pedrofs951@gmail.com", "12345678"))
+                mediatr.InsertOrUpdate()
+                //mediatr.Send(new AdicionarUsuarioCommand("Pedro", "pedrofs951@gmail.com", "12345678"))
                 // mediatr.Send(new AdicionarGrupoUsuarioCommand(Guid.Parse("e8325aac-b4ab-4534-ae4d-7dcd04b09065"), "Grupo dos caras", 15))
                 //mediatr.Send(new AdicionarEmpresaUsuarioCommand(Guid.Parse("e8325aac-b4ab-4534-ae4d-7dcd04b09065"), "PEDRAO LTDA","651864984894", Core.Enums.DiasSemanaFuncionamento.DiasUteis,
                 //new TimeSpan(8,0,0), new TimeSpan(18,0,0)))

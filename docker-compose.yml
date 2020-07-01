@@ -2,6 +2,7 @@ version: '3'
 networks:
   eventsourcing-network:
   postgres-network:
+  read-network:
 services:
   postgresdb:
     image: postgres:13-alpine
@@ -54,5 +55,19 @@ services:
     depends_on:
       - mongo-eventstore
     networks:
-      - eventsourcing-network  
+      - eventsourcing-network
+    
+  ravendb:
+    image: ravendb/ravendb
+    container_name: ravendb-read-database
+    restart: always
+    ports:
+      - "8080:8080"
+      - "38888:38888"
+    environment:
+      - RAVEN_Setup_Mode=None  
+      - RAVEN_Security_UnsecuredAccessAllowed='PrivateNetwork'      
+    networks:
+      - read-network
+  
     

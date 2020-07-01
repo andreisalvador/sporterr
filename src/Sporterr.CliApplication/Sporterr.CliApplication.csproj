@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Sporterr.EventSourcing\Sporterr.EventSourcing.csproj" />
     <ProjectReference Include="..\Sporterr.Locacoes.Application\Sporterr.Locacoes.Application.csproj" />
     <ProjectReference Include="..\Sporterr.Locacoes.Data\Sporterr.Locacoes.Data.csproj" />
+    <ProjectReference Include="..\Sporterr.Reading\Sporterr.Reading.csproj" />
   </ItemGroup>
 
 </Project>
