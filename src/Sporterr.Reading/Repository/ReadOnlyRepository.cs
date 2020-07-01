@@ -2,9 +2,9 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Sporterr.Reading
+namespace Sporterr.Reading.Repository
 {
-    public class ReadingRepository : IReadingRepository
+    public class ReadOnlyRepository : IReadOnlyRepository
     {
         public Task InsertOrUpdate()
         {

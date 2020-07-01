@@ -3,7 +3,7 @@ using System;
 
 namespace Sporterr.Core.DomainObjects
 {
-    public abstract class Entity<T> where T : class
+    public abstract class Entity<TEntity> where TEntity : class
     {
         public Guid Id { get; private set; }        
         public DateTime DataCriacao { get; private set; }
@@ -15,12 +15,12 @@ namespace Sporterr.Core.DomainObjects
 
         public abstract void Validate();
 
-        protected void Validate(T entity, AbstractValidator<T> validator) =>
-            validator.ValidateAndThrow<T>(entity);
+        protected void Validate(TEntity entity, AbstractValidator<TEntity> validator) =>
+            validator.ValidateAndThrow(entity);
 
         public override bool Equals(object obj)
         {
-            var compareTo = obj as Entity<T>;
+            var compareTo = obj as Entity<TEntity>;
 
             if (ReferenceEquals(this, compareTo)) return true;
             if (ReferenceEquals(null, compareTo)) return false;
@@ -28,7 +28,7 @@ namespace Sporterr.Core.DomainObjects
             return Id.Equals(compareTo.Id);
         }
 
-        public static bool operator ==(Entity<T> a, Entity<T> b)
+        public static bool operator ==(Entity<TEntity> a, Entity<TEntity> b)
         {
             if (a is null && b is null)
                 return true;
@@ -39,7 +39,7 @@ namespace Sporterr.Core.DomainObjects
             return a.Equals(b);
         }
 
-        public static bool operator !=(Entity<T> a, Entity<T> b)
+        public static bool operator !=(Entity<TEntity> a, Entity<TEntity> b)
         {
             return !(a == b);
         }

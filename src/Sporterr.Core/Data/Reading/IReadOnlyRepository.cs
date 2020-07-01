@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Core.Data.Reading
 {
-    public interface IReadingRepository
+    public interface IReadOnlyRepository
     {
         Task InsertOrUpdate();
     }
