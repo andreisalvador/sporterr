@@ -73,6 +73,8 @@ namespace Sporterr.Cadastro.Domain
         {
             solicitacao.Validate();
 
+            if (string.IsNullOrWhiteSpace(motivo)) throw new DomainException("O motivo precisa ser informado.");
+
             ValidarSeExisteSolicitacao(solicitacao, "recusar");
 
             Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
@@ -82,6 +84,8 @@ namespace Sporterr.Cadastro.Domain
         public void CancelarSolicitacao(Solicitacao solicitacao, string motivo)
         {
             solicitacao.Validate();
+
+            if (string.IsNullOrWhiteSpace(motivo)) throw new DomainException("O motivo precisa ser informado.");
 
             ValidarSeExisteSolicitacao(solicitacao, "cancelar");
 
@@ -134,7 +138,7 @@ namespace Sporterr.Cadastro.Domain
 
         public void AlterarHorarioFechamento(TimeSpan horarioFechamento)
         {
-            if (HorarioFechamento != horarioFechamento) HorarioAbertura = horarioFechamento;
+            if (HorarioFechamento != horarioFechamento) HorarioFechamento = horarioFechamento;
         }
 
         public void AlterarHorarioFuncionamento(TimeSpan horarioAbertura, TimeSpan horarioFechamento)
@@ -184,7 +188,7 @@ namespace Sporterr.Cadastro.Domain
             quadra.TornarQuadraProntaPraUso();
         }
 
-        public bool PossuiQuadras() => _quadras.Any();
+        public bool PossuiQuadras() => _quadras.Count > 0;
         public bool PossuiSolicitacoesPendentes() => _solicitacoes.Any(s => s.EstaPendente());
         public bool QuadraPertenceEmpresa(Quadra quadra) => _quadras.Any(q => q.Equals(quadra));
 

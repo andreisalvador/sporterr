@@ -7,16 +7,16 @@ namespace Sporterr.Cadastro.Domain.Validations
     {
         public EmpresaValidation()
         {
+            RuleFor(e => e.RazaoSocial)
+                .NotEmpty().WithMessage("A razão social precisa ser informada.")
+                .MinimumLength(5)
+                .MaximumLength(100);
+
             RuleFor(e => e.Cnpj)
-                .NotEmpty();
+                .NotEmpty().WithMessage("O Cnpj precisa ser informado.");
 
             RuleFor(e => e.DiasFuncionamento)
-                .IsInEnum();
-
-            RuleFor(e => e.RazaoSocial)
-                .NotEmpty()
-                .MinimumLength(10)
-                .MaximumLength(100);
+                .IsInEnum().WithMessage("O registro de dias de funcionamento informado é inválido.");
         }
     }
 }

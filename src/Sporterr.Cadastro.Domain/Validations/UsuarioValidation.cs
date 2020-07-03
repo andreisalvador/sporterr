@@ -10,7 +10,7 @@ namespace Sporterr.Cadastro.Domain.Validations
             RuleFor(u => u.Nome)
                 .NotEmpty().WithMessage(MensagensValidacaoCadastro.NomeUsuarioVazio)
                 .MaximumLength(50).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMaximaCaracteresNome, 50))
-                .MinimumLength(5).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMinimaCaracteresNome, 20));
+                .MinimumLength(2).WithMessage(string.Format(MensagensValidacaoCadastro.QuantidadeMinimaCaracteresNome, 20));
 
             RuleFor(u => u.Email)
                 .NotEmpty().WithMessage(MensagensValidacaoCadastro.EmailInvadio)

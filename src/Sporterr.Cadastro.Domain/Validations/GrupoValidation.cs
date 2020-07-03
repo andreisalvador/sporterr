@@ -9,6 +9,9 @@ namespace Sporterr.Cadastro.Domain.Validations
         {
             RuleFor(g => g.NomeGrupo)
                 .NotEmpty().WithMessage("Nome do grupo precisa ser informado");
+
+            RuleFor(g => g.NumeroMaximoMembros)
+                .GreaterThan((sbyte)2).WithMessage("O número maximo de participantes do grupo precisa ser maior que 1.");
         }
     }
 }

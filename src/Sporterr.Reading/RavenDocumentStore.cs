@@ -20,8 +20,6 @@ namespace Sporterr.Reading
                     Database = "SporterrDocuments"
                 };
 
-
-
                 return store.Initialize();
             });
         }

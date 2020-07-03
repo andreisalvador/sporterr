@@ -57,10 +57,10 @@ namespace Sporterr.Cadastro.Domain
         {
             if (PossuiSolicitacaoDeLocacaoPendente())
                 throw new DomainException("Não é possível inativar uma quadra com processos de locação pendentes.");
+
+            Ativo = false;
         }
 
         public override void Validate() => Validate(this, new QuadraValidation());
-
-        
     }
 }

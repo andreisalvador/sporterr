@@ -33,11 +33,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sporterr.CliApplication", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventStore", "EventStore", "{B41BB01A-9AB9-444A-BDEE-A0A426ED30E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sporterr.EventSourcing", "..\src\Sporterr.EventSourcing\Sporterr.EventSourcing.csproj", "{77C4E454-3548-4EDD-ABC6-2B00449DB452}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sporterr.EventSourcing", "..\src\Sporterr.EventSourcing\Sporterr.EventSourcing.csproj", "{77C4E454-3548-4EDD-ABC6-2B00449DB452}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reading", "Reading", "{E02F3E80-25BE-4D70-8F7F-A15E507617F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sporterr.Reading", "..\src\Sporterr.Reading\Sporterr.Reading.csproj", "{DE2AC59B-C138-4EB0-BAD8-A78774658645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sporterr.Reading", "..\src\Sporterr.Reading\Sporterr.Reading.csproj", "{DE2AC59B-C138-4EB0-BAD8-A78774658645}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{12D7EEE1-DB32-43B8-A6FE-887C5CCDB27F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cadastro", "Cadastro", "{20B60732-5298-4572-8921-E35D02604326}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Locacao", "Locacao", "{8BFAB820-5A99-44D2-9B19-3BB01EFE440D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sporterr.Cadastro.UnitTests", "..\tests\Sporterr.Cadastro.UnitTests\Sporterr.Cadastro.UnitTests.csproj", "{22F897D4-300B-4130-9553-6D7CF3D980B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sporterr.Locacoes.UnitTests", "Sporterr.Locacoes.UnitTests\Sporterr.Locacoes.UnitTests.csproj", "{151380C9-E32A-48F5-85F7-9DFD5883870D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +95,14 @@ Global
 		{DE2AC59B-C138-4EB0-BAD8-A78774658645}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE2AC59B-C138-4EB0-BAD8-A78774658645}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE2AC59B-C138-4EB0-BAD8-A78774658645}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F897D4-300B-4130-9553-6D7CF3D980B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F897D4-300B-4130-9553-6D7CF3D980B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F897D4-300B-4130-9553-6D7CF3D980B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F897D4-300B-4130-9553-6D7CF3D980B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{151380C9-E32A-48F5-85F7-9DFD5883870D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{151380C9-E32A-48F5-85F7-9DFD5883870D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{151380C9-E32A-48F5-85F7-9DFD5883870D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{151380C9-E32A-48F5-85F7-9DFD5883870D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +122,10 @@ Global
 		{5F806508-F906-4D3D-8C8B-446204FEF741} = {A08BEB81-EA0B-40A1-A0C3-28B33ADE8DD2}
 		{77C4E454-3548-4EDD-ABC6-2B00449DB452} = {B41BB01A-9AB9-444A-BDEE-A0A426ED30E0}
 		{DE2AC59B-C138-4EB0-BAD8-A78774658645} = {E02F3E80-25BE-4D70-8F7F-A15E507617F1}
+		{20B60732-5298-4572-8921-E35D02604326} = {12D7EEE1-DB32-43B8-A6FE-887C5CCDB27F}
+		{8BFAB820-5A99-44D2-9B19-3BB01EFE440D} = {12D7EEE1-DB32-43B8-A6FE-887C5CCDB27F}
+		{22F897D4-300B-4130-9553-6D7CF3D980B3} = {20B60732-5298-4572-8921-E35D02604326}
+		{151380C9-E32A-48F5-85F7-9DFD5883870D} = {8BFAB820-5A99-44D2-9B19-3BB01EFE440D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E7A6CA5C-C429-41AE-8DFE-95AC150F799B}
