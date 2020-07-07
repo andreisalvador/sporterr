@@ -1,34 +1,38 @@
-﻿using FluentValidation;
-using Sporterr.Cadastro.Domain.Validations;
-using Sporterr.Core.DomainObjects;
+﻿using Sporterr.Core.DomainObjects;
+using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Core.Enums;
+using Sporterr.Locacoes.Domain.Validations;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace Sporterr.Cadastro.Domain
+namespace Sporterr.Locacoes.Domain
 {
-    public class Solicitacao : Entity<Solicitacao>
+    public class Solicitacao : Entity<Solicitacao>, IAggregateRoot
     {
         private readonly List<HistoricoSolicitacao> _historicos;
 
-        public Guid LocacaoId { get; private set; }
+        public Guid UsuarioLocatarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
         public Guid QuadraId { get; private set; }
+        public DateTime DataHoraInicioLocacao { get; private set; }
+        public DateTime DataHoraFimLocacao { get; private set; }
+        public TimeSpan TempoTotalLocacaoSolicitado { get; private set; }
         public StatusSolicitacao Status { get; private set; }
-        public IReadOnlyCollection<HistoricoSolicitacao> Historicos => _historicos.AsReadOnly();
-        //Ef rel.
-        public Empresa Empresa { get; set; }
-        public Quadra Quadra { get; set; }
-        public Solicitacao(Guid locacaoId, Guid quadraId)
+        public IReadOnlyCollection<HistoricoSolicitacao> Historicos => _historicos.AsReadOnly();        
+        
+        public Solicitacao(Guid usuarioLocatarioId, Guid empresaId, Guid quadraId, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
         {
-            LocacaoId = locacaoId;            
+            UsuarioLocatarioId = usuarioLocatarioId;
             QuadraId = quadraId;
+            EmpresaId = empresaId;
+            DataHoraInicioLocacao = dataHoraInicioLocacao;
+            DataHoraFimLocacao = dataHoraFimLocacao;
+            TempoTotalLocacaoSolicitado = dataHoraFimLocacao - dataHoraInicioLocacao;
             Status = StatusSolicitacao.AguardandoAprovacao;
-            _historicos = new List<HistoricoSolicitacao>() { new HistoricoSolicitacao(Id, Status) };
+            _historicos = new List<HistoricoSolicitacao>() { new HistoricoSolicitacao(Id, Status) };            
             Validate();
         }
-
-        internal void AssociarEmpresaSolicitacao(Guid empresaId) => EmpresaId = empresaId;
 
         public void Aprovar()
         {
@@ -46,10 +50,10 @@ namespace Sporterr.Cadastro.Domain
             IncluirHistoricoSolicitacao(motivoRecusa);
         }
 
-        public void AguardarCancelamento(string motivoCancelamento)
+        public void AguardarCancelamento()
         {
             Status = StatusSolicitacao.AguardandoCancelamento;
-            IncluirHistoricoSolicitacao(motivoCancelamento);
+            IncluirHistoricoSolicitacao();
         }
 
         private void IncluirHistoricoSolicitacao(string? descricao = null) =>

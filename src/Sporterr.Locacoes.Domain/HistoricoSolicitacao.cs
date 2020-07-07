@@ -1,10 +1,11 @@
-﻿using FluentValidation;
-using Sporterr.Cadastro.Domain.Validations;
-using Sporterr.Core.DomainObjects;
+﻿using Sporterr.Core.DomainObjects;
 using Sporterr.Core.Enums;
+using Sporterr.Locacoes.Domain.Validations;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Sporterr.Cadastro.Domain
+namespace Sporterr.Locacoes.Domain
 {
     public class HistoricoSolicitacao : Entity<HistoricoSolicitacao>
     {
@@ -18,7 +19,7 @@ namespace Sporterr.Cadastro.Domain
         {
             SolicitacaoId = solicitacaoId;
             StatusSolicitacao = statusSolicitacao;
-            Descricao = descricao;            
+            Descricao = descricao;
             Validate();
         }
 

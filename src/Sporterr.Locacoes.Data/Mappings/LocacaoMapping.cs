@@ -13,23 +13,11 @@ namespace Sporterr.Locacoes.Data.Mappings
             builder.Property(l => l.UsuarioLocatarioId)
                 .IsRequired();
 
+            builder.Property(l => l.SolicitacaoId)
+              .IsRequired();
+
             builder.Property(l => l.EmpresaId)
                 .IsRequired();
-
-            builder.OwnsOne(l => l.Quadra, q =>
-            {
-                q.Property(p => p.Id)
-                .HasColumnName("QuadraId")
-                .IsRequired();
-
-                q.Property(p => p.TempoLocacaoQuadra)
-                .HasColumnName("TempoLocacaoQuadra")                
-                .IsRequired();
-
-                q.Property(p => p.ValorPorTempoLocadoQuadra)
-                .HasColumnName("ValorPorTempoLocadoQuadra")
-                .IsRequired();
-            });
 
             builder.ToTable("Locacoes");
         }

@@ -29,7 +29,7 @@ namespace Sporterr.Cadastro.Data.Repository
 
         public async Task<Grupo> ObterGrupoPorId(Guid grupoId)
         {
-            return await _context.Grupos.AsQueryable().SingleOrDefaultAsync(s => s.Id.Equals(grupoId));
+            return await _context.Grupos.FindAsync(grupoId);
         }
 
         public void AdicionarMembro(Membro membro)
@@ -44,7 +44,7 @@ namespace Sporterr.Cadastro.Data.Repository
 
         public async Task<Membro> ObterMembroPorId(Guid membroId)
         {
-            return await _context.Membros.AsQueryable().SingleOrDefaultAsync(s => s.Id.Equals(membroId));
+            return await _context.Membros.FindAsync(membroId);
         }
 
         public async Task<bool> Commit()

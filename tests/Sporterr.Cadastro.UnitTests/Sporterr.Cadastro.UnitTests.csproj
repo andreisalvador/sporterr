@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Sporterr.Cadastro.Domain\Sporterr.Cadastro.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Sporterr.Locacoes.Domain\Sporterr.Locacoes.Domain.csproj" />
   </ItemGroup>
 
 </Project>

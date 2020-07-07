@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DomainObjects\DTO\" />
     <Folder Include="Messages\CommonMessages\DomainEvents\" />
   </ItemGroup>
 

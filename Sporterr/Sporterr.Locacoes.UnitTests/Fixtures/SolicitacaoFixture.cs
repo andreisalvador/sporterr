@@ -1,11 +1,8 @@
-﻿using Sporterr.Cadastro.Domain;
-using Sporterr.Locacoes.Domain;
+﻿using Sporterr.Locacoes.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
-namespace Sporterr.Cadastro.UnitTests.Fixtures
+namespace Sporterr.Locacoes.UnitTests.Fixtures
 {
 
     [CollectionDefinition(nameof(SolicitacaoFixtureCollection))]

@@ -9,21 +9,16 @@ namespace Sporterr.Locacoes.Application.Commands
         public Guid UsuarioLocatarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
         public Guid QuadraId { get; private set; }
-        public decimal ValorTempoQuadra { get; private set; }
-        public TimeSpan TempoLocacaoQuadra { get; private set; }
         public DateTime DataHoraInicioLocacao { get; private set; }
         public DateTime DataHoraFimLocacao { get; private set; }
 
 
-        public AbrirSolicitacaoLocacaoCommand(Guid usuarioLocatarioId, Guid empresaId, Guid quadraId, decimal valorTempoQuadra, 
-                                              TimeSpan tempoLocacaoQuadra, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
+        public AbrirSolicitacaoLocacaoCommand(Guid usuarioLocatarioId, Guid empresaId, Guid quadraId, DateTime dataHoraInicioLocacao, DateTime dataHoraFimLocacao)
             : base(new AbrirSolicitacaoLocacaoValidation())
         {
             UsuarioLocatarioId = usuarioLocatarioId;
             EmpresaId = empresaId;
             QuadraId = quadraId;
-            ValorTempoQuadra = valorTempoQuadra;
-            TempoLocacaoQuadra = tempoLocacaoQuadra;
             DataHoraInicioLocacao = dataHoraInicioLocacao;
             DataHoraFimLocacao = dataHoraFimLocacao;
         }
@@ -40,12 +35,6 @@ namespace Sporterr.Locacoes.Application.Commands
 
                 RuleFor(s => s.QuadraId)
                     .NotEqual(Guid.Empty).WithMessage("O quadra precisa ser informada.");
-
-                RuleFor(s => s.ValorTempoQuadra)
-                    .GreaterThan(0).WithMessage("O valor do tempo de locação da quadra precisa ser maior que zero.");
-
-                RuleFor(s => s.TempoLocacaoQuadra)
-                    .NotEqual(TimeSpan.MinValue).WithMessage("O tempo de locação da quadra precisa ser informado.");
 
                 RuleFor(s => s.DataHoraInicioLocacao)
                     .NotEqual(DateTime.MinValue).WithMessage("A data e hora de início da locação precisa ser informada.");

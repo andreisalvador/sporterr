@@ -11,6 +11,8 @@ namespace Sporterr.Locacoes.Data
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=LocacoesDb;Integrated Security=true;Pooling=true";
 
         public DbSet<Locacao> Locacoes { get; set; }
+        public DbSet<Solicitacao> Solicitacoes { get; private set; }
+        public DbSet<HistoricoSolicitacao> Historicos { get; private set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

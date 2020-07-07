@@ -13,22 +13,19 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
     {
         private readonly Lazy<EmpresaFixture> empresaFixture;
         private readonly Lazy<UsuarioFixture> usuarioFixture;
-        private readonly Lazy<GrupoFixture> grupoFixture;
-        private readonly Lazy<SolicitacaoFixture> solicitacaoFixture;
+        private readonly Lazy<GrupoFixture> grupoFixture;        
         private readonly Lazy<QuadraFixture> quadraFixture;
 
         public EmpresaFixture Empresa => empresaFixture.Value;
         public UsuarioFixture Usuario => usuarioFixture.Value;
-        public GrupoFixture Grupo => grupoFixture.Value;
-        public SolicitacaoFixture Solicitacao => solicitacaoFixture.Value;
+        public GrupoFixture Grupo => grupoFixture.Value;        
         public QuadraFixture Quadra => quadraFixture.Value;
 
         public FixtureWrapper()
         {
             empresaFixture = new Lazy<EmpresaFixture>();
             usuarioFixture = new Lazy<UsuarioFixture>();
-            grupoFixture = new Lazy<GrupoFixture>();
-            solicitacaoFixture = new Lazy<SolicitacaoFixture>();
+            grupoFixture = new Lazy<GrupoFixture>();            
             quadraFixture = new Lazy<QuadraFixture>();
         }
 

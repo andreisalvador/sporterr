@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sporterr.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,13 +8,14 @@ namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes
     public class SolicitacaoLocacaoCanceladaEvent : Event
     {
         public Guid SolicitacaoId { get; private set; }
-        public Guid LocacaoId { get; private set; }
-        public SolicitacaoLocacaoCanceladaEvent(Guid solicitacaoId, Guid locacaoId)
+        public StatusSolicitacao StatusSolicitacao { get; private set; }        
+        public string MotivoCancelamento { get; private set; }
+        public SolicitacaoLocacaoCanceladaEvent(Guid solicitacaoId, string movitoCancelamento)
         {
             AggregateId = solicitacaoId;
             SolicitacaoId = solicitacaoId;
-            LocacaoId = locacaoId;
+            MotivoCancelamento = movitoCancelamento;
+            StatusSolicitacao = StatusSolicitacao.Cancelada;
         }
-
     }
 }

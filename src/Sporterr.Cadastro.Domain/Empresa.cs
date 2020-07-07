@@ -13,18 +13,15 @@ namespace Sporterr.Cadastro.Domain
     public class Empresa : Entity<Empresa>, IActivationEntity, IAggregateRoot
     {
         private readonly List<Quadra> _quadras;
-        private readonly List<Solicitacao> _solicitacoes;
 
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
-        public string Cnpj { get; private set; } 
+        public string Cnpj { get; private set; }
         public DiasSemanaFuncionamento DiasFuncionamento { get; private set; }
         public TimeSpan HorarioAbertura { get; private set; }
         public TimeSpan HorarioFechamento { get; private set; }
         public bool Ativo { get; private set; }
         public IReadOnlyCollection<Quadra> Quadras => _quadras.AsReadOnly();
-        public IReadOnlyCollection<Solicitacao> Solicitacoes => _solicitacoes.AsReadOnly();
-
         //Ef Rel.
         public Usuario UsuarioProprietario { get; set; }
 
@@ -41,57 +38,11 @@ namespace Sporterr.Cadastro.Domain
             HorarioFechamento = horarioFechamento;
             DiasFuncionamento = diasFuncionamento;
             _quadras = new List<Quadra>();
-            _solicitacoes = new List<Solicitacao>();
             Ativar();
             Validate();
         }
 
         internal void AssociarUsuarioProprietario(Guid usuarioProprietarioId) => UsuarioProprietarioId = usuarioProprietarioId;
-
-        public void AdicionarSolicitacao(Solicitacao solicitacao)
-        {
-            solicitacao.Validate();
-
-            if (ExisteSolicitacaoParaEmpresa(solicitacao))
-                throw new DomainException($"Esta solicitação ja está aberta para a empresa '{RazaoSocial}'");
-
-            solicitacao.AssociarEmpresaSolicitacao(Id);
-            _solicitacoes.Add(solicitacao);
-        }
-
-        public void AprovarSolicitacao(Solicitacao solicitacao)
-        {
-            solicitacao.Validate();
-
-            ValidarSeExisteSolicitacao(solicitacao, "aprovar");
-
-            Solicitacao solicitacaoParaAprovar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
-            solicitacaoParaAprovar.Aprovar();
-        }
-
-        public void RecusarSolicitacao(Solicitacao solicitacao, string motivo)
-        {
-            solicitacao.Validate();
-
-            if (string.IsNullOrWhiteSpace(motivo)) throw new DomainException("O motivo precisa ser informado.");
-
-            ValidarSeExisteSolicitacao(solicitacao, "recusar");
-
-            Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
-            solicitacaoParaRecusar.Recusar(motivo);
-        }
-
-        public void CancelarSolicitacao(Solicitacao solicitacao, string motivo)
-        {
-            solicitacao.Validate();
-
-            if (string.IsNullOrWhiteSpace(motivo)) throw new DomainException("O motivo precisa ser informado.");
-
-            ValidarSeExisteSolicitacao(solicitacao, "cancelar");
-
-            Solicitacao solicitacaoParaRecusar = _solicitacoes.SingleOrDefault(s => s.Id.Equals(solicitacao.Id));
-            solicitacaoParaRecusar.Cancelar(motivo);
-        }
 
         public void AdicionarQuadra(Quadra quadra)
         {
@@ -188,31 +139,22 @@ namespace Sporterr.Cadastro.Domain
             quadra.TornarQuadraProntaPraUso();
         }
 
-        public bool PossuiQuadras() => _quadras.Count > 0;
-        public bool PossuiSolicitacoesPendentes() => _solicitacoes.Any(s => s.EstaPendente());
+        public bool PossuiQuadras() => _quadras.Count > 0;        
         public bool QuadraPertenceEmpresa(Quadra quadra) => _quadras.Any(q => q.Equals(quadra));
 
         private void ValidarSeQuadraPertenceEmpresa(Quadra quadra)
         {
             if (!QuadraPertenceEmpresa(quadra))
                 throw new DomainException($"A quadra informada não pertence a empresa '{RazaoSocial}'.");
-        }
-        private void ValidarSeExisteSolicitacao(Solicitacao solicitacao, string nomeProcesso)
-        {
-            if (!ExisteSolicitacaoParaEmpresa(solicitacao))
-                throw new DomainException($"Não é possível {nomeProcesso} a solicitacao, pois ela não existe na empresa '{RazaoSocial}'.");
-        }
-
-        private bool ExisteSolicitacaoParaEmpresa(Solicitacao solicitacao) => _solicitacoes.Any(s => s.EmpresaId.Equals(Id) && s.Id.Equals(solicitacao.Id));
-
+        }      
         public void Ativar()
         {
             Ativo = true;
         }
         public void Inativar()
         {
-            if (PossuiSolicitacoesPendentes())
-                throw new DomainException("Não é possível inativar empresas com solicitações pendentes");
+            //if (PossuiSolicitacoesPendentes())
+            //    throw new DomainException("Não é possível inativar empresas com solicitações pendentes");
 
             Ativo = false;
         }

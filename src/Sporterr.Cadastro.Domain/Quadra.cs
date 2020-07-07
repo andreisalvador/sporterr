@@ -35,18 +35,14 @@ namespace Sporterr.Cadastro.Domain
 
         public void ColocarQuadraEmManutencao()
         {
-            if (PossuiSolicitacaoDeLocacaoPendente())
-                throw new DomainException("Não é possível colocar uma quadra em manutenção com processos de locação pendentes.");
+            //if (PossuiSolicitacaoDeLocacaoPendente())
+            //    throw new DomainException("Não é possível colocar uma quadra em manutenção com processos de locação pendentes.");
 
             EmManutencao = true;
         }
 
         public void TornarQuadraProntaPraUso() => EmManutencao = false;
-
-        public bool JaPassouPorProcessoLocacao() => Empresa.Solicitacoes.Any(s => s.QuadraId.Equals(Id));
-
-        public bool PossuiSolicitacaoDeLocacaoPendente() =>
-            Empresa.Solicitacoes.Any(s => s.QuadraId.Equals(Id) && s.EstaPendente());
+    
 
         public void Ativar()
         {
@@ -55,8 +51,8 @@ namespace Sporterr.Cadastro.Domain
 
         public void Inativar()
         {
-            if (PossuiSolicitacaoDeLocacaoPendente())
-                throw new DomainException("Não é possível inativar uma quadra com processos de locação pendentes.");
+            //if (PossuiSolicitacaoDeLocacaoPendente())
+            //    throw new DomainException("Não é possível inativar uma quadra com processos de locação pendentes.");
 
             Ativo = false;
         }

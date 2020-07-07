@@ -34,10 +34,17 @@ namespace Sporterr.Core.Messages.Handler
             bool salvou = await Save();
 
             if (salvou)
-                foreach (Event @event in events)
-                    await _mediatr.Publish(@event);
+                await PublishEvents(events);
 
             return salvou;
+        }
+
+        protected async Task<bool> PublishEvents(params Event[] events)
+        {
+            foreach (Event @event in events)
+                await _mediatr.Publish(@event);
+
+            return await Task.FromResult(true);
         }
     }
 }

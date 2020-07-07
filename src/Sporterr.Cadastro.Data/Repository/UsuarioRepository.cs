@@ -53,17 +53,17 @@ namespace Sporterr.Cadastro.Data.Repository
 
         public async Task<Empresa> ObterEmpresaPorId(Guid empresaId)
         {
-            return await _context.Empresas.SingleOrDefaultAsync(e => e.Id.Equals(empresaId));
+            return await _context.Empresas.FindAsync(empresaId);
         }
 
         public async Task<Grupo> ObterGrupoPorId(Guid grupoId)
         {
-            return await _context.Grupos.SingleOrDefaultAsync(g => g.Id.Equals(grupoId));
+            return await _context.Grupos.FindAsync(grupoId);
         }
 
         public async Task<Usuario> ObterUsuarioPorId(Guid usuarioId)
         {
-            return await _context.Usuarios.AsQueryable().SingleOrDefaultAsync(u => u.Id.Equals(usuarioId));
+            return await _context.Usuarios.FindAsync(usuarioId);
         }
         public void Dispose()
         {

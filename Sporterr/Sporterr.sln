@@ -45,9 +45,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cadastro", "Cadastro", "{20
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Locacao", "Locacao", "{8BFAB820-5A99-44D2-9B19-3BB01EFE440D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sporterr.Cadastro.UnitTests", "..\tests\Sporterr.Cadastro.UnitTests\Sporterr.Cadastro.UnitTests.csproj", "{22F897D4-300B-4130-9553-6D7CF3D980B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sporterr.Cadastro.UnitTests", "..\tests\Sporterr.Cadastro.UnitTests\Sporterr.Cadastro.UnitTests.csproj", "{22F897D4-300B-4130-9553-6D7CF3D980B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sporterr.Locacoes.UnitTests", "Sporterr.Locacoes.UnitTests\Sporterr.Locacoes.UnitTests.csproj", "{151380C9-E32A-48F5-85F7-9DFD5883870D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sporterr.Locacoes.UnitTests", "Sporterr.Locacoes.UnitTests\Sporterr.Locacoes.UnitTests.csproj", "{151380C9-E32A-48F5-85F7-9DFD5883870D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

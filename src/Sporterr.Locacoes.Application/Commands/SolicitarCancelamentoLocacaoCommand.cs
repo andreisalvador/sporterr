@@ -8,13 +8,11 @@ namespace Sporterr.Locacoes.Application.Commands
     {
         public Guid SolicitacaoId { get; private set; }
         public Guid LocacaoId { get; private set; }
-        public string Motivo { get; private set; }
-        public SolicitarCancelamentoLocacaoCommand(Guid solicitacaoId, Guid locacaoId, string motivo)
+        public SolicitarCancelamentoLocacaoCommand(Guid solicitacaoId, Guid locacaoId)
             : base(new SolicitarCancelamentoLocacaoValidation())
         {
             LocacaoId = locacaoId;
-            SolicitacaoId = solicitacaoId;
-            Motivo = motivo;
+            SolicitacaoId = solicitacaoId;         
         }
 
 
@@ -24,9 +22,6 @@ namespace Sporterr.Locacoes.Application.Commands
             {
                 RuleFor(s => s.LocacaoId)
                     .NotEqual(Guid.Empty).WithMessage("A locação precisa ser informada.");
-
-                RuleFor(s => s.Motivo)
-                    .NotEmpty().WithMessage("O motivo do cancelamento precisa ser informado.");
 
                 RuleFor(s => s.SolicitacaoId)
                     .NotEqual(Guid.Empty).WithMessage("A solicitação precisa ser informada.");

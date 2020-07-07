@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sporterr.Cadastro.Domain.Validations
+namespace Sporterr.Locacoes.Domain.Validations
 {
     public class HistoricoSolicitacaoValidation : AbstractValidator<HistoricoSolicitacao>
     {

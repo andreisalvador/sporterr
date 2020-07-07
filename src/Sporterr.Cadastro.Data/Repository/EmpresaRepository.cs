@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using System;
@@ -28,11 +29,6 @@ namespace Sporterr.Cadastro.Data.Repository
             _context.Quadras.Add(quadra);
         }
 
-        public void AdicionarSolicitacao(Solicitacao solicitacao)
-        {
-            _context.Solicitacoes.Add(solicitacao);
-        }
-
         public void AtualizarEmpresa(Empresa empresa)
         {
             _context.Empresas.Update(empresa);
@@ -43,41 +39,26 @@ namespace Sporterr.Cadastro.Data.Repository
             _context.Quadras.Update(quadra);
         }
 
-        public void AtualizarSolicitacao(Solicitacao solicitacao)
-        {
-            HistoricoSolicitacao historicoSolicitacao = solicitacao.Historicos.OrderByDescending(s => s.DataCriacao).FirstOrDefault();
-
-            if (historicoSolicitacao != null)
-                _context.HistoricosSolicitacoes.Add(historicoSolicitacao);
-
-            _context.Solicitacoes.Update(solicitacao);
-        }
-
         public async Task<bool> Commit()
         {
             return await _context.CommitAsync();
         }
 
         public async Task<Empresa> ObterEmpresaPorId(Guid empresaId)
+        {   
+            return await _context.Empresas.FindAsync(empresaId);
+        }
+
+        public async Task<Empresa> ObterEmpresaComQuadrasPorId(Guid empresaId)
         {
-            return await _context.Empresas.AsQueryable().SingleOrDefaultAsync(empresa => empresa.Id.Equals(empresaId));
+            return await _context.Empresas.Include(e => e.Quadras).SingleOrDefaultAsync(e => e.Id.Equals(empresaId));
         }
 
         public async Task<Quadra> ObterQuadraPorId(Guid quadraId)
         {
-            return await _context.Quadras.AsQueryable().SingleOrDefaultAsync(quadra => quadra.Id.Equals(quadraId));
+            return await _context.Quadras.FindAsync(quadraId);
         }
-
-        public async Task<Solicitacao> ObterSolicitacaoPorId(Guid solicitacaoId)
-        {
-            return await _context.Solicitacoes.AsQueryable().SingleOrDefaultAsync(solicitacao => solicitacao.Id.Equals(solicitacaoId));
-        }
-
-        public async Task<Solicitacao> ObterSolicitacaoPorLocacaoEmpresa(Guid locacaoId, Guid empresaId)
-        {
-            return await _context.Solicitacoes.Where(solicitacao => solicitacao.LocacaoId.Equals(locacaoId) && solicitacao.EmpresaId.Equals(empresaId)).AsQueryable().SingleOrDefaultAsync();
-        }
-
+        
         public void Dispose()
         {
             _context?.Dispose();

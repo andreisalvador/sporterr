@@ -31,16 +31,6 @@ namespace Sporterr.Locacoes.Data.Repository
             return await _context.CommitAsync();
         }
 
-        public async Task<bool> ExisteNoPeriodo(DateTime inicio, DateTime fim)
-        {
-            return await _context.Locacoes.AsNoTracking().Where(locacao => locacao.DataHoraInicioLocacao >= inicio && fim <= locacao.DataHoraFimLocacao).AsQueryable().CountAsync() > 0;
-        }
-
-        public async Task<Locacao> ObterNoPeriodo(DateTime inicio, DateTime fim)
-        {
-            return await _context.Locacoes.AsNoTracking().Where(locacao => locacao.DataHoraInicioLocacao >= inicio && fim <= locacao.DataHoraFimLocacao).AsQueryable().SingleOrDefaultAsync();
-        }
-
         public async Task<Locacao> ObterPorId(Guid locacaoId)
         {
             return await _context.Locacoes.FindAsync(locacaoId);
@@ -55,9 +45,14 @@ namespace Sporterr.Locacoes.Data.Repository
         {
             return await _context.Locacoes.AsNoTracking().ToListAsync();
         }
+        public async Task<Locacao> ObterPorSolicitacao(Guid solicitacaoId)
+        {
+            return await _context.Locacoes.SingleOrDefaultAsync(l => l.SolicitacaoId.Equals(solicitacaoId));
+        }
         public void Dispose()
         {
             _context?.Dispose();
         }
+
     }
 }

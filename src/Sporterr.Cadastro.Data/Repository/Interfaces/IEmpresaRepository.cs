@@ -10,14 +10,10 @@ namespace Sporterr.Cadastro.Data.Repository.Interfaces
         void AdicionarEmpresa(Empresa empresa);
         void AtualizarEmpresa(Empresa empresa);
         Task<Empresa> ObterEmpresaPorId(Guid empresaId);
+        Task<Empresa> ObterEmpresaComQuadrasPorId(Guid empresaId);
 
         void AdicionarQuadra(Quadra quadra);
         void AtualizarQuadra(Quadra quadra);
         Task<Quadra> ObterQuadraPorId(Guid quadraId);
-
-        void AdicionarSolicitacao(Solicitacao solicitacao);
-        void AtualizarSolicitacao(Solicitacao solicitacao);
-        Task<Solicitacao> ObterSolicitacaoPorId(Guid solicitacaoId);
-        Task<Solicitacao> ObterSolicitacaoPorLocacaoEmpresa(Guid locacaoId, Guid empresaId);
     }
 }

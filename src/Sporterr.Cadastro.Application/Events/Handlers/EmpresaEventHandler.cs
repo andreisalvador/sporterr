@@ -3,14 +3,14 @@ using Sporterr.Cadastro.Application.Commands;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sporterr.Cadastro.Application.Events.Handlers
 {
     public class EmpresaEventHandler :
-        INotificationHandler<LocacaoSolicitadaEvent>,
-        INotificationHandler<CancelamentoLocacaoSolicitadoEvent>
+        INotificationHandler<SolicitacaoCancelamentoLocacaoEnviadaEvent>
     {
         private readonly IEmpresaRepository _repository;
         private readonly IMediatrHandler _mediatr;
@@ -21,14 +21,9 @@ namespace Sporterr.Cadastro.Application.Events.Handlers
             _mediatr = mediatr;
         }
 
-        public async Task Handle(LocacaoSolicitadaEvent message, CancellationToken cancellationToken)
+        public async Task Handle(SolicitacaoCancelamentoLocacaoEnviadaEvent message, CancellationToken cancellationToken)
         {
-            await _mediatr.Send(new AbrirSolicitacaoLocacaoParaEmpresaCommand(message.LocacaoId, message.EmpresaId, message.QuadraId));
-        }
-
-        public async Task Handle(CancelamentoLocacaoSolicitadoEvent message, CancellationToken cancellationToken)
-        {
-            await _mediatr.Send(new CancelarSolicitacaoLocacaoEmpresaCommand(message.SolicitacaoId, message.EmpresaId, message.LocacaoId, message.MotivoCancelamento));
+            await _mediatr.Send(new CancelarSolicitacaoLocacaoEmpresaCommand(message.SolicitacaoId, message.EmpresaId, message.MotivoCancelamento));
         }
     }
 }

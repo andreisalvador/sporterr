@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Sporterr.Cadastro.Domain.Validations
+namespace Sporterr.Locacoes.Domain.Validations
 {
     public class SolicitacaoValidation : AbstractValidator<Solicitacao>
     {
         public SolicitacaoValidation()
         {
-            RuleFor(s => s.LocacaoId)
-                .NotEqual(Guid.Empty).WithMessage("A locação é obrigatória.");
+            RuleFor(s => s.EmpresaId).
+                NotEqual(Guid.Empty).WithMessage("A empresa é obrigatória.");
 
             RuleFor(s => s.QuadraId)
                 .NotEqual(Guid.Empty).WithMessage("A quadra é obrigatória.");

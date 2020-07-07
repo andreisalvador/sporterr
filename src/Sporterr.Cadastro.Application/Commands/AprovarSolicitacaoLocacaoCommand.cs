@@ -4,17 +4,19 @@ using System;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class AprovarSolicitacaoEmpresaCommand : Command<AprovarSolicitacaoEmpresaCommand>
+    public class AprovarSolicitacaoLocacaoCommand : Command<AprovarSolicitacaoLocacaoCommand>
     {
         public Guid SolicitacaoId { get; private set; }
         public Guid EmpresaId { get; private set; }
-        public AprovarSolicitacaoEmpresaCommand(Guid solicitacaoId, Guid empresaId)
+        public Guid QuadraId { get; private set; }
+        public AprovarSolicitacaoLocacaoCommand(Guid solicitacaoId, Guid empresaId, Guid quadraId)
             : base(new AprovarSolicitacaoLocacaoValidation())
         {
             SolicitacaoId = solicitacaoId;
             EmpresaId = empresaId;
+            QuadraId = quadraId;
         }
-        private class AprovarSolicitacaoLocacaoValidation : AbstractValidator<AprovarSolicitacaoEmpresaCommand>
+        private class AprovarSolicitacaoLocacaoValidation : AbstractValidator<AprovarSolicitacaoLocacaoCommand>
         {
             public AprovarSolicitacaoLocacaoValidation()
             {
@@ -23,6 +25,9 @@ namespace Sporterr.Cadastro.Application.Commands
 
                 RuleFor(a => a.EmpresaId)
                    .NotEqual(Guid.Empty).WithMessage("A empresa precisa ser informada.");
+
+                RuleFor(a => a.QuadraId)
+                  .NotEqual(Guid.Empty).WithMessage("A quadra precisa ser informada.");
             }
         }
     }
