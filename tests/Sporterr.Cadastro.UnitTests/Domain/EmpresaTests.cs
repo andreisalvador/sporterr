@@ -151,7 +151,6 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             //Arrange
             Empresa empresa = _fixtureWrapper.Empresa.CriarEmpresaValida();
             Quadra quadra = _fixtureWrapper.Quadra.CriarQuadraValida();
-            quadra.Empresa = empresa;
             quadra.Inativar();
 
             //Act & Assert
