@@ -1,4 +1,5 @@
 ﻿using Sporterr.Core.DomainObjects;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Core.Enums;
 using Sporterr.Locacoes.Domain.Validations;
@@ -36,22 +37,34 @@ namespace Sporterr.Locacoes.Domain
 
         public void Aprovar()
         {
+            if (Status != StatusSolicitacao.AguardandoAprovacao) throw new DomainException("Só é possível aprovar solicitações que estavam aguardando aprovação.");
+
             Status = StatusSolicitacao.Aprovada;
             IncluirHistoricoSolicitacao();
         }
         public void Cancelar(string motivoCancelamento)
         {
+            if (string.IsNullOrWhiteSpace(motivoCancelamento)) throw new DomainException("Para cancelar uma solicição, você precisa informar o motivo de cancelamento.");
+
+            if (Status != StatusSolicitacao.Aprovada) throw new DomainException("Só é possível cancelar solicitações que estavam aprovadas.");
+
             Status = StatusSolicitacao.Cancelada;
             IncluirHistoricoSolicitacao(motivoCancelamento);
         }
         public void Recusar(string motivoRecusa)
         {
+            if (string.IsNullOrWhiteSpace(motivoRecusa)) throw new DomainException("Para recusar uma solicição, você precisa informar o motivo da recusa.");
+
+            if (Status != StatusSolicitacao.AguardandoAprovacao) throw new DomainException("Só é possível recusar solicitações que estavam aguardando aprovação.");
+
             Status = StatusSolicitacao.Recusada;
             IncluirHistoricoSolicitacao(motivoRecusa);
         }
 
         public void AguardarCancelamento()
         {
+            if (Status != StatusSolicitacao.Aprovada) throw new DomainException("Só é possível solicitar cancelamento de solicitações que estavam aprovadas.");
+
             Status = StatusSolicitacao.AguardandoCancelamento;
             IncluirHistoricoSolicitacao();
         }

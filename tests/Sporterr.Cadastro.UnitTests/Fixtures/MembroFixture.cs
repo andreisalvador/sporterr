@@ -7,7 +7,7 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
     [CollectionDefinition(nameof(MembroFixtureCollection))]
     public class MembroFixtureCollection : ICollectionFixture<MembroFixture> { }
 
-    public class MembroFixture
+    public class MembroFixture : IDisposable
     {
         public Membro CriarMembroValido()
         {
@@ -17,6 +17,11 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
         public Membro CriarMembroInvalido()
         {
             return new Membro(Guid.Empty);
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(true);
         }
     }
 }
