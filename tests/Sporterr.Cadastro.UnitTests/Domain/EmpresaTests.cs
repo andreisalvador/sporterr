@@ -32,7 +32,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
 
         [Fact(DisplayName = "Nova empresa válida")]
         [Trait("Domain", "Testes da Empresa")]
-        public void Usuario_Validate_EmpresaDeveSerValida()
+        public void Empresa_Validate_EmpresaDeveSerValida()
         {
             //Arrange & Act
             Empresa empresa = _fixtureWrapper.Empresa.CriarEmpresaValida();

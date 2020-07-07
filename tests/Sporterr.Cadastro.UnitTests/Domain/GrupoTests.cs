@@ -1,4 +1,5 @@
-﻿using Sporterr.Cadastro.Domain;
+﻿using FluentValidation;
+using Sporterr.Cadastro.Domain;
 using Sporterr.Cadastro.UnitTests.Fixtures;
 using Sporterr.Core.DomainObjects.Exceptions;
 using System;
@@ -17,6 +18,27 @@ namespace Sporterr.Cadastro.UnitTests.Domain
         {
             _fixtureWrapper = fixtureWrapper;
         }
+
+        [Fact(DisplayName = "Nov grupo inválido")]
+        [Trait("Domain", "Testes do Grupo")]
+        public void Empresa_Validate_GrupoDeveSerInvalido()
+        {
+            //Arrange & Act & Assert
+            Assert.Throws<ValidationException>(() => _fixtureWrapper.Grupo.CriarGrupoInvalido());
+        }
+
+        [Fact(DisplayName = "Novo grupo válido")]
+        [Trait("Domain", "Testes do Grupo")]
+        public void Grupo_Validate_GrupoDeveSerValido()
+        {
+            //Arrange & Act
+            Grupo grupo = _fixtureWrapper.Grupo.CriarGrupoValido();
+
+            //Assert
+            Assert.NotNull(grupo);
+            Assert.True(grupo.Ativo);
+        }
+
 
         [Fact(DisplayName = "Adiciona membro novo ao grupo")]
         [Trait("Domain", "Testes do Grupo")]
