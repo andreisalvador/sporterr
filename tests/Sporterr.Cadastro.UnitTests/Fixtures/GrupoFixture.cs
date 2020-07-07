@@ -11,9 +11,9 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
 
     public class GrupoFixture : IDisposable
     {
-        public Grupo CriarGrupoValido()
+        public Grupo CriarGrupoValido(sbyte quantidadeMaximaMembros = 2)
         {
-            return new Grupo("Futebol 2020");
+            return new Grupo("Futebol 2020", quantidadeMaximaMembros);
         }
 
         public Grupo CriarGrupoInvalido()

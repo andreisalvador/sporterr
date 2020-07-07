@@ -15,11 +15,13 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
         private readonly Lazy<UsuarioFixture> usuarioFixture;
         private readonly Lazy<GrupoFixture> grupoFixture;        
         private readonly Lazy<QuadraFixture> quadraFixture;
+        private readonly Lazy<MembroFixture> membroFixture;
 
         public EmpresaFixture Empresa => empresaFixture.Value;
         public UsuarioFixture Usuario => usuarioFixture.Value;
         public GrupoFixture Grupo => grupoFixture.Value;        
         public QuadraFixture Quadra => quadraFixture.Value;
+        public MembroFixture Membro => membroFixture.Value;
 
         public FixtureWrapper()
         {
@@ -27,6 +29,7 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
             usuarioFixture = new Lazy<UsuarioFixture>();
             grupoFixture = new Lazy<GrupoFixture>();            
             quadraFixture = new Lazy<QuadraFixture>();
+            membroFixture = new Lazy<MembroFixture>();
         }
 
         public void Dispose()
