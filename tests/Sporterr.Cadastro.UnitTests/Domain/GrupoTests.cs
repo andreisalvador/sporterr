@@ -19,9 +19,9 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             _fixtureWrapper = fixtureWrapper;
         }
 
-        [Fact(DisplayName = "Nov grupo inválido")]
+        [Fact(DisplayName = "Novo grupo inválido")]
         [Trait("Domain", "Testes do Grupo")]
-        public void Empresa_Validate_GrupoDeveSerInvalido()
+        public void Grupo_Validate_GrupoDeveSerInvalido()
         {
             //Arrange & Act & Assert
             Assert.Throws<ValidationException>(() => _fixtureWrapper.Grupo.CriarGrupoInvalido());
