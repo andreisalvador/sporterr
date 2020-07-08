@@ -46,7 +46,7 @@ namespace Sporterr.Locacoes.Domain
 
         internal void AssociarSolicitacao(Guid solicitacaoId) => SolicitacaoId = solicitacaoId;       
       
-        public void CancelarLocacao()
+        public void Cancelar()
         {
             if (Status != StatusLocacao.Aprovada) throw new DomainException($"Não é possível cancelar locações que não estavam aprovadas.");
 

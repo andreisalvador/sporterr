@@ -61,7 +61,7 @@ namespace Sporterr.Locacoes.Application.Events.Handlers
 
             Locacao locacaoParaCancelar = await _locacaoRepository.ObterPorSolicitacao(message.SolicitacaoId);
 
-            locacaoParaCancelar.CancelarLocacao();
+            locacaoParaCancelar.Cancelar();
 
             _locacaoRepository.AtualizarLocacao(locacaoParaCancelar);
 

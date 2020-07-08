@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
+using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Locacoes.Domain;
+using Sporterr.Locacoes.Domain.Enums;
 using Sporterr.Locacoes.UnitTests.Fixtures;
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,21 @@ namespace Sporterr.Locacoes.UnitTests.Domain
         {
             //Arrange & Act & Assert
             Assert.Throws<ValidationException>(() => _fixtureWrapper.Locacao.CriarLocacaoInvalida());
+        }
+
+
+        [Fact(DisplayName = "Cancelar locação")]
+        [Trait("Domain", "Testes de Locação")]
+        public void Locacao_Cancelar_DeveAplicarStatusDeCanceladoNaLocacao()
+        {
+            //Arrange
+            Locacao locacao = _fixtureWrapper.Locacao.CriarLocacaoValida();           
+
+            //Act
+            locacao.Cancelar();
+
+            //Assert
+            Assert.Equal(StatusLocacao.Cancelada, locacao.Status);            
         }
     }
 }
