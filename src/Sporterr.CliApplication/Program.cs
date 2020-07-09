@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Sporterr.Cadastro.Application.Commands;
@@ -35,26 +36,26 @@ namespace Sporterr.CliApplication
         {
             IServiceProvider provider = new ServiceCollection()
                 //Usuario
-                .AddScoped<IRequestHandler<AdicionarUsuarioCommand, bool>, UsuarioCommandHandler>()
-                .AddScoped<IRequestHandler<AdicionarEmpresaUsuarioCommand, bool>, UsuarioCommandHandler>()
-                .AddScoped<IRequestHandler<AdicionarGrupoUsuarioCommand, bool>, UsuarioCommandHandler>()
-                .AddScoped<IRequestHandler<InativarEmpresaUsuarioCommand, bool>, UsuarioCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarEmpresaUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarGrupoUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
+                .AddScoped<IRequestHandler<InativarEmpresaUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
 
                 //Grupo
-                .AddScoped<IRequestHandler<AdicionarMembroGrupoCommand, bool>, GrupoCommandHandler>()
-                .AddScoped<IRequestHandler<RemoverMembroGrupoCommand, bool>, GrupoCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarMembroGrupoCommand, ValidationResult>, GrupoCommandHandler>()
+                .AddScoped<IRequestHandler<RemoverMembroGrupoCommand, ValidationResult>, GrupoCommandHandler>()
 
                 //Empresa
-                .AddScoped<IRequestHandler<AdicionarQuadraEmpresaCommand, bool>, EmpresaCommandHandler>()
-                .AddScoped<IRequestHandler<AprovarSolicitacaoLocacaoCommand, bool>, EmpresaCommandHandler>()
-                .AddScoped<IRequestHandler<RecusarSolicitacaoLocacaoCommand, bool>, EmpresaCommandHandler>()
-                .AddScoped<IRequestHandler<CancelarSolicitacaoLocacaoEmpresaCommand, bool>, EmpresaCommandHandler>()
-                .AddScoped<IRequestHandler<InativarQuadraEmpresaCommand, bool>, EmpresaCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarQuadraEmpresaCommand, ValidationResult>, EmpresaCommandHandler>()
+                .AddScoped<IRequestHandler<AprovarSolicitacaoLocacaoCommand, ValidationResult>, EmpresaCommandHandler>()
+                .AddScoped<IRequestHandler<RecusarSolicitacaoLocacaoCommand, ValidationResult>, EmpresaCommandHandler>()
+                .AddScoped<IRequestHandler<CancelarSolicitacaoLocacaoEmpresaCommand, ValidationResult>, EmpresaCommandHandler>()
+                .AddScoped<IRequestHandler<InativarQuadraEmpresaCommand, ValidationResult>, EmpresaCommandHandler>()
                 .AddScoped<INotificationHandler<SolicitacaoCancelamentoLocacaoEnviadaEvent>, EmpresaEventHandler>()
 
                 //Solicitacao
-                .AddScoped<IRequestHandler<AbrirSolicitacaoLocacaoCommand, bool>, SolicitacaoCommandHandler>()
-                .AddScoped<IRequestHandler<SolicitarCancelamentoLocacaoCommand, bool>, SolicitacaoCommandHandler>()
+                .AddScoped<IRequestHandler<AbrirSolicitacaoLocacaoCommand, ValidationResult>, SolicitacaoCommandHandler>()
+                .AddScoped<IRequestHandler<SolicitarCancelamentoLocacaoCommand, ValidationResult>, SolicitacaoCommandHandler>()
                 .AddScoped<INotificationHandler<SolicitacaoLocacaoAprovadaEvent>, SolicitacaoEventHandler>()
                 .AddScoped<INotificationHandler<SolicitacaoLocacaoRecusadaEvent>, SolicitacaoEventHandler>()
                 .AddScoped<INotificationHandler<SolicitacaoLocacaoCanceladaEvent>, SolicitacaoEventHandler>()

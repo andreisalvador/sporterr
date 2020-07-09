@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Sporterr.Cadastro.Application.Events;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
@@ -17,12 +18,12 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Cadastro.Application.Commands.Handlers
 {
-    public class EmpresaCommandHandler : BaseCommandHandler<Empresa>,
-        IRequestHandler<AdicionarQuadraEmpresaCommand, bool>,
-        IRequestHandler<AprovarSolicitacaoLocacaoCommand, bool>,
-        IRequestHandler<RecusarSolicitacaoLocacaoCommand, bool>,
-        IRequestHandler<CancelarSolicitacaoLocacaoEmpresaCommand, bool>,
-        IRequestHandler<InativarQuadraEmpresaCommand, bool>
+    public class EmpresaCommandHandler : CommandHandler<Empresa>,
+        IRequestHandler<AdicionarQuadraEmpresaCommand, ValidationResult>,
+        IRequestHandler<AprovarSolicitacaoLocacaoCommand, ValidationResult>,
+        IRequestHandler<RecusarSolicitacaoLocacaoCommand, ValidationResult>,
+        IRequestHandler<CancelarSolicitacaoLocacaoEmpresaCommand, ValidationResult>,
+        IRequestHandler<InativarQuadraEmpresaCommand, ValidationResult>
     {
 
         private readonly IEmpresaRepository _empresaRepository;
@@ -31,9 +32,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             _empresaRepository = empresaRepository;
         }
 
-        public async Task<bool> Handle(AdicionarQuadraEmpresaCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarQuadraEmpresaCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Empresa empresa = await _empresaRepository.ObterEmpresaPorId(message.EmpresaId);
 
@@ -49,9 +50,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
                                                             novaQuadra.TempoLocacao, novaQuadra.ValorPorTempoLocado, novaQuadra.TipoEsporteQuadra));
         }
 
-        public async Task<bool> Handle(AprovarSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AprovarSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Empresa empresa = await _empresaRepository.ObterEmpresaComQuadrasPorId(message.EmpresaId);
 
@@ -70,23 +71,23 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await PublishEvents(new SolicitacaoLocacaoAprovadaEvent(message.SolicitacaoId, empresa.Id, message.QuadraId, informacoesTempoQuadra));
         }
 
-        public async Task<bool> Handle(RecusarSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(RecusarSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             return await SaveAndPublish(new SolicitacaoLocacaoRecusadaEvent(message.SolicitacaoId, message.Motivo));
         }
 
-        public async Task<bool> Handle(CancelarSolicitacaoLocacaoEmpresaCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(CancelarSolicitacaoLocacaoEmpresaCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             return await PublishEvents(new SolicitacaoLocacaoCanceladaEvent(message.SolicitacaoId, message.MotivoCancelamento));
         }
 
-        public async Task<bool> Handle(InativarQuadraEmpresaCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(InativarQuadraEmpresaCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Empresa empresa = await _empresaRepository.ObterEmpresaPorId(message.EmpresaId);
 

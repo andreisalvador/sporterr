@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Sporterr.Cadastro.Application.Events;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Cadastro.Application.Commands.Handlers
 {
-    public class GrupoCommandHandler : BaseCommandHandler<Grupo>,
-        IRequestHandler<AdicionarMembroGrupoCommand, bool>,
-        IRequestHandler<RemoverMembroGrupoCommand, bool>
+    public class GrupoCommandHandler : CommandHandler<Grupo>,
+        IRequestHandler<AdicionarMembroGrupoCommand, ValidationResult>,
+        IRequestHandler<RemoverMembroGrupoCommand, ValidationResult>
     {
         private readonly IGrupoRepository _repository;
         public GrupoCommandHandler(IGrupoRepository repository, IMediatrHandler mediatr) : base(repository, mediatr)
@@ -19,9 +20,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             _repository = repository;
         }
 
-        public async Task<bool> Handle(AdicionarMembroGrupoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarMembroGrupoCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult; 
 
             Grupo grupo = await _repository.ObterGrupoPorId(message.GrupoId);
 
@@ -38,9 +39,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await SaveAndPublish(new MembroAdicionadoGrupoEvent(novoMembro.Id, novoMembro.UsuarioId, novoMembro.GrupoId));
         }
 
-        public async Task<bool> Handle(RemoverMembroGrupoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(RemoverMembroGrupoCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Grupo grupo = await _repository.ObterGrupoPorId(message.GrupoId);
 

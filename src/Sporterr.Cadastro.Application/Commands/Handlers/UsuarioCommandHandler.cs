@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Sporterr.Cadastro.Application.Events;
 using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
@@ -10,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Cadastro.Application.Commands.Handlers
 {
-    public class UsuarioCommandHandler : BaseCommandHandler<Usuario>,
-        IRequestHandler<AdicionarUsuarioCommand, bool>,
-        IRequestHandler<AdicionarEmpresaUsuarioCommand, bool>,
-        IRequestHandler<AdicionarGrupoUsuarioCommand, bool>,
-        IRequestHandler<InativarEmpresaUsuarioCommand, bool>
+    public class UsuarioCommandHandler : CommandHandler<Usuario>,
+        IRequestHandler<AdicionarUsuarioCommand, ValidationResult>,
+        IRequestHandler<AdicionarEmpresaUsuarioCommand, ValidationResult>,
+        IRequestHandler<AdicionarGrupoUsuarioCommand, ValidationResult>,
+        IRequestHandler<InativarEmpresaUsuarioCommand, ValidationResult>
     {
         private readonly IUsuarioRepository _repository;
 
@@ -23,9 +24,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             _repository = repository;
         }
 
-        public async Task<bool> Handle(AdicionarUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarUsuarioCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Usuario usuario = new Usuario(message.NomeUsuario, message.EmailUsuario, message.SenhaUsuario);
 
@@ -34,9 +35,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await SaveAndPublish(new UsuarioAdicionadoEvent(usuario.Id, usuario.Nome, usuario.Email, usuario.Senha));
         }
 
-        public async Task<bool> Handle(AdicionarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Usuario proprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioProprietarioId);
 
@@ -52,9 +53,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
                                                                                     message.DiasFuncionamento, message.HorarioAbertura, message.HorarioFechamento));
         }
 
-        public async Task<bool> Handle(AdicionarGrupoUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarGrupoUsuarioCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Usuario proprietarioGrupo = await _repository.ObterUsuarioPorId(message.UsuarioCriadorId);
 
@@ -71,9 +72,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await SaveAndPublish(new GrupoAdicionadoUsuarioEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
         }
 
-        public async Task<bool> Handle(InativarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(InativarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Usuario usuarioProprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioProprietarioEmpresaId);
 

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
 using Sporterr.Core.Messages.Handler;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Locacoes.Application.Commands.Handlers
 {
-    public class SolicitacaoCommandHandler : BaseCommandHandler<Locacao>,
-        IRequestHandler<AbrirSolicitacaoLocacaoCommand, bool>,
-        IRequestHandler<SolicitarCancelamentoLocacaoCommand, bool>
+    public class SolicitacaoCommandHandler : CommandHandler<Locacao>,
+        IRequestHandler<AbrirSolicitacaoLocacaoCommand, ValidationResult>,
+        IRequestHandler<SolicitarCancelamentoLocacaoCommand, ValidationResult>
     {
         private readonly ILocacaoRepository _locacaoRepository;
         private readonly IMediatrHandler _mediatr;
@@ -24,9 +25,9 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
             _solicitacaoRepository = solicitacaoRepository;
         }
         
-        public async Task<bool> Handle(AbrirSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AbrirSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             bool solicitacaoExistenteNoPeriodo = await _solicitacaoRepository.ExisteNoPeriodo(message.DataHoraInicioLocacao, message.DataHoraFimLocacao);
 
@@ -41,9 +42,9 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
                                         
         }
 
-        public async Task<bool> Handle(SolicitarCancelamentoLocacaoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(SolicitarCancelamentoLocacaoCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return false;
+            if (!message.IsValid()) return message.ValidationResult;
 
             Solicitacao solicitacaoParaCancelar = await _solicitacaoRepository.ObterPorId(message.SolicitacaoId);
 

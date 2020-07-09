@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Sporterr.Core.Messages
 {
-    public abstract class Command<TCommand> : Message, IRequest<bool>
+    public abstract class Command<TCommand> : Message, IRequest<ValidationResult>
     {
         private readonly IValidator _commandValidator;
         public Command(AbstractValidator<TCommand> commandValidator)

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation.Results;
+using MediatR;
 using Sporterr.Core.Data.EventSourcing;
 using Sporterr.Core.Messages;
 using Sporterr.Core.Messages.CommonMessages.Notifications;
@@ -25,7 +26,7 @@ namespace Sporterr.Core.Communication.Mediator
             await _eventSourcingRepository.SaveEvent(@event);
         }
 
-        public async Task<bool> Send<TCommand>(TCommand command) where TCommand : Command<TCommand>
+        public async Task<ValidationResult> Send<TCommand>(TCommand command) where TCommand : Command<TCommand>
             => await _mediator.Send(command);
     }
 }
