@@ -32,6 +32,18 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             Assert.NotNull(locacao);
 
         }
+        [Fact(DisplayName = "Calculo valor locação")]
+        [Trait("Domain", "Testes de Locação")]
+        public void Locacao_CalcularValorLocacao_DeveCriarLocacaoComValorCalculado()
+        {
+            //Arrange & Act
+            Locacao locacao = _fixtureWrapper.Locacao.CriarLocacaoValida();
+
+            //Assert
+            Assert.Equal(600m, locacao.Valor);
+
+        }
+
         [Fact(DisplayName = "Nova locação inválida")]
         [Trait("Domain", "Testes de Locação")]
         public void Locacao_Validate_DeveCriarLocacaoInvalida()

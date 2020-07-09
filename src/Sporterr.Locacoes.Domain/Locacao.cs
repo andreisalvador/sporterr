@@ -43,8 +43,6 @@ namespace Sporterr.Locacoes.Domain
         {
             Valor = CalcularValorLocacao(InformacoesTempoQuadra.ValorPorTempoLocadoQuadra, InformacoesTempoQuadra.TempoLocacaoQuadra);
         }
-
-        internal void AssociarSolicitacao(Guid solicitacaoId) => SolicitacaoId = solicitacaoId;       
       
         public void Cancelar()
         {
@@ -56,7 +54,7 @@ namespace Sporterr.Locacoes.Domain
         // TODO: Realizar calculo
         private decimal CalcularValorLocacao(decimal valorTempoLocacaoQuadra, TimeSpan tempoLocacaoQuadra)
         {
-            return 0m;
+            return (decimal)(TempoLocado / tempoLocacaoQuadra) * valorTempoLocacaoQuadra;
         }
 
         public override void Validate() => Validate(this, new LocacaoValidation());

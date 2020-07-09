@@ -15,7 +15,7 @@ namespace Sporterr.Locacoes.UnitTests.Fixtures
         {
             return new Locacao(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), TimeSpan.FromHours(1), new Core.DomainObjects.DTO.InformacoesTempoQuadra
             {
-                TempoLocacaoQuadra = TimeSpan.FromHours(1),
+                TempoLocacaoQuadra = TimeSpan.FromMinutes(15),
                 ValorPorTempoLocadoQuadra = 150
             });
         }
