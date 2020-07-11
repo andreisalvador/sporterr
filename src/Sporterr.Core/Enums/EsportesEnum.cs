@@ -3,7 +3,7 @@
 namespace Sporterr.Core.Enums
 {
     [Flags]
-    public enum Esporte
+    public enum Esportes
     {
         Futebol = 1,
         Volei = 2,

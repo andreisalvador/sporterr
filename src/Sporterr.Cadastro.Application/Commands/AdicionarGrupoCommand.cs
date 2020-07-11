@@ -4,20 +4,20 @@ using System;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class AdicionarGrupoUsuarioCommand : Command<AdicionarGrupoUsuarioCommand>
+    public class AdicionarGrupoCommand : Command<AdicionarGrupoCommand>
     {
         public Guid UsuarioCriadorId { get; private set; }
         public string NomeGrupo { get; private set; }
         public sbyte NumeroMaximoMembros { get; private set; }
 
-        public AdicionarGrupoUsuarioCommand(Guid usuarioCriadorId, string nomeGrupo, sbyte numeroMaximoMembros) : base(new AdicionarGrupoUsuarioValidation())
+        public AdicionarGrupoCommand(Guid usuarioCriadorId, string nomeGrupo, sbyte numeroMaximoMembros) : base(new AdicionarGrupoUsuarioValidation())
         {
             UsuarioCriadorId = usuarioCriadorId;
             NomeGrupo = nomeGrupo;
             NumeroMaximoMembros = numeroMaximoMembros;
         }
         
-        private class AdicionarGrupoUsuarioValidation : AbstractValidator<AdicionarGrupoUsuarioCommand>
+        private class AdicionarGrupoUsuarioValidation : AbstractValidator<AdicionarGrupoCommand>
         {
             public AdicionarGrupoUsuarioValidation()
             {

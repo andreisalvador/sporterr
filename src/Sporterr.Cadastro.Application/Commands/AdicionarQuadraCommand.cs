@@ -7,15 +7,15 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class AdicionarQuadraEmpresaCommand : Command<AdicionarQuadraEmpresaCommand>
+    public class AdicionarQuadraCommand : Command<AdicionarQuadraCommand>
     {
         public Guid UsuarioId { get; private set; }
         public Guid EmpresaId { get; private set; }
         public decimal ValorPorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
-        public Esporte TipoEsporteQuadra { get; private set; }
+        public Esportes TipoEsporteQuadra { get; private set; }
 
-        public AdicionarQuadraEmpresaCommand(Guid usuarioId, Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao, Esporte tipoEsporteQuadra)
+        public AdicionarQuadraCommand(Guid usuarioId, Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao, Esportes tipoEsporteQuadra)
             : base(new AdicionarQuadraEmpresaUsuarioValidation())
         {
             UsuarioId = usuarioId;
@@ -25,7 +25,7 @@ namespace Sporterr.Cadastro.Application.Commands
             TipoEsporteQuadra = tipoEsporteQuadra;
         }
 
-        private class AdicionarQuadraEmpresaUsuarioValidation : AbstractValidator<AdicionarQuadraEmpresaCommand>
+        private class AdicionarQuadraEmpresaUsuarioValidation : AbstractValidator<AdicionarQuadraCommand>
         {
             public AdicionarQuadraEmpresaUsuarioValidation()
             {

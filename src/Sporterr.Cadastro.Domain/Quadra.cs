@@ -15,13 +15,13 @@ namespace Sporterr.Cadastro.Domain
         public decimal ValorPorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
         public bool EmManutencao { get; private set; }
-        public Esporte TipoEsporteQuadra { get; private set; }
+        public Esportes TipoEsporteQuadra { get; private set; }
         public bool Ativo { get; private set; }
 
         // Ef rel.
         public Empresa Empresa { get; set; }
 
-        public Quadra(Esporte tipoEsporteQuadra, TimeSpan tempoLocacao, decimal valorPorTempoLocado)
+        public Quadra(Esportes tipoEsporteQuadra, TimeSpan tempoLocacao, decimal valorPorTempoLocado)
         {            
             TempoLocacao = tempoLocacao;
             ValorPorTempoLocado = valorPorTempoLocado;

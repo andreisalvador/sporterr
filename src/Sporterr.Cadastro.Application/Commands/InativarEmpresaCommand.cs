@@ -4,18 +4,18 @@ using System;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class InativarEmpresaUsuarioCommand : Command<InativarEmpresaUsuarioCommand>
+    public class InativarEmpresaCommand : Command<InativarEmpresaCommand>
     {
         public Guid UsuarioProprietarioEmpresaId { get; private set; }
         public Guid EmpresaId { get; private set; }
-        public InativarEmpresaUsuarioCommand(Guid usuarioProprietarioEmpresaId, Guid empresaId)
+        public InativarEmpresaCommand(Guid usuarioProprietarioEmpresaId, Guid empresaId)
             : base(new InativarEmpresaUsuarioValidation())
         {
             UsuarioProprietarioEmpresaId = usuarioProprietarioEmpresaId;
             EmpresaId = empresaId;
         }
 
-        private class InativarEmpresaUsuarioValidation : AbstractValidator<InativarEmpresaUsuarioCommand>
+        private class InativarEmpresaUsuarioValidation : AbstractValidator<InativarEmpresaCommand>
         {
             public InativarEmpresaUsuarioValidation()
             {

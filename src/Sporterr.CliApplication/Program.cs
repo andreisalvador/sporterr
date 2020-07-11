@@ -37,20 +37,20 @@ namespace Sporterr.CliApplication
             IServiceProvider provider = new ServiceCollection()
                 //Usuario
                 .AddScoped<IRequestHandler<AdicionarUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
-                .AddScoped<IRequestHandler<AdicionarEmpresaUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
-                .AddScoped<IRequestHandler<AdicionarGrupoUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
-                .AddScoped<IRequestHandler<InativarEmpresaUsuarioCommand, ValidationResult>, UsuarioCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarEmpresaCommand, ValidationResult>, UsuarioCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarGrupoCommand, ValidationResult>, UsuarioCommandHandler>()
+                .AddScoped<IRequestHandler<InativarEmpresaCommand, ValidationResult>, UsuarioCommandHandler>()
 
                 //Grupo
-                .AddScoped<IRequestHandler<AdicionarMembroGrupoCommand, ValidationResult>, GrupoCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarMembroCommand, ValidationResult>, GrupoCommandHandler>()
                 .AddScoped<IRequestHandler<RemoverMembroGrupoCommand, ValidationResult>, GrupoCommandHandler>()
 
                 //Empresa
-                .AddScoped<IRequestHandler<AdicionarQuadraEmpresaCommand, ValidationResult>, EmpresaCommandHandler>()
+                .AddScoped<IRequestHandler<AdicionarQuadraCommand, ValidationResult>, EmpresaCommandHandler>()
                 .AddScoped<IRequestHandler<AprovarSolicitacaoLocacaoCommand, ValidationResult>, EmpresaCommandHandler>()
                 .AddScoped<IRequestHandler<RecusarSolicitacaoLocacaoCommand, ValidationResult>, EmpresaCommandHandler>()
                 .AddScoped<IRequestHandler<CancelarSolicitacaoLocacaoEmpresaCommand, ValidationResult>, EmpresaCommandHandler>()
-                .AddScoped<IRequestHandler<InativarQuadraEmpresaCommand, ValidationResult>, EmpresaCommandHandler>()
+                .AddScoped<IRequestHandler<InativarQuadraCommand, ValidationResult>, EmpresaCommandHandler>()
                 .AddScoped<INotificationHandler<SolicitacaoCancelamentoLocacaoEnviadaEvent>, EmpresaEventHandler>()
 
                 //Solicitacao
@@ -84,7 +84,7 @@ namespace Sporterr.CliApplication
             Task.WaitAll(
                 //mediatr.Send(new AdicionarUsuarioCommand("Andrei Franz Salvador", "andreifs95@gmail.com", "12345678"))
                 //mediatr.Send(new AdicionarEmpresaUsuarioCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), "Andrei LTDA", "516464844684684", DiasSemanaFuncionamento.DiasUteis, TimeSpan.FromHours(8), TimeSpan.FromHours(18)))
-                //mediatr.Send(new AdicionarQuadraEmpresaCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), 150m, TimeSpan.FromHours(1), Esporte.Futebol))
+                //mediatr.Send(new AdicionarQuadraEmpresaCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), 150m, TimeSpan.FromHours(1), Esportes.Futebol))
                 //mediatr.Send(new AbrirSolicitacaoLocacaoCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"),
                 //Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d"), DateTime.Today.AddHours(8), DateTime.Today.AddHours(18)))
                 //mediatr.Send(new AprovarSolicitacaoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d")))

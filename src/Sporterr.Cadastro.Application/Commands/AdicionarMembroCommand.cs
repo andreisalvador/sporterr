@@ -7,18 +7,18 @@ using System.Text;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class AdicionarMembroGrupoCommand : Command<AdicionarMembroGrupoCommand>
+    public class AdicionarMembroCommand : Command<AdicionarMembroCommand>
     {
         public Guid UsuarioMembroId { get; private set; }
         public Guid GrupoId { get; private set; }
 
-        public AdicionarMembroGrupoCommand(Guid usuarioMembroId, Guid grupoId) : base(new AdicionarMembroGrupoValidation())
+        public AdicionarMembroCommand(Guid usuarioMembroId, Guid grupoId) : base(new AdicionarMembroGrupoValidation())
         {
             UsuarioMembroId = usuarioMembroId;
             GrupoId = grupoId;
         }
 
-        private class AdicionarMembroGrupoValidation  : AbstractValidator<AdicionarMembroGrupoCommand>
+        private class AdicionarMembroGrupoValidation  : AbstractValidator<AdicionarMembroCommand>
         {
             public AdicionarMembroGrupoValidation()
             {

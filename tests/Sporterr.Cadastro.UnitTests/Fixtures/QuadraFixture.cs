@@ -14,12 +14,12 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
     {
         public Quadra CriarQuadraValida()
         {
-            return new Quadra(Core.Enums.Esporte.Futebol, TimeSpan.FromHours(1), 100m);
+            return new Quadra(Core.Enums.Esportes.Futebol, TimeSpan.FromHours(1), 100m);
         }
 
         public Quadra CriarQuadraInvalida()
         {
-            return new Quadra((Esporte)16516, TimeSpan.MinValue, 0);
+            return new Quadra((Esportes)16516, TimeSpan.MinValue, 0);
         }
 
         public void Dispose()

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Sporterr.Cadastro.Application.Commands.Handlers
 {
     public class GrupoCommandHandler : CommandHandler<Grupo>,
-        IRequestHandler<AdicionarMembroGrupoCommand, ValidationResult>,
+        IRequestHandler<AdicionarMembroCommand, ValidationResult>,
         IRequestHandler<RemoverMembroGrupoCommand, ValidationResult>
     {
         private readonly IGrupoRepository _repository;
@@ -20,7 +20,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             _repository = repository;
         }
 
-        public async Task<ValidationResult> Handle(AdicionarMembroGrupoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarMembroCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return message.ValidationResult; 
 

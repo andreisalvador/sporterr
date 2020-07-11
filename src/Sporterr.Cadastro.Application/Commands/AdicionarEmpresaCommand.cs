@@ -5,7 +5,7 @@ using System;
 
 namespace Sporterr.Cadastro.Application.Commands
 {
-    public class AdicionarEmpresaUsuarioCommand : Command<AdicionarEmpresaUsuarioCommand>
+    public class AdicionarEmpresaCommand : Command<AdicionarEmpresaCommand>
     {
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
@@ -14,7 +14,7 @@ namespace Sporterr.Cadastro.Application.Commands
         public TimeSpan HorarioAbertura { get; private set; }
         public TimeSpan HorarioFechamento { get; private set; }
 
-        public AdicionarEmpresaUsuarioCommand(Guid usuarioProprietarioId, string razaoSocial, string cnpj, DiasSemanaFuncionamento diasFuncionamento, TimeSpan horarioAbertura, TimeSpan horarioFechamento)
+        public AdicionarEmpresaCommand(Guid usuarioProprietarioId, string razaoSocial, string cnpj, DiasSemanaFuncionamento diasFuncionamento, TimeSpan horarioAbertura, TimeSpan horarioFechamento)
             : base(new AdicionarEmpresaUsuarioValidation())
         {
             UsuarioProprietarioId = usuarioProprietarioId;
@@ -25,7 +25,7 @@ namespace Sporterr.Cadastro.Application.Commands
             HorarioFechamento = horarioFechamento;
         }        
 
-        private class AdicionarEmpresaUsuarioValidation : AbstractValidator<AdicionarEmpresaUsuarioCommand>
+        private class AdicionarEmpresaUsuarioValidation : AbstractValidator<AdicionarEmpresaCommand>
         {
             public AdicionarEmpresaUsuarioValidation()
             {

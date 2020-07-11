@@ -19,11 +19,11 @@ using System.Threading.Tasks;
 namespace Sporterr.Cadastro.Application.Commands.Handlers
 {
     public class EmpresaCommandHandler : CommandHandler<Empresa>,
-        IRequestHandler<AdicionarQuadraEmpresaCommand, ValidationResult>,
+        IRequestHandler<AdicionarQuadraCommand, ValidationResult>,
         IRequestHandler<AprovarSolicitacaoLocacaoCommand, ValidationResult>,
         IRequestHandler<RecusarSolicitacaoLocacaoCommand, ValidationResult>,
         IRequestHandler<CancelarSolicitacaoLocacaoEmpresaCommand, ValidationResult>,
-        IRequestHandler<InativarQuadraEmpresaCommand, ValidationResult>
+        IRequestHandler<InativarQuadraCommand, ValidationResult>
     {
 
         private readonly IEmpresaRepository _empresaRepository;
@@ -32,7 +32,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             _empresaRepository = empresaRepository;
         }
 
-        public async Task<ValidationResult> Handle(AdicionarQuadraEmpresaCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarQuadraCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return message.ValidationResult;
 
@@ -85,7 +85,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await PublishEvents(new SolicitacaoLocacaoCanceladaEvent(message.SolicitacaoId, message.MotivoCancelamento));
         }
 
-        public async Task<ValidationResult> Handle(InativarQuadraEmpresaCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(InativarQuadraCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return message.ValidationResult;
 

@@ -12,9 +12,9 @@ namespace Sporterr.Cadastro.Application.Events
         public Guid GrupoId { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
         public decimal ValorTempoLocado { get; private set; }
-        public Esporte TipoEsporteQuadra { get; private set; }
+        public Esportes TipoEsporteQuadra { get; private set; }
 
-        public QuadraAdicionadaEmpresaEvent(Guid quadraId, Guid usuarioId, Guid empresaId, Guid id, TimeSpan tempoLocacao, decimal valorTempoLocado, Esporte tipoEsporteQuadra)
+        public QuadraAdicionadaEmpresaEvent(Guid quadraId, Guid usuarioId, Guid empresaId, Guid id, TimeSpan tempoLocacao, decimal valorTempoLocado, Esportes tipoEsporteQuadra)
         {
             AggregateId = quadraId;
             QuadraId = quadraId;

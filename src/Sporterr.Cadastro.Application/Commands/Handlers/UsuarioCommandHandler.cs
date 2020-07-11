@@ -13,9 +13,9 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 {
     public class UsuarioCommandHandler : CommandHandler<Usuario>,
         IRequestHandler<AdicionarUsuarioCommand, ValidationResult>,
-        IRequestHandler<AdicionarEmpresaUsuarioCommand, ValidationResult>,
-        IRequestHandler<AdicionarGrupoUsuarioCommand, ValidationResult>,
-        IRequestHandler<InativarEmpresaUsuarioCommand, ValidationResult>
+        IRequestHandler<AdicionarEmpresaCommand, ValidationResult>,
+        IRequestHandler<AdicionarGrupoCommand, ValidationResult>,
+        IRequestHandler<InativarEmpresaCommand, ValidationResult>
     {
         private readonly IUsuarioRepository _repository;
 
@@ -35,7 +35,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await SaveAndPublish(new UsuarioAdicionadoEvent(usuario.Id, usuario.Nome, usuario.Email, usuario.Senha));
         }
 
-        public async Task<ValidationResult> Handle(AdicionarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarEmpresaCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return message.ValidationResult;
 
@@ -53,7 +53,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
                                                                                     message.DiasFuncionamento, message.HorarioAbertura, message.HorarioFechamento));
         }
 
-        public async Task<ValidationResult> Handle(AdicionarGrupoUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarGrupoCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return message.ValidationResult;
 
@@ -72,7 +72,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
             return await SaveAndPublish(new GrupoAdicionadoUsuarioEvent(novoGrupo.UsuarioCriadorId, novoGrupo.Id, novoGrupo.NomeGrupo, novoGrupo.NumeroMaximoMembros));
         }
 
-        public async Task<ValidationResult> Handle(InativarEmpresaUsuarioCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(InativarEmpresaCommand message, CancellationToken cancellationToken)
         {
             if (!message.IsValid()) return message.ValidationResult;
 
