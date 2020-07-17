@@ -5,6 +5,7 @@ using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.DomainObjects.Exceptions;
+using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Usuario;
 using Sporterr.Core.Messages.Handler;
 using System.Threading;
 using System.Threading.Tasks;

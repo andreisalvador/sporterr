@@ -13,9 +13,9 @@ namespace Sporterr.Cadastro.Application.Commands
         public Guid EmpresaId { get; private set; }
         public decimal ValorPorTempoLocado { get; private set; }
         public TimeSpan TempoLocacao { get; private set; }
-        public Esportes TipoEsporteQuadra { get; private set; }
+        public TipoEsporte TipoEsporteQuadra { get; private set; }
 
-        public AdicionarQuadraCommand(Guid usuarioId, Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao, Esportes tipoEsporteQuadra)
+        public AdicionarQuadraCommand(Guid usuarioId, Guid empresaId, decimal valorTempoLocado, TimeSpan tempoLocacao, TipoEsporte tipoEsporteQuadra)
             : base(new AdicionarQuadraEmpresaUsuarioValidation())
         {
             UsuarioId = usuarioId;

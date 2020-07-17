@@ -17,7 +17,7 @@ namespace Sporterr.Cadastro.Domain
         public string Nome { get; private set; }
         public string Email { get; private set; }
         public string Senha { get; private set; }
-        public Esportes PraticanteEsportes { get; private set; }
+        public TipoEsporte EsportesPratica { get; private set; }
         public bool Ativo { get; private set; }
         public IReadOnlyCollection<Empresa> Empresas => _empresas.AsReadOnly();
         public IReadOnlyCollection<Grupo> Grupos => _grupos.AsReadOnly();
@@ -32,6 +32,17 @@ namespace Sporterr.Cadastro.Domain
             Ativar();
             Validate();
         }
+
+        public void AtivarEsportesPratica(TipoEsporte novosEsportesPratica)
+        {
+            EsportesPratica |= novosEsportesPratica;
+        }
+
+        public void DesativarEsportesPratica(TipoEsporte esportesParaDesativar)
+        {
+            EsportesPratica &= ~esportesParaDesativar;
+        }
+
         public void AdicionarEmpresa(Empresa empresa)
         {
             empresa.Validate();

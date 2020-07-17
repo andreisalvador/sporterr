@@ -31,7 +31,7 @@ namespace Sporterr.Cadastro.Data.Repository
 
         public void AtualizarEmpresa(Empresa empresa)
         {
-            _context.Empresas.Update(empresa);
+            _context.Empresas.Update(empresa);            
         }
 
         public void AtualizarQuadra(Quadra quadra)

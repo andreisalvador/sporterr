@@ -8,9 +8,11 @@ namespace Sporterr.Sorteio.Data
 {
     public class SorteioContext : DbContext
     {
+        public DbSet<PerfilHabilidades> PerfisHabilidade { get; set; }
         public DbSet<Esporte> Esportes { get; set; }
         public DbSet<Habilidade> Habilidades { get; set; }
         public DbSet<HabilidadeUsuario> HabilidadesUsuarios { get; set; }
+        public DbSet<AvaliacaoHabilidade> AvaliacoesHabilidade { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -8,13 +8,13 @@ namespace Sporterr.Sorteio.Domain
 {
     public class Esporte : Entity<Esporte>, IAggregateRoot
     {
-        private readonly IList<Habilidade> _habilidades;
+        private readonly List<Habilidade> _habilidades;
 
         public string Nome { get; private set; }
-        public Core.Enums.Esportes TipoEsporte { get; }
-        public IReadOnlyCollection<Habilidade> Habilidades { get; private set; }
+        public Core.Enums.TipoEsporte TipoEsporte { get; }
+        public IReadOnlyCollection<Habilidade> Habilidades => _habilidades.AsReadOnly();
 
-        public Esporte(string nome, Core.Enums.Esportes tipoEsporte)
+        public Esporte(string nome, Core.Enums.TipoEsporte tipoEsporte)
         {
             Nome = nome;
             TipoEsporte = tipoEsporte;

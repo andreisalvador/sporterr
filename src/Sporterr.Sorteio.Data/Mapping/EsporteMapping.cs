@@ -18,7 +18,7 @@ namespace Sporterr.Sorteio.Data.Mapping
             builder.HasIndex(e => e.TipoEsporte)
                 .IsUnique();
 
-            builder.ToTable("Esportes");
+            builder.ToTable("TipoEsporte");
         }
     }
 }

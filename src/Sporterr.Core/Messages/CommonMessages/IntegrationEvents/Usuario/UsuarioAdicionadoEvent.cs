@@ -1,7 +1,7 @@
 ﻿using Sporterr.Core.Messages;
 using System;
 
-namespace Sporterr.Cadastro.Application.Events
+namespace Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Usuario
 {
     public class UsuarioAdicionadoEvent : Event
     {

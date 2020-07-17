@@ -6,7 +6,7 @@ namespace Sporterr.Sorteio.Domain.Esportes
 {
     public class Futebol : Esporte
     {
-        public Futebol() : base(nameof(Futebol), Core.Enums.Esportes.Futebol)
+        public Futebol() : base(nameof(Futebol), Core.Enums.TipoEsporte.Futebol)
         {
             AdicionarHabilidade(new Habilidade("Chute"));
             AdicionarHabilidade(new Habilidade("Defesa"));
