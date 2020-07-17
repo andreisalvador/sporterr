@@ -8,6 +8,8 @@ namespace Sporterr.Sorteio.Data
 {
     public class SorteioContext : DbContext
     {
+        private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=SorteioDb;Integrated Security=true;Pooling=true";
+
         public DbSet<PerfilHabilidades> PerfisHabilidade { get; set; }
         public DbSet<Esporte> Esportes { get; set; }
         public DbSet<Habilidade> Habilidades { get; set; }
@@ -16,7 +18,8 @@ namespace Sporterr.Sorteio.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            optionsBuilder.UseNpgsql(CONNECTION_STRING_POSTGRES);
+            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
