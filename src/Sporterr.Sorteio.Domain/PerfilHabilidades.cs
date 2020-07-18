@@ -1,6 +1,7 @@
 ﻿using Sporterr.Core.DomainObjects;
 using Sporterr.Core.DomainObjects.Interfaces;
 using Sporterr.Core.Enums;
+using Sporterr.Sorteio.Domain.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace Sporterr.Sorteio.Domain
 
         public override void Validate()
         {
-            throw new NotImplementedException();
+            Validate(this, new PerfilHabilidadesValidation());
         }
 
         public void Ativar()

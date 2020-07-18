@@ -1,4 +1,5 @@
 ﻿using Sporterr.Core.DomainObjects;
+using Sporterr.Sorteio.Domain.Validations;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +24,7 @@ namespace Sporterr.Sorteio.Domain
 
         public override void Validate()
         {
-            throw new NotImplementedException();
+            Validate(this, new AvaliacaoHabilidadeValidation());
         }
     }
 }
