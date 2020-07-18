@@ -27,9 +27,16 @@ namespace Sporterr.Sorteio.Domain
             HabilidadeId = habilidadeId;
             EsporteId = esporteId;            
             _avaliacoes = new List<AvaliacaoHabilidade>();
+            Validate();
         }
 
         internal void AssociarPerfilHabilidadesUsuario(Guid perfilHabilidades) => PerfilHabilidadesId = perfilHabilidades;
+
+        public void AdicionarAvaliacoesHabilidade(IEnumerable<AvaliacaoHabilidade> avaliacoes)
+        {
+            foreach (AvaliacaoHabilidade avaliacao in avaliacoes)
+                AdicionarAvaliacaoHabilidade(avaliacao);
+        }
 
         public void AdicionarAvaliacaoHabilidade(AvaliacaoHabilidade avaliacao)
         {

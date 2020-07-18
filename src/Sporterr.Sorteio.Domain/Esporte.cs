@@ -20,6 +20,7 @@ namespace Sporterr.Sorteio.Domain
             Nome = nome;
             TipoEsporte = tipoEsporte;
             _habilidades = new List<Habilidade>();
+            Validate();
         }
 
         public void AdicionarHabilidade(Habilidade habilidade)

@@ -1,4 +1,6 @@
-﻿using Sporterr.Cadastro.Domain;
+﻿using Bogus;
+using Sporterr.Cadastro.Domain;
+using Sporterr.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +15,7 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
     {
         public Grupo CriarGrupoValido(sbyte quantidadeMaximaMembros = 2)
         {
-            return new Grupo("Futebol 2020", quantidadeMaximaMembros);
+            return new Faker<Grupo>("pt_BR").CustomInstantiator(g => new Grupo($"Grupo de {g.PickRandom<TipoEsporte>()}", quantidadeMaximaMembros));
         }
 
         public Grupo CriarGrupoInvalido()

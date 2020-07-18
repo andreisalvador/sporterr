@@ -1,4 +1,6 @@
-﻿using Sporterr.Cadastro.Domain;
+﻿using Bogus;
+using Bogus.Extensions.Brazil;
+using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,8 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
     {
         public Empresa CriarEmpresaValida()
         {
-            return new Empresa("Andrei Solutions", "15405104000153", TimeSpan.FromHours(8), TimeSpan.FromHours(18), Core.Enums.DiasSemanaFuncionamento.DiasUteis);
+            return new Faker<Empresa>("pt_BR")
+                .CustomInstantiator(e => new Empresa(e.Company.CompanyName(), e.Company.Cnpj(), TimeSpan.FromHours(8), TimeSpan.FromHours(18), DiasSemanaFuncionamento.DiasUteis));
         }
 
         public Empresa CriarEmpresaInvalida()

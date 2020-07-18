@@ -1,8 +1,10 @@
-﻿using Sporterr.Cadastro.Domain;
+﻿using Bogus;
+using Sporterr.Cadastro.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using static Bogus.DataSets.Name;
 
 namespace Sporterr.Cadastro.UnitTests.Fixtures
 {
@@ -13,7 +15,8 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
     {
         public Usuario CriarUsuarioValido()
         {
-            return new Usuario("Andrei", "andreifs@gmail.com", "12345678");
+            return new Faker<Usuario>("pt_BR")
+                .CustomInstantiator(u => new Usuario(u.Name.FirstName(u.PickRandom<Gender>()), u.Internet.Email(), u.Internet.Password(20)));
         }
 
         public Usuario CriarUsuarioInvalido()

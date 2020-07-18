@@ -12,10 +12,11 @@ namespace Sporterr.Sorteio.Domain
         public string Nome { get; private set; }
         public Guid EsporteId { get; private set; }
 
-        public Esporte Esporte { get; private set; }
+        public Esporte Esporte { get; set; }
         public Habilidade(string nome)
         {
             Nome = nome;
+            Validate();
         }
 
         internal void AssociarEsporte(Guid esporteId) => EsporteId = esporteId;

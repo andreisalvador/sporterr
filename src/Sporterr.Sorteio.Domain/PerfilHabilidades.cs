@@ -22,6 +22,7 @@ namespace Sporterr.Sorteio.Domain
         {
             UsuarioId = usuarioId;            
             _habilidadesUsuario = new List<HabilidadeUsuario>();
+            Validate();
             Ativar();
         }
 
@@ -38,7 +39,7 @@ namespace Sporterr.Sorteio.Domain
         }
 
         public IEnumerable<HabilidadeUsuario> ObterHabilidadesPorEsporte(TipoEsporte esporte)
-            => _habilidadesUsuario.Where(h => h.Esporte.Equals(esporte));
+            => _habilidadesUsuario.Where(h => h.Esporte.TipoEsporte.Equals(esporte));
 
         public void VincularNovoEsporte(TipoEsporte esporte)
         {

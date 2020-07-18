@@ -1,8 +1,7 @@
-﻿using Sporterr.Cadastro.Domain;
+﻿using Bogus;
+using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Sporterr.Cadastro.UnitTests.Fixtures
@@ -14,7 +13,7 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
     {
         public Quadra CriarQuadraValida()
         {
-            return new Quadra(Core.Enums.TipoEsporte.Futebol, TimeSpan.FromHours(1), 100m);
+            return new Faker<Quadra>("pt_BR").CustomInstantiator(q => new Quadra(q.PickRandom<TipoEsporte>(), TimeSpan.FromHours(1), q.Random.Decimal(100, 150)));
         }
 
         public Quadra CriarQuadraInvalida()

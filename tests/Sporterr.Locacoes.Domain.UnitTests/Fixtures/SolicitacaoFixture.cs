@@ -1,4 +1,6 @@
-﻿using Sporterr.Locacoes.Domain;
+﻿using Bogus;
+using Bogus.DataSets;
+using Sporterr.Locacoes.Domain;
 using System;
 using Xunit;
 
@@ -12,7 +14,10 @@ namespace Sporterr.Locacoes.UnitTests.Fixtures
     {
         public Solicitacao CriarSolicitacaoValida()
         {
-            return new Solicitacao(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), new DateTime(2020, 7, 6, 15, 0, 0), new DateTime(2020, 7, 6, 16, 0, 0));
+            return new Faker<Solicitacao>("pt_BR")
+                .CustomInstantiator(s => new Solicitacao(s.Random.Guid(), s.Random.Guid(), s.Random.Guid(),
+                            s.Date.Between(new DateTime(2020, 7, 6, 15, 0, 0), new DateTime(2020, 7, 6, 15, 30, 0)),
+                             s.Date.Between(new DateTime(2020, 7, 6, 15, 31, 0), new DateTime(2020, 7, 6, 16, 0, 0))));
         }
 
         public Solicitacao CriarSolicitacaoInvalida()

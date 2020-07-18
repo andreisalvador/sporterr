@@ -18,6 +18,7 @@ namespace Sporterr.Sorteio.Domain
         {
             UsuarioAvaliadoId = usuarioAvaliadoId;            
             Nota = nota;
+            Validate();
         }
 
         internal void AssociarHabilidadeUsuario(Guid habilidadeUsuaioId) => HabilidadeUsuarioId = habilidadeUsuaioId;
