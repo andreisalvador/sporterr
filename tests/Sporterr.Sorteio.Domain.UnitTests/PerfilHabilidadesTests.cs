@@ -96,5 +96,12 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             //Assert
             Assert.Equal(2, habilidadesEncontradas.Count());
         }
+
+        [Fact(DisplayName ="Vincula esporte na habilidade", Skip = "Preciso planejar como vincular")]
+        [Trait("Domain", "Testes de perfil de habilidades")]
+        public void PerfilHabilidades_VincularEsporte_DeveVincularEsporteNaHabilidade()
+        {
+
+        }
     }
 }

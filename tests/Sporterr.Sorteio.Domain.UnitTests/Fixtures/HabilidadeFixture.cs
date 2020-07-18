@@ -12,7 +12,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests.Fixtures
     {
         public Habilidade CriarHabilidadeValida()
         {
-            return new Faker<Habilidade>("pt-BR")
+            return new Faker<Habilidade>("pt_BR")
                                         .CustomInstantiator(h => new Habilidade(h.Random.String()));
         }
 
