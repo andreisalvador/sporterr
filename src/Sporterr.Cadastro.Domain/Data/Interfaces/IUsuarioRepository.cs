@@ -1,9 +1,8 @@
-﻿using Sporterr.Cadastro.Domain;
-using Sporterr.Core.Data;
+﻿using Sporterr.Core.Data;
 using System;
 using System.Threading.Tasks;
 
-namespace Sporterr.Cadastro.Data.Repository.Interfaces
+namespace Sporterr.Cadastro.Domain.Data.Interfaces
 {
     public interface IUsuarioRepository : IRepository<Usuario>
     {

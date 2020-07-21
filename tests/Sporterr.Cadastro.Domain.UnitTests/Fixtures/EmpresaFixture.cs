@@ -3,8 +3,6 @@ using Bogus.Extensions.Brazil;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Sporterr.Cadastro.UnitTests.Fixtures
@@ -23,7 +21,7 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
 
         public Empresa CriarEmpresaInvalida()
         {
-            return new Empresa("A", "", TimeSpan.MinValue, TimeSpan.MinValue, (DiasSemanaFuncionamento)1546);
+            return new Empresa("A", "20.188.785/0001-85", TimeSpan.MinValue, TimeSpan.MinValue, (DiasSemanaFuncionamento)1546);
         }
 
 

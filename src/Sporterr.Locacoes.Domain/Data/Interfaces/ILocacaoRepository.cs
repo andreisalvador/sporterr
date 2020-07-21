@@ -1,10 +1,9 @@
 ﻿using Sporterr.Core.Data;
-using Sporterr.Locacoes.Domain;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sporterr.Locacoes.Data.Repository.Interfaces
+namespace Sporterr.Locacoes.Domain.Data.Interfaces
 {
     public interface ILocacaoRepository : IRepository<Locacao>
     {

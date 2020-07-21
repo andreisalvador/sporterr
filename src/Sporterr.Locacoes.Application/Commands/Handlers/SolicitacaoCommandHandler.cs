@@ -3,9 +3,8 @@ using MediatR;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
 using Sporterr.Core.Messages.Handler;
-using Sporterr.Locacoes.Application.Events;
-using Sporterr.Locacoes.Data.Repository.Interfaces;
 using Sporterr.Locacoes.Domain;
+using Sporterr.Locacoes.Domain.Data.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 

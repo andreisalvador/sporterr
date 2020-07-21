@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sporterr.Sorteio.Data.Repository.Interfaces
+namespace Sporterr.Sorteio.Domain.Data.Interfaces
 {
     public interface IEsporteRepository : IRepository<Esporte>
     {
@@ -14,6 +14,7 @@ namespace Sporterr.Sorteio.Data.Repository.Interfaces
         void RemoverEsporte(Esporte esporte);
         void AtualizarEsporte(Esporte esporte);
         Task<Esporte> ObterEsportePorId(Guid esporteId);
+        Task<Esporte> ObterEsporteComHabilidadesPorId(Guid esporteId);
 
         void AdicionarHabilidade(Habilidade habilidade);
         void RemoverHabilidade(Habilidade habilidade);

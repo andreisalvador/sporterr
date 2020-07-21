@@ -1,18 +1,14 @@
 ﻿using FluentValidation.Results;
 using MediatR;
 using Sporterr.Cadastro.Application.Events;
-using Sporterr.Cadastro.Data.Repository.Interfaces;
 using Sporterr.Cadastro.Domain;
+using Sporterr.Cadastro.Domain.Data.Interfaces;
 using Sporterr.Core.Communication.Mediator;
-using Sporterr.Core.Data;
 using Sporterr.Core.DomainObjects.DTO;
 using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
 using Sporterr.Core.Messages.Handler;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 

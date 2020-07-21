@@ -16,7 +16,7 @@ namespace Sporterr.Cadastro.Domain
 
         public Guid UsuarioProprietarioId { get; private set; }
         public string RazaoSocial { get; private set; }
-        public string Cnpj { get; private set; }
+        public Cnpj Cnpj { get; private set; }
         public DiasSemanaFuncionamento DiasFuncionamento { get; private set; }
         public TimeSpan HorarioAbertura { get; private set; }
         public TimeSpan HorarioFechamento { get; private set; }

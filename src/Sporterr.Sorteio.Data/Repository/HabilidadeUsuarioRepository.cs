@@ -1,8 +1,7 @@
-﻿using Sporterr.Sorteio.Data.Repository.Interfaces;
-using Sporterr.Sorteio.Domain;
+﻿using Sporterr.Sorteio.Domain;
+using Sporterr.Sorteio.Domain.Data.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sporterr.Sorteio.Data.Repository
@@ -55,9 +54,19 @@ namespace Sporterr.Sorteio.Data.Repository
             _context.HabilidadesUsuarios.Remove(habilidadeUsuario);
         }
 
+        public async Task<HabilidadeUsuario> ObterPorId(Guid habilidadeUsuarioId)
+        {
+            return await _context.HabilidadesUsuarios.FindAsync(habilidadeUsuarioId);
+        }
+
+        public async Task<AvaliacaoHabilidade> ObterAvaliacaoHabilidadePorId(Guid avaliacaoHabilidadeId)
+        {
+            return await _context.AvaliacoesHabilidade.FindAsync(avaliacaoHabilidadeId);
+        }
         public void Dispose()
         {
             _context?.Dispose();
         }
+
     }
 }

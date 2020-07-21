@@ -1,8 +1,6 @@
-﻿using Sporterr.Sorteio.Data.Repository.Interfaces;
-using Sporterr.Sorteio.Domain;
+﻿using Sporterr.Sorteio.Domain;
+using Sporterr.Sorteio.Domain.Data.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sporterr.Sorteio.Data.Repository
@@ -28,10 +26,15 @@ namespace Sporterr.Sorteio.Data.Repository
         {
             return await _context.CommitAsync();
         }
+        public async Task<PerfilHabilidades> ObterPorId(Guid perfilId)
+        {
+            return await _context.PerfisHabilidade.FindAsync(perfilId);
+        }
 
         public void Dispose()
         {
             _context?.Dispose();
         }
+
     }
 }

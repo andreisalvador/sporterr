@@ -13,7 +13,7 @@ namespace Sporterr.Cadastro.Domain.Validations
                 .MaximumLength(100);
 
             RuleFor(e => e.Cnpj)
-                .NotEmpty().WithMessage("O Cnpj precisa ser informado.");
+                .NotNull().WithMessage("O Cnpj precisa ser válido.");
 
             RuleFor(e => e.DiasFuncionamento)
                 .IsInEnum().WithMessage("O registro de dias de funcionamento informado é inválido.");

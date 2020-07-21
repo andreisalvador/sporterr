@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sporterr.Locacoes.Data.Repository.Interfaces;
 using Sporterr.Locacoes.Domain;
+using Sporterr.Locacoes.Domain.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

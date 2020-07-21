@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Sporterr.Cadastro.Data.Repository.Interfaces;
-using Sporterr.Cadastro.Domain;
+﻿using Sporterr.Cadastro.Domain;
+using Sporterr.Cadastro.Domain.Data.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sporterr.Cadastro.Data.Repository

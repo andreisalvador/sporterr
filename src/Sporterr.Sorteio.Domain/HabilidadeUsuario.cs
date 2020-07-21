@@ -45,6 +45,9 @@ namespace Sporterr.Sorteio.Domain
             Nota = _avaliacoes.Average(a => a.Nota);
         }
 
+        public static implicit operator HabilidadeUsuario(Habilidade habilidade)
+            => new HabilidadeUsuario(habilidade.Id, habilidade.EsporteId);
+
         public override void Validate()
         {
             Validate(this, new HabilidadeUsuarioValidation());

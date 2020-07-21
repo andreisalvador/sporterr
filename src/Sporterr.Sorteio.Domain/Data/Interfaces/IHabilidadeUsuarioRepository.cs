@@ -3,8 +3,9 @@ using Sporterr.Sorteio.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Sporterr.Sorteio.Data.Repository.Interfaces
+namespace Sporterr.Sorteio.Domain.Data.Interfaces
 {
     public interface IHabilidadeUsuarioRepository : IRepository<HabilidadeUsuario>
     {
@@ -16,5 +17,8 @@ namespace Sporterr.Sorteio.Data.Repository.Interfaces
         void RemoverHabilidadesUsuario(IEnumerable<HabilidadeUsuario> habilidadesUsuario);
 
         void AdicionarAvaliacaoHabilidade(AvaliacaoHabilidade avaliacaoHabilidade);
+
+        Task<HabilidadeUsuario> ObterPorId(Guid habilidadeUsuarioId);
+        Task<AvaliacaoHabilidade> ObterAvaliacaoHabilidadePorId(Guid avaliacaoHabilidadeId);
     }
 }

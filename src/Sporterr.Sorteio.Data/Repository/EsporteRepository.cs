@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Sporterr.Sorteio.Data.Repository.Interfaces;
 using Sporterr.Sorteio.Domain;
+using Sporterr.Sorteio.Domain.Data.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sporterr.Sorteio.Data.Repository
@@ -46,6 +45,11 @@ namespace Sporterr.Sorteio.Data.Repository
         public async Task<Esporte> ObterEsportePorId(Guid esporteId)
         {
             return await _context.Esportes.FindAsync(esporteId);
+        }
+
+        public async Task<Esporte> ObterEsporteComHabilidadesPorId(Guid esporteId)
+        {
+            return await _context.Esportes.Include(e => e.Habilidades).SingleOrDefaultAsync(e => e.Id.Equals(esporteId));
         }
 
         public async Task<Habilidade> ObterHabilidadePorId(Guid habilidadeId)
