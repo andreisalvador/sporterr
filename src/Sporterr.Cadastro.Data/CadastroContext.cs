@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Sporterr.Cadastro.Domain;
+using Sporterr.Core.Data;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sporterr.Cadastro.Data
 {
-    public class CadastroContext : DbContext
+    public class CadastroContext : DbContext, IDbContext
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=CadastrosDb;Integrated Security=true;Pooling=true";
 

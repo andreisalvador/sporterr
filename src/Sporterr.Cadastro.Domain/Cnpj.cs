@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace Sporterr.Cadastro.Domain
 {
@@ -49,18 +44,18 @@ namespace Sporterr.Cadastro.Domain
             int soma;
             int resto;
             string digito;
-            char[] numerosCnpj;
+            Span<char> numerosCnpj;
             ReadOnlySpan<char> tempCnpj;
 
             if (HasMask(cnpj))
-                numerosCnpj = RemoveMask(cnpj);
+                numerosCnpj = RemoveMask(ref cnpj);
             else
                 numerosCnpj = cnpj.ToCharArray();
 
-            if (numerosCnpj.Count() != 14)
+            if (numerosCnpj.Length != 14)
                 return false;
 
-            tempCnpj = numerosCnpj.AsSpan(0, 12);
+            tempCnpj = numerosCnpj.Slice(0, 12);
 
             soma = 0;
 
@@ -93,19 +88,18 @@ namespace Sporterr.Cadastro.Domain
             return cnpj.EndsWith(digito);
         }
 
-        private static char[] RemoveMask(string cnpj)
+        private static Span<char> RemoveMask(ref string cnpj)
         {
-            char[] cnpjNumbers = new char[14];
+            Span<char> cnpjNumbers = stackalloc char[14];
             int index = 0;
 
             for (int i = 0; i < cnpj.Length; i++)
                 if (char.IsNumber(cnpj[i]))
                     cnpjNumbers[index++] = cnpj[i];
 
-            return cnpjNumbers;
+            return cnpjNumbers.ToArray();
         }
 
         private static bool HasMask(string value) => value.Contains('.');
-
     }
 }

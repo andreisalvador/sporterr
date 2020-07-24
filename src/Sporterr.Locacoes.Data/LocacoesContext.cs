@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Sporterr.Core.Data;
 using Sporterr.Locacoes.Domain;
 using System;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Locacoes.Data
 {
-    public class LocacoesContext : DbContext
+    public class LocacoesContext : DbContext, IDbContext
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=LocacoesDb;Integrated Security=true;Pooling=true";
 

@@ -1,4 +1,5 @@
-﻿using Sporterr.Sorteio.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using Sporterr.Sorteio.Domain;
 using Sporterr.Sorteio.Domain.Data.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -26,6 +27,11 @@ namespace Sporterr.Sorteio.Data.Repository
         {
             return await _context.CommitAsync();
         }
+        public async Task<bool> Existe(Guid perfilId)
+        {
+            return await _context.PerfisHabilidade.AnyAsync(p => p.Id.Equals(perfilId));
+        }
+
         public async Task<PerfilHabilidades> ObterPorId(Guid perfilId)
         {
             return await _context.PerfisHabilidade.FindAsync(perfilId);
@@ -36,5 +42,6 @@ namespace Sporterr.Sorteio.Data.Repository
             _context?.Dispose();
         }
 
+        
     }
 }

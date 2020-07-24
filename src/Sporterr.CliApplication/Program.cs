@@ -8,6 +8,7 @@ using Sporterr.Cadastro.Data;
 using Sporterr.Cadastro.Data.Repository;
 using Sporterr.Cadastro.Domain.Data.Interfaces;
 using Sporterr.Core.Communication.Mediator;
+using Sporterr.Core.Data;
 using Sporterr.Core.Data.EventSourcing;
 using Sporterr.Core.Data.Reading;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
@@ -21,6 +22,10 @@ using Sporterr.Locacoes.Data.Repository;
 using Sporterr.Locacoes.Domain.Data.Interfaces;
 using Sporterr.Reading;
 using Sporterr.Reading.Repository;
+using Sporterr.Sorteio.Data;
+using Sporterr.Sorteio.Data.Repository;
+using Sporterr.Sorteio.Data.Seeds;
+using Sporterr.Sorteio.Domain.Data.Interfaces;
 using System;
 using System.Threading.Tasks;
 
@@ -62,29 +67,35 @@ namespace Sporterr.CliApplication
                 .AddScoped<ILocacaoRepository, LocacaoRepository>()
                 .AddScoped<ISolicitacaoRepository, SolicitacaoRepository>()
                 .AddScoped<IGrupoRepository, GrupoRepository>()
-                .AddScoped<IMediatrHandler, MediatrHandler>()
-                .AddScoped<EventStoreContext>()
+                .AddScoped<IEsporteRepository, EsporteRepository>()
+                .AddScoped<IHabilidadeUsuarioRepository, HabilidadeUsuarioRepository>()
+                .AddScoped<IPerfilHabilidadesRepository, PerfilHabilidadesRepository>()
                 .AddScoped<IEventSourcingRepository, EventSourcingRepository>()
-                .AddDbContext<LocacoesContext>()
-                .AddDbContext<CadastroContext>()
                 .AddScoped<IReadOnlyRepository, ReadOnlyRepository>()
                 .AddSingleton<RavenDocumentStore>()
+                .AddScoped<EventStoreContext>()
+                .AddDbContext<LocacoesContext>()
+                .AddDbContext<CadastroContext>()
+                .AddDbContext<SorteioContext>()
+                .AddTransient<IDataSeeder<SorteioContext>, SorteioDataSeeder>()
+                .AddScoped<IMediatrHandler, MediatrHandler>()
                 .AddMediatR(typeof(Program))
                 .BuildServiceProvider();
 
 
 
-            var mediatr = provider.GetService<IMediatrHandler>();
+            var mediatr = provider.GetService<IDataSeeder<SorteioContext>>();
 
 
             Task.WaitAll(
+                mediatr.Seed()
                 //mediatr.Send(new AdicionarUsuarioCommand("Andrei Franz Salvador", "andreifs95@gmail.com", "12345678"))
                 //mediatr.Send(new AdicionarEmpresaUsuarioCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), "Andrei LTDA", "516464844684684", DiasSemanaFuncionamento.DiasUteis, TimeSpan.FromHours(8), TimeSpan.FromHours(18)))
                 //mediatr.Send(new AdicionarQuadraEmpresaCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), 150m, TimeSpan.FromHours(1), TipoEsporte.Futebol))
                 //mediatr.Send(new AbrirSolicitacaoLocacaoCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"),
                 //Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d"), DateTime.Today.AddHours(8), DateTime.Today.AddHours(18)))
                 //mediatr.Send(new AprovarSolicitacaoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d")))
-                mediatr.Send(new SolicitarCancelamentoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("5b4f8c44-0b0c-4e72-88f3-d34bb1d5411c")))
+                //mediatr.Send(new SolicitarCancelamentoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("5b4f8c44-0b0c-4e72-88f3-d34bb1d5411c")))
                 );
 
         }

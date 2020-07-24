@@ -23,6 +23,7 @@
     <ProjectReference Include="..\Sporterr.Locacoes.Application\Sporterr.Locacoes.Application.csproj" />
     <ProjectReference Include="..\Sporterr.Locacoes.Data\Sporterr.Locacoes.Data.csproj" />
     <ProjectReference Include="..\Sporterr.Reading\Sporterr.Reading.csproj" />
+    <ProjectReference Include="..\Sporterr.Sorteio.Data\Sporterr.Sorteio.Data.csproj" />
   </ItemGroup>
 
 </Project>

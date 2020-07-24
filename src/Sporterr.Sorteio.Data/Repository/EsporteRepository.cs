@@ -67,6 +67,11 @@ namespace Sporterr.Sorteio.Data.Repository
             _context.Esportes.Remove(esporte);
         }
 
+        public void AdicionarHabilidades(IEnumerable<Habilidade> habilidades)
+        {
+            _context.Habilidades.AddRange(habilidades);
+        }
+
         public void RemoverHabilidade(Habilidade habilidade)
         {
             _context.Habilidades.Remove(habilidade);
@@ -76,5 +81,7 @@ namespace Sporterr.Sorteio.Data.Repository
         {
             _context?.Dispose();
         }
+
+
     }
 }

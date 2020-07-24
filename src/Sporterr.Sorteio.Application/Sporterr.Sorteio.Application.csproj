@@ -5,8 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Events\" />
+    <Folder Include="Events\Handlers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sporterr.Core\Sporterr.Core.csproj" />
+    <ProjectReference Include="..\Sporterr.Sorteio.Domain\Sporterr.Sorteio.Domain.csproj" />
   </ItemGroup>
 
 </Project>

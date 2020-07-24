@@ -17,6 +17,7 @@ namespace Sporterr.Sorteio.Domain.Data.Interfaces
         Task<Esporte> ObterEsporteComHabilidadesPorId(Guid esporteId);
 
         void AdicionarHabilidade(Habilidade habilidade);
+        void AdicionarHabilidades(IEnumerable<Habilidade> habilidades);
         void RemoverHabilidade(Habilidade habilidade);
         void AtualizarHabilidade(Habilidade habilidade);
         Task<Habilidade> ObterHabilidadePorId(Guid habilidadeId);

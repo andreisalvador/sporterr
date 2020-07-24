@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Sporterr.Core.Data;
 using Sporterr.Sorteio.Domain;
 using System;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Sorteio.Data
 {
-    public class SorteioContext : DbContext
+    public class SorteioContext : DbContext, IDbContext
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=SorteioDb;Integrated Security=true;Pooling=true";
 
@@ -20,7 +21,7 @@ namespace Sporterr.Sorteio.Data
         {
             optionsBuilder.UseNpgsql(CONNECTION_STRING_POSTGRES);
             base.OnConfiguring(optionsBuilder);
-        }
+        }        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
