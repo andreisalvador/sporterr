@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Cadastro.UnitTests.Fixtures;
 using System;
@@ -23,7 +24,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
         public void Membro_Validate_MembroDeveSerInvalido()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.Membro.CriarMembroInvalido());
+            _fixtureWrapper.Membro.Invoking(x => x.CriarMembroInvalido()).Should().Throw<ValidationException>();
         }
 
         [Fact(DisplayName = "Novo membro válido")]
@@ -34,7 +35,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Membro membro = _fixtureWrapper.Membro.CriarMembroValido();
 
             //Assert
-            Assert.NotNull(membro);            
+            membro.Should().NotBeNull();
         }
     }
 }

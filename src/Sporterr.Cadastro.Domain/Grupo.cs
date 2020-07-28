@@ -15,8 +15,8 @@ namespace Sporterr.Cadastro.Domain
 
         public Guid UsuarioCriadorId { get; private set; }
         public string NomeGrupo { get; private set; }
-        public sbyte NumeroMaximoMembros { get; private set; }
-        public sbyte QuantidadeMembros { get; private set; }
+        public byte NumeroMaximoMembros { get; private set; }
+        public byte QuantidadeMembros { get; private set; }
         public IReadOnlyCollection<Membro> Membros => _membros.AsReadOnly();
         public bool Ativo { get; private set; }
 
@@ -24,7 +24,7 @@ namespace Sporterr.Cadastro.Domain
         public Usuario UsuarioCriador { get; set; }
 
 
-        public Grupo(string nomeGrupo, sbyte numeroMaximoMembros = 5)
+        public Grupo(string nomeGrupo, byte numeroMaximoMembros = 5)
         {
             NomeGrupo = nomeGrupo;
             NumeroMaximoMembros = numeroMaximoMembros;

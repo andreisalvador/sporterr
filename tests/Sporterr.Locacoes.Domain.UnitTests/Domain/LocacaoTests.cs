@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Locacoes.Domain;
 using Sporterr.Locacoes.Domain.Enums;
@@ -29,7 +30,7 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             Locacao locacao = _fixtureWrapper.Locacao.CriarLocacaoValida();
 
             //Assert
-            Assert.NotNull(locacao);
+            locacao.Should().NotBeNull();
 
         }
         [Fact(DisplayName = "Calculo valor locação")]
@@ -40,7 +41,7 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             Locacao locacao = _fixtureWrapper.Locacao.CriarLocacaoValida();
 
             //Assert
-            Assert.Equal(600m, locacao.Valor);
+            locacao.Valor.Should().Be(600m);
 
         }
 
@@ -49,7 +50,7 @@ namespace Sporterr.Locacoes.UnitTests.Domain
         public void Locacao_Validate_DeveCriarLocacaoInvalida()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.Locacao.CriarLocacaoInvalida());
+            _fixtureWrapper.Locacao.Invoking(x => x.CriarLocacaoInvalida()).Should().Throw<ValidationException>();
         }
 
 
@@ -58,13 +59,13 @@ namespace Sporterr.Locacoes.UnitTests.Domain
         public void Locacao_Cancelar_DeveAplicarStatusDeCanceladoNaLocacao()
         {
             //Arrange
-            Locacao locacao = _fixtureWrapper.Locacao.CriarLocacaoValida();           
+            Locacao locacao = _fixtureWrapper.Locacao.CriarLocacaoValida();
 
             //Act
             locacao.Cancelar();
 
             //Assert
-            Assert.Equal(StatusLocacao.Cancelada, locacao.Status);            
+            locacao.Status.Should().Be(StatusLocacao.Cancelada);
         }
     }
 }

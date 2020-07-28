@@ -13,7 +13,7 @@ namespace Sporterr.Cadastro.UnitTests.Fixtures
 
     public class GrupoFixture : IDisposable
     {
-        public Grupo CriarGrupoValido(sbyte quantidadeMaximaMembros = 2)
+        public Grupo CriarGrupoValido(byte quantidadeMaximaMembros = 2)
         {
             return new Faker<Grupo>("pt_BR").CustomInstantiator(g => new Grupo($"Grupo de {g.PickRandom<TipoEsporte>()}", quantidadeMaximaMembros));
         }

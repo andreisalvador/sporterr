@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Sorteio.Domain.UnitTests.Fixtures;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             HabilidadeUsuario habilidadeUsuario = _fixtureWrapper.HabilidadeUsuario.CriarHabilidadeUsuarioValido();
 
             //Assert
-            Assert.NotNull(habilidadeUsuario);
+            habilidadeUsuario.Should().NotBeNull();
         }
 
         [Fact(DisplayName = "Cria habilidade de usuário inválida")]
@@ -34,7 +35,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
         public void HabilidadeUsuario_Validate_DeveFalharPoisHabilidadeUsuarioEhInvalida()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.HabilidadeUsuario.CriarHabilidadeUsuarioInvalido());
+            _fixtureWrapper.HabilidadeUsuario.Invoking(x => x.CriarHabilidadeUsuarioInvalido()).Should().Throw<ValidationException>();
         }
 
         [Fact(DisplayName = "Adiciona uma coleção de avaliações na habilidade do usuário")]
@@ -54,10 +55,10 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             habilidadeUsuario.AdicionarAvaliacoesHabilidade(avaliacoes);
 
             //Assert
-            Assert.Equal(3, habilidadeUsuario.Avaliacoes.Count);
-            Assert.True(habilidadeUsuario.Nota >= 0);
-            Assert.Equal(habilidadeUsuario.Nota, avaliacoes.Average(a => a.Nota));
-            Assert.Equal(habilidadeUsuario.Id, avaliacoes.Select(s => s.HabilidadeUsuarioId).Distinct().Single());
+            habilidadeUsuario.Avaliacoes.Should().HaveCount(3);
+            habilidadeUsuario.Nota.Should().BeGreaterOrEqualTo(0);
+            habilidadeUsuario.Nota.Should().Be(avaliacoes.Average(a => a.Nota));
+            habilidadeUsuario.Id.Should().Be(avaliacoes.Select(s => s.HabilidadeUsuarioId).Distinct().Single());
         }
 
         [Fact(DisplayName = "Adiciona uma coleção de avaliações na habilidade do usuário")]
@@ -72,10 +73,10 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             habilidadeUsuario.AdicionarAvaliacaoHabilidade(avaliacao);
 
             //Assert
-            Assert.Equal(1, habilidadeUsuario.Avaliacoes.Count);
-            Assert.True(habilidadeUsuario.Nota >= 0);
-            Assert.Equal(habilidadeUsuario.Nota, avaliacao.Nota);
-            Assert.Equal(habilidadeUsuario.Id, avaliacao.HabilidadeUsuarioId);
+            habilidadeUsuario.Avaliacoes.Should().HaveCount(1);            
+            habilidadeUsuario.Nota.Should().BeGreaterOrEqualTo(0);
+            habilidadeUsuario.Nota.Should().Be(avaliacao.Nota);
+            habilidadeUsuario.Id.Should().Be(avaliacao.HabilidadeUsuarioId);
         }
     }
 }

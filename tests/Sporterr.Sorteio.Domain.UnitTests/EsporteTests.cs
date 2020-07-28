@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Sorteio.Domain.UnitTests.Fixtures;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             Esporte esporte = _fixtureWrapper.Esporte.CriarEsporteValido();
 
             //Assert
-            Assert.NotNull(esporte);
+            esporte.Should().NotBeNull();
         }
 
         [Fact(DisplayName = "Cria esporte inválido")]
@@ -33,7 +34,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
         public void Esporte_Validate_DeveCriarEsporteInvalido()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.Esporte.CriarEsporteInvalido());
+             _fixtureWrapper.Esporte.Invoking(x => x.CriarEsporteInvalido()).Should().Throw<ValidationException>();
         }
 
 
@@ -49,8 +50,8 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             esporte.AdicionarHabilidade(habilidade);
 
             //Assert
-            Assert.Equal(1, esporte.Habilidades.Count);
-            Assert.Equal(esporte.Id, esporte.Habilidades.Single().EsporteId);
+            esporte.Habilidades.Should().HaveCount(1);
+            esporte.Id.Should().Be(esporte.Habilidades.Single().EsporteId);
         }
 
         [Fact(DisplayName = "Remove habilidade do esporte")]
@@ -66,7 +67,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             esporte.RemoverHablidade(habilidade);
 
             //Assert
-            Assert.Equal(0, esporte.Habilidades.Count);
+            esporte.Habilidades.Should().BeEmpty();            
         }
     }
 }

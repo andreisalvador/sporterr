@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Cadastro.UnitTests.Fixtures;
 using Sporterr.Core.DomainObjects.Exceptions;
@@ -27,7 +28,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
         public void Empresa_Validate_EmpresaDeveSerInvalida()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.Empresa.CriarEmpresaInvalida());
+            _fixtureWrapper.Empresa.Invoking(x => x.CriarEmpresaInvalida()).Should().Throw<ValidationException>();
         }
 
         [Fact(DisplayName = "Nova empresa válida")]
@@ -38,8 +39,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Empresa empresa = _fixtureWrapper.Empresa.CriarEmpresaValida();
 
             //Assert
-            Assert.NotNull(empresa);
-            Assert.True(empresa.Ativo);
+            empresa.Should().NotBeNull();
+            empresa.Ativo.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Adicionar nova quadra na empresa")]
@@ -54,8 +55,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.AdicionarQuadra(quadra);
 
             //Arrange
-            Assert.Equal(1, empresa.Quadras.Count);
-            Assert.Same(quadra, empresa.Quadras.SingleOrDefault());
+            empresa.Quadras.Should().HaveCount(1);
+            quadra.Should().BeSameAs(empresa.Quadras.SingleOrDefault());
         }
 
         [Fact(DisplayName = "Adicionar quadra já existente na empresa")]
@@ -68,7 +69,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.AdicionarQuadra(quadra);
 
             //Act & Arrange
-            Assert.Throws<DomainException>(() => empresa.AdicionarQuadra(quadra));
+            empresa.Invoking(x => x.AdicionarQuadra(quadra)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Inativar quadra da empresa")]
@@ -85,7 +86,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.InativarQuadra(quadra);
 
             //Assert
-            Assert.False(quadra.Ativo);
+            quadra.Ativo.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Inativar quadra já inativa da empresa")]
@@ -99,7 +100,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             quadra.Inativar();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => empresa.InativarQuadra(quadra));
+            empresa.Invoking(x => x.InativarQuadra(quadra)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Inativar quadra não pertencente a empresa")]
@@ -111,7 +112,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Quadra quadra = _fixtureWrapper.Quadra.CriarQuadraValida();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => empresa.InativarQuadra(quadra));
+            empresa.Invoking(x => x.InativarQuadra(quadra)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Reativar quadra da empresa")]
@@ -129,7 +130,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.ReativarQuadra(quadra);
 
             //Assert
-            Assert.True(quadra.Ativo);
+            quadra.Ativo.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Reativar quadra já ativa da empresa")]
@@ -141,7 +142,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Quadra quadra = _fixtureWrapper.Quadra.CriarQuadraValida();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => empresa.ReativarQuadra(quadra));
+            empresa.Invoking(x => x.ReativarQuadra(quadra)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Reativar quadra não pertencente a empresa")]
@@ -154,7 +155,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             quadra.Inativar();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => empresa.ReativarQuadra(quadra));
+            empresa.Invoking(x => x.ReativarQuadra(quadra)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Coloca quadra em manutenção na empresa")]
@@ -171,7 +172,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.ColocarQuadraEmManutencao(quadra);
 
             //Assert
-            Assert.True(quadra.EmManutencao);
+            quadra.EmManutencao.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Coloca quadra que já esta em manutenção, em manutenção na empresa")]
@@ -183,7 +184,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Quadra quadra = _fixtureWrapper.Quadra.CriarQuadraValida();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => empresa.ColocarQuadraEmManutencao(quadra));
+            empresa.Invoking(x => x.ColocarQuadraEmManutencao(quadra)).Should().Throw<DomainException>();
         }
 
 
@@ -202,7 +203,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.RetirarQuadraDeManutencao(quadra);
 
             //Assert
-            Assert.False(quadra.EmManutencao);
+            quadra.EmManutencao.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Retira quadra que não esta em manutenção da manutenção na empresa")]
@@ -214,7 +215,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Quadra quadra = _fixtureWrapper.Quadra.CriarQuadraValida();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => empresa.RetirarQuadraDeManutencao(quadra));
+            empresa.Invoking(x => x.RetirarQuadraDeManutencao(quadra)).Should().Throw<DomainException>();
         }
 
 
@@ -231,7 +232,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.AlterarHorarioAbertura(novoHorarioAbertura);
 
             //Assert
-            Assert.Equal(novoHorarioAbertura, empresa.HorarioAbertura);
+            novoHorarioAbertura.Should().Be(empresa.HorarioAbertura);
         }
 
         [Fact(DisplayName = "Altera horário de fechamento da empresa")]
@@ -246,7 +247,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.AlterarHorarioFechamento(novoHorarioFechamento);
 
             //Assert
-            Assert.Equal(novoHorarioFechamento, empresa.HorarioFechamento);
+            novoHorarioFechamento.Should().Be(empresa.HorarioFechamento);
         }
 
         [Fact(DisplayName = "Altera horário de funcionamento da empresa")]
@@ -262,8 +263,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.AlterarHorarioFuncionamento(novoHorarioAbertura, novoHorarioFechamento);
 
             //Assert
-            Assert.Equal(novoHorarioAbertura, empresa.HorarioAbertura);
-            Assert.Equal(novoHorarioFechamento, empresa.HorarioFechamento);
+            novoHorarioAbertura.Should().Be(empresa.HorarioAbertura);
+            novoHorarioFechamento.Should().Be(empresa.HorarioFechamento);
         }
 
         [Fact(DisplayName = "Adicionar um novo dia de funcionamento a empresa")]
@@ -278,7 +279,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.AtivarFuncionamentoNoDiaDaSemana(Core.Enums.DiasSemanaFuncionamento.Sabado);
 
             //Assert
-            Assert.Equal((int)diasSemanaFuncionamentoAtual + DiasSemanaFuncionamento.Sabado, empresa.DiasFuncionamento);
+            empresa.DiasFuncionamento.Should().Be((int)diasSemanaFuncionamentoAtual + DiasSemanaFuncionamento.Sabado);
         }
 
         [Fact(DisplayName = "Desativar um dia de funcionamento a empresa")]
@@ -293,7 +294,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.DesativarFuncionamentoNoDiaDaSemana(Core.Enums.DiasSemanaFuncionamento.Quarta);
 
             //Assert
-            Assert.Equal((int)diasSemanaFuncionamentoAtual - DiasSemanaFuncionamento.Quarta, empresa.DiasFuncionamento);
+            empresa.DiasFuncionamento.Should().Be((int)diasSemanaFuncionamentoAtual - DiasSemanaFuncionamento.Quarta);
         }
 
         [Fact(DisplayName = "Alterar dias de funcionamento a empresa")]
@@ -307,7 +308,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.AlterarDiasFuncionamento(DiasSemanaFuncionamento.Todos);
 
             //Assert
-            Assert.Equal(DiasSemanaFuncionamento.Todos, empresa.DiasFuncionamento);
+            empresa.DiasFuncionamento.Should().Be(DiasSemanaFuncionamento.Todos);
         }
 
         [Fact(DisplayName = "Inativa a empresa")]
@@ -321,7 +322,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             empresa.Inativar();
 
             //Assert
-            Assert.False(empresa.Ativo);
+            empresa.Ativo.Should().BeFalse();
         }
     }
 }

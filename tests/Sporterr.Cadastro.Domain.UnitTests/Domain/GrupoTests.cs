@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Cadastro.UnitTests.Fixtures;
 using Sporterr.Core.DomainObjects.Exceptions;
@@ -24,7 +25,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
         public void Grupo_Validate_GrupoDeveSerInvalido()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.Grupo.CriarGrupoInvalido());
+            _fixtureWrapper.Grupo.Invoking(x => x.CriarGrupoInvalido()).Should().Throw<ValidationException>();
         }
 
         [Fact(DisplayName = "Novo grupo válido")]
@@ -35,8 +36,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Grupo grupo = _fixtureWrapper.Grupo.CriarGrupoValido();
 
             //Assert
-            Assert.NotNull(grupo);
-            Assert.True(grupo.Ativo);
+            grupo.Should().NotBeNull();
+            grupo.Ativo.Should().BeTrue();
         }
 
 
@@ -52,9 +53,9 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             novoGrupo.AdicionarMembro(novoMembro);
 
             //Assert
-            Assert.Same(novoMembro, novoGrupo.Membros.SingleOrDefault(m => m.Equals(novoMembro)));
-            Assert.True(novoGrupo.QuantidadeMembros > 0);
-            Assert.NotEqual(Guid.Empty, novoMembro.GrupoId);
+            novoMembro.Should().BeSameAs(novoGrupo.Membros.SingleOrDefault(m => m.Equals(novoMembro)));
+            novoGrupo.QuantidadeMembros.Should().BeGreaterThan(0);
+            novoMembro.Id.Should().NotBeEmpty();
         }
 
         [Fact(DisplayName = "Adiciona membro novo em grupo cheio")]
@@ -70,8 +71,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             novoGrupo.AdicionarMembro(novoMembro2);
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => novoGrupo.AdicionarMembro(novoMembroDoGrupoCheio));
-            Assert.Equal(novoGrupo.QuantidadeMembros, novoGrupo.Membros.Count);
+            novoGrupo.Invoking(x => x.AdicionarMembro(novoMembroDoGrupoCheio)).Should().Throw<DomainException>();
+            novoGrupo.QuantidadeMembros.Should().Be((byte)novoGrupo.Membros.Count);
         }
 
         [Fact(DisplayName = "Adiciona mesmo membro novamente ao grupo")]
@@ -84,7 +85,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             novoGrupo.AdicionarMembro(novoMembro);
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => novoGrupo.AdicionarMembro(novoMembro));
+            novoGrupo.Invoking(x => x.AdicionarMembro(novoMembro)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Remove membro do grupo")]
@@ -100,8 +101,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             novoGrupo.RemoverMembro(membro);
 
             //Assert
-            Assert.False(novoGrupo.Membros.Any());
-            Assert.Equal(0, novoGrupo.QuantidadeMembros);
+            novoGrupo.Membros.Should().BeEmpty();
+            novoGrupo.QuantidadeMembros.Should().Be(0);
         }
 
         [Fact(DisplayName = "Remove membro que não faz parte do grupo")]
@@ -113,7 +114,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Membro membro = _fixtureWrapper.Membro.CriarMembroValido();
 
             //Act & Asser
-            Assert.Throws<DomainException>(() => novoGrupo.RemoverMembro(membro));
+            novoGrupo.Invoking(x => x.RemoverMembro(membro)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Verifica se o grupo esta cheio")]
@@ -128,7 +129,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             novoGrupo.AdicionarMembro(membro2);
 
             //Act & Asser
-            Assert.True(novoGrupo.GrupoEstaCheio());
+            novoGrupo.GrupoEstaCheio().Should().BeTrue();
         }
 
         [Fact(DisplayName = "Verifica se o membro faz parte do grupo")]
@@ -141,7 +142,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             novoGrupo.AdicionarMembro(membro);
 
             //Act & Asser
-            Assert.True(novoGrupo.MembroPertenceGrupo(membro));
+            novoGrupo.MembroPertenceGrupo(membro).Should().BeTrue();
         }
     }
 }

@@ -5,6 +5,7 @@ using Sporterr.Locacoes.Domain;
 using Sporterr.Locacoes.UnitTests.Fixtures;
 using Xunit;
 using Sporterr.Core.DomainObjects.Exceptions;
+using FluentAssertions;
 
 namespace Sporterr.Locacoes.UnitTests.Domain
 {
@@ -26,7 +27,7 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             Solicitacao solicitacao = _fixtureWrapper.Solicitacao.CriarSolicitacaoValida();
 
             //Assert
-            Assert.NotNull(solicitacao);
+            solicitacao.Should().NotBeNull();
         }
 
         [Fact(DisplayName = "Nova solicitação inválida")]
@@ -34,7 +35,7 @@ namespace Sporterr.Locacoes.UnitTests.Domain
         public void Solicitacao_Validate_DeveCriarSolicitacaoInvalida()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.Solicitacao.CriarSolicitacaoInvalida());
+            _fixtureWrapper.Solicitacao.Invoking(x => x.CriarSolicitacaoInvalida()).Should().Throw<ValidationException>();
         }
 
         [Fact(DisplayName = "Aprova solicitação")]
@@ -48,8 +49,8 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             solicitacao.Aprovar();
 
             //Assert
-            Assert.Equal(StatusSolicitacao.Aprovada, solicitacao.Status);
-            Assert.Equal(1, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.Aprovada));
+            solicitacao.Status.Should().Be(StatusSolicitacao.Aprovada);
+            solicitacao.Historicos.Should().Contain(h => h.StatusSolicitacao == StatusSolicitacao.Aprovada);
         }
 
         [Fact(DisplayName = "Cancelar solicitação")]
@@ -64,8 +65,8 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             solicitacao.Cancelar("Motivo cancelamento");
 
             //Assert
-            Assert.Equal(StatusSolicitacao.Cancelada, solicitacao.Status);
-            Assert.Equal(1, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.Cancelada));
+            solicitacao.Status.Should().Be(StatusSolicitacao.Cancelada);
+            solicitacao.Historicos.Should().Contain(h => h.StatusSolicitacao == StatusSolicitacao.Aprovada);
         }
 
 
@@ -81,8 +82,8 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             Assert.Throws<DomainException>(() => solicitacao.Cancelar(string.Empty));
 
             //Assert
-            Assert.Equal(0, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.Cancelada));
-            Assert.Equal(StatusSolicitacao.Aprovada, solicitacao.Status);
+            solicitacao.Historicos.Should().NotContain(h => h.StatusSolicitacao == StatusSolicitacao.Cancelada);
+            solicitacao.Status.Should().Be(StatusSolicitacao.Aprovada);
         }
 
         [Fact(DisplayName = "Cancelar solicitação que não estava aprovada")]
@@ -90,14 +91,14 @@ namespace Sporterr.Locacoes.UnitTests.Domain
         public void Solicitacao_Cancelar_DeveFalharPoisSolicitacaoNaoEstavaAprovada()
         {
             //Arrange
-            Solicitacao solicitacao = _fixtureWrapper.Solicitacao.CriarSolicitacaoValida();            
+            Solicitacao solicitacao = _fixtureWrapper.Solicitacao.CriarSolicitacaoValida();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => solicitacao.Cancelar("Motivo cancelamento"));
+            solicitacao.Invoking(x => x.Cancelar("Motivo cancelamento")).Should().Throw<DomainException>();
 
             //Assert
-            Assert.Equal(StatusSolicitacao.AguardandoAprovacao, solicitacao.Status);
-            Assert.Equal(0, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.Cancelada));
+            solicitacao.Status.Should().Be(StatusSolicitacao.AguardandoAprovacao);
+            solicitacao.Historicos.Should().NotContain(h => h.StatusSolicitacao == StatusSolicitacao.Cancelada);
         }
 
         [Fact(DisplayName = "Recusar solicitação")]
@@ -112,8 +113,8 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             solicitacao.Recusar("Motivo cancelamento");
 
             //Assert
-            Assert.Equal(StatusSolicitacao.Recusada, solicitacao.Status);
-            Assert.Equal(1, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.Recusada));
+            solicitacao.Status.Should().Be(StatusSolicitacao.Recusada);
+            solicitacao.Historicos.Should().Contain(h => h.StatusSolicitacao == StatusSolicitacao.Recusada);
         }
 
 
@@ -125,11 +126,11 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             Solicitacao solicitacao = _fixtureWrapper.Solicitacao.CriarSolicitacaoValida();
 
             //Act && Assert
-            Assert.Throws<DomainException>(() => solicitacao.Recusar(string.Empty));
+            solicitacao.Invoking(x => x.Recusar(string.Empty)).Should().Throw<DomainException>();
 
             //Assert
-            Assert.Equal(StatusSolicitacao.AguardandoAprovacao, solicitacao.Status);
-            Assert.Equal(0, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.Recusada));
+            solicitacao.Status.Should().Be(StatusSolicitacao.AguardandoAprovacao);
+            solicitacao.Historicos.Should().NotContain(h => h.StatusSolicitacao == StatusSolicitacao.Recusada);
         }
 
         [Fact(DisplayName = "Coloca solicitação em aguardo de cancelamento")]
@@ -144,8 +145,8 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             solicitacao.AguardarCancelamento();
 
             //Assert
-            Assert.Equal(StatusSolicitacao.AguardandoCancelamento, solicitacao.Status);
-            Assert.Equal(1, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.AguardandoCancelamento));
+            solicitacao.Status.Should().Be(StatusSolicitacao.AguardandoCancelamento);
+            solicitacao.Historicos.Should().Contain(h => h.StatusSolicitacao == StatusSolicitacao.AguardandoCancelamento);
         }
 
         [Fact(DisplayName = "Coloca solicitação que não estava aprovada em aguardo de cancelamento ")]
@@ -156,11 +157,11 @@ namespace Sporterr.Locacoes.UnitTests.Domain
             Solicitacao solicitacao = _fixtureWrapper.Solicitacao.CriarSolicitacaoValida();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => solicitacao.AguardarCancelamento());
+            solicitacao.Invoking(x => x.AguardarCancelamento()).Should().Throw<DomainException>();
 
             //Assert
-            Assert.Equal(StatusSolicitacao.AguardandoAprovacao, solicitacao.Status);
-            Assert.Equal(0, solicitacao.Historicos.Count(h => h.StatusSolicitacao == StatusSolicitacao.AguardandoCancelamento));
+            solicitacao.Status.Should().Be(StatusSolicitacao.AguardandoAprovacao);
+            solicitacao.Historicos.Should().NotContain(h => h.StatusSolicitacao == StatusSolicitacao.AguardandoCancelamento);
         }
     }
 }

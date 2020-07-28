@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Cadastro.UnitTests.Fixtures;
 using Sporterr.Core.DomainObjects.Exceptions;
@@ -10,14 +11,14 @@ using Xunit;
 
 namespace Sporterr.Cadastro.UnitTests.Domain
 {
-    [Collection(nameof(FixtureWrapper))]    
+    [Collection(nameof(FixtureWrapper))]
     public class UsuarioTests
     {
-        private readonly FixtureWrapper _fixtureWrapper;        
+        private readonly FixtureWrapper _fixtureWrapper;
 
         public UsuarioTests(FixtureWrapper fixturesWrapper)
         {
-            _fixtureWrapper = fixturesWrapper;            
+            _fixtureWrapper = fixturesWrapper;
         }
 
         [Fact(DisplayName = "Novo usuário inválido")]
@@ -25,7 +26,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
         public void Usuario_Validate_UsuarioDeveInvalido()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.Usuario.CriarUsuarioInvalido());
+            _fixtureWrapper.Usuario.Invoking(x => x.CriarUsuarioInvalido()).Should().Throw<ValidationException>();
         }
 
         [Fact(DisplayName = "Novo usuário válido")]
@@ -36,8 +37,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             Usuario usuario = _fixtureWrapper.Usuario.CriarUsuarioValido();
 
             //Assert
-            Assert.NotNull(usuario);
-            Assert.True(usuario.Ativo);
+            usuario.Should().NotBeNull();
+            usuario.Ativo.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Adicionar nova empresa")]
@@ -52,8 +53,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             usuario.AdicionarEmpresa(empresa);
 
             //Assert
-            Assert.Equal(1, usuario.Empresas.Count);
-            Assert.Same(empresa, usuario.Empresas.SingleOrDefault());
+            usuario.Empresas.Should().HaveCount(1);
+            empresa.Should().BeSameAs(usuario.Empresas.SingleOrDefault());
         }
 
         [Fact(DisplayName = "Adicionar empresa já existente")]
@@ -66,7 +67,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             usuario.AdicionarEmpresa(empresa);
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => usuario.AdicionarEmpresa(empresa));
+            usuario.Invoking(x => x.AdicionarEmpresa(empresa)).Should().Throw<DomainException>();
         }
 
 
@@ -83,7 +84,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             usuario.InativarEmpresa(empresa);
 
             //Assert
-            Assert.False(empresa.Ativo);
+            empresa.Ativo.Should().BeFalse();
         }
 
         [Fact(DisplayName = "Inativar empresa não pertencente ao usuário")]
@@ -92,10 +93,10 @@ namespace Sporterr.Cadastro.UnitTests.Domain
         {
             //Arrange
             Usuario usuario = _fixtureWrapper.Usuario.CriarUsuarioValido();
-            Empresa empresa = _fixtureWrapper.Empresa.CriarEmpresaValida();            
+            Empresa empresa = _fixtureWrapper.Empresa.CriarEmpresaValida();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => usuario.InativarEmpresa(empresa));
+            usuario.Invoking(x => x.InativarEmpresa(empresa)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Adicionar novo grupo")]
@@ -110,8 +111,8 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             usuario.AdicionarGrupo(grupo);
 
             //Assert
-            Assert.Equal(1, usuario.Grupos.Count);
-            Assert.Same(grupo, usuario.Grupos.SingleOrDefault());
+            usuario.Grupos.Should().HaveCount(1);
+            grupo.Should().BeSameAs(usuario.Grupos.SingleOrDefault());
         }
 
         [Fact(DisplayName = "Adicionar grupo já existente")]
@@ -124,7 +125,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             usuario.AdicionarGrupo(grupo);
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => usuario.AdicionarGrupo(grupo));
+            usuario.Invoking(x => x.AdicionarGrupo(grupo)).Should().Throw<DomainException>();
         }
 
         [Fact(DisplayName = "Remover grupo")]
@@ -140,7 +141,7 @@ namespace Sporterr.Cadastro.UnitTests.Domain
             usuario.RemoverGrupo(grupo);
 
             //Assert
-            Assert.Equal(0, usuario.Grupos.Count);
+            usuario.Grupos.Should().BeEmpty();
         }
 
 
@@ -150,10 +151,10 @@ namespace Sporterr.Cadastro.UnitTests.Domain
         {
             //Arrange
             Usuario usuario = _fixtureWrapper.Usuario.CriarUsuarioValido();
-            Grupo grupo = _fixtureWrapper.Grupo.CriarGrupoValido();            
+            Grupo grupo = _fixtureWrapper.Grupo.CriarGrupoValido();
 
             //Act & Assert
-            Assert.Throws<DomainException>(() => usuario.RemoverGrupo(grupo));
+            usuario.Invoking(x => x.RemoverGrupo(grupo)).Should().Throw<DomainException>();
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Sporterr.Cadastro.Application.Commands
     {
         public Guid UsuarioCriadorId { get; private set; }
         public string NomeGrupo { get; private set; }
-        public sbyte NumeroMaximoMembros { get; private set; }
+        public byte NumeroMaximoMembros { get; private set; }
 
-        public AdicionarGrupoCommand(Guid usuarioCriadorId, string nomeGrupo, sbyte numeroMaximoMembros) : base(new AdicionarGrupoUsuarioValidation())
+        public AdicionarGrupoCommand(Guid usuarioCriadorId, string nomeGrupo, byte numeroMaximoMembros) : base(new AdicionarGrupoUsuarioValidation())
         {
             UsuarioCriadorId = usuarioCriadorId;
             NomeGrupo = nomeGrupo;

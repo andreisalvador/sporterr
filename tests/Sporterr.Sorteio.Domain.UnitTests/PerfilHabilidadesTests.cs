@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using FluentAssertions;
+using FluentValidation;
 using Sporterr.Sorteio.Domain.UnitTests.Fixtures;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,8 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             PerfilHabilidades novoPerfil = _fixtureWrapper.PerfilHabilidades.CriarPerfilHabilidadeValido();
 
             //Assert
-            Assert.NotNull(novoPerfil);
-            Assert.True(novoPerfil.Ativo);
+            novoPerfil.Should().NotBeNull();
+            novoPerfil.Ativo.Should().BeTrue();
         }
 
         [Fact(DisplayName = "Cria perfil de habilidades inválido")]
@@ -33,7 +34,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
         public void PerfilHabilidades_Validate_DeveFalharPoisPerfilEhInvalido()
         {
             //Arrange & Act & Assert
-            Assert.Throws<ValidationException>(() => _fixtureWrapper.PerfilHabilidades.CriarPerfilHabilidadeInvalido());
+            _fixtureWrapper.PerfilHabilidades.Invoking(x => x.CriarPerfilHabilidadeInvalido()).Should().Throw<ValidationException>();
         }
 
         [Fact(DisplayName ="Adiciona uma coleção de habilidades ao perfil")]
@@ -53,7 +54,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             perfil.AdicionarHabilidadesUsuario(habilidades);
 
             //Assert
-            Assert.Equal(2, perfil.HabilidadesUsuario.Count);
+            perfil.HabilidadesUsuario.Should().HaveCount(2);            
         }
 
         [Fact(DisplayName = "Adiciona uma habilidade ao perfil")]
@@ -68,7 +69,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             perfil.AdicionarHabilidadeUsuario(habilidade);
 
             //Assert
-            Assert.Equal(1, perfil.HabilidadesUsuario.Count);
+            perfil.HabilidadesUsuario.Should().HaveCount(1);
         }
 
         [Fact(DisplayName = "Retorna habilidades procurando por esporte")]
@@ -94,7 +95,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             IEnumerable<HabilidadeUsuario> habilidadesEncontradas = perfil.ObterHabilidadesPorEsporte(esporte.TipoEsporte);
 
             //Assert
-            Assert.Equal(2, habilidadesEncontradas.Count());
+            perfil.HabilidadesUsuario.Should().HaveCount(2);
         }
 
         [Fact(DisplayName ="Vincula esporte na habilidade", Skip = "Preciso planejar como vincular")]
