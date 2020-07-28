@@ -43,7 +43,7 @@ namespace Sporterr.Cadastro.Domain
         {
             int soma;
             int resto;
-            string digito;
+            int digito;
             Span<char> numerosCnpj;
             ReadOnlySpan<char> tempCnpj;
 
@@ -68,13 +68,12 @@ namespace Sporterr.Cadastro.Domain
             else
                 resto = 11 - resto;
 
-            digito = resto.ToString();
+            digito = resto;
 
-            tempCnpj = tempCnpj.ToString() + digito;
             soma = 0;
 
             for (int i = 0; i < 13; i++)
-                soma += (tempCnpj[i] - '0') * multiplicador2[i];
+                soma += (i == 12 ? digito : (tempCnpj[i] - '0')) * multiplicador2[i];
 
             resto = (soma % 11);
 
@@ -82,10 +81,8 @@ namespace Sporterr.Cadastro.Domain
                 resto = 0;
             else
                 resto = 11 - resto;
-
-            digito = digito + resto.ToString();
-
-            return cnpj.EndsWith(digito);
+            
+            return numerosCnpj[12] - '0' == digito && numerosCnpj[13] - '0' == resto;
         }
 
         private static Span<char> RemoveMask(ref string cnpj)

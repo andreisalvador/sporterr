@@ -5,10 +5,7 @@ using Sporterr.Cadastro.UnitTests.Fixtures;
 using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using Xunit;
 
 namespace Sporterr.Cadastro.UnitTests.Domain

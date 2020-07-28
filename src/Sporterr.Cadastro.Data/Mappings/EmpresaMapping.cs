@@ -19,6 +19,7 @@ namespace Sporterr.Cadastro.Data.Mappings
                 x => x.Value,
                 x => Cnpj.Parse(x)
                 )).HasColumnName("Cnpj");
+            
             builder.ToTable("Empresas");
         }
     }
