@@ -45,7 +45,6 @@ namespace Sporterr.Cadastro.Domain
             int resto;
             int digito;
             Span<char> numerosCnpj;
-            ReadOnlySpan<char> tempCnpj;
 
             if (HasMask(cnpj))
                 numerosCnpj = RemoveMask(ref cnpj);
@@ -55,12 +54,10 @@ namespace Sporterr.Cadastro.Domain
             if (numerosCnpj.Length != 14)
                 return false;
 
-            tempCnpj = numerosCnpj.Slice(0, 12);
-
             soma = 0;
 
             for (int i = 0; i < 12; i++)
-                soma += (tempCnpj[i] - '0') * multiplicador1[i];
+                soma += (numerosCnpj[i] - '0') * multiplicador1[i];
 
             resto = (soma % 11);
             if (resto < 2)
@@ -73,7 +70,7 @@ namespace Sporterr.Cadastro.Domain
             soma = 0;
 
             for (int i = 0; i < 13; i++)
-                soma += (i == 12 ? digito : (tempCnpj[i] - '0')) * multiplicador2[i];
+                soma += (i == 12 ? digito : (numerosCnpj[i] - '0')) * multiplicador2[i];
 
             resto = (soma % 11);
 
