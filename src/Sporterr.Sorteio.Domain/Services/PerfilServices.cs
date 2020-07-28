@@ -5,6 +5,7 @@ using Sporterr.Sorteio.Domain.Services.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sporterr.Sorteio.Domain.Services
@@ -34,7 +35,7 @@ namespace Sporterr.Sorteio.Domain.Services
             if (perfil == null)
                 await _mediatr.Notify(new DomainNotification(nameof(PerfilServices), "O perfil informado não foi encontrado na base de dados."));
 
-            Esporte esporte = await _esporteRepository.ObterEsportePorId(esporteId);
+            Esporte esporte = await _esporteRepository.ObterEsporteComHabilidadesPorId(esporteId);
 
             if (esporte == null)
                 await _mediatr.Notify(new DomainNotification(nameof(PerfilServices), "O esporte informado não foi encontrado na base de dados."));
@@ -48,7 +49,36 @@ namespace Sporterr.Sorteio.Domain.Services
                 foreach (Habilidade habilidade in esporte.Habilidades)
                     novasHabilidadesUsuario.Add(habilidade);
 
+                perfil.AdicionarHabilidadesUsuario(novasHabilidadesUsuario);
+
                 _habilidadeUsuarioRepository.AdicionarHabilidadesUsuario(novasHabilidadesUsuario);
+                _perfilHabilidadesRepository.AtualizarPerfilHabilidades(perfil);
+
+                await _habilidadeUsuarioRepository.Commit();
+                await _perfilHabilidadesRepository.Commit();
+            }
+        }
+
+        public async Task AvaliarPerfil(Guid perfilId, IDictionary<Guid, double> habilidadesAvaliadas)
+        {
+            PerfilHabilidades perfil = await _perfilHabilidadesRepository.ObterPorIdComHabilidades(perfilId);
+
+            if (perfil == null)
+                await _mediatr.Notify(new DomainNotification(nameof(PerfilServices), "O perfil informado não foi encontrado na base de dados."));
+
+            if (perfil != null)
+            {   
+                IEnumerable<HabilidadeUsuario> habilidadesParaAvaliar = perfil.HabilidadesUsuario
+                                                                              .Where(h => habilidadesAvaliadas.Select(h => h.Key).Contains(h.Id));
+
+                foreach (HabilidadeUsuario habilidade in habilidadesParaAvaliar)
+                {
+                    AvaliacaoHabilidade avaliacao = new AvaliacaoHabilidade(perfil.UsuarioId, habilidadesAvaliadas[habilidade.Id]);
+                    habilidade.AdicionarAvaliacaoHabilidade(avaliacao);
+                    _habilidadeUsuarioRepository.AdicionarAvaliacaoHabilidade(avaliacao);
+                }
+
+                _habilidadeUsuarioRepository.AtualizarHabilidadesUsuario(habilidadesParaAvaliar);
                 _perfilHabilidadesRepository.AtualizarPerfilHabilidades(perfil);
 
                 await _habilidadeUsuarioRepository.Commit();

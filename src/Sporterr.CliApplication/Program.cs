@@ -22,11 +22,16 @@ using Sporterr.Locacoes.Data.Repository;
 using Sporterr.Locacoes.Domain.Data.Interfaces;
 using Sporterr.Reading;
 using Sporterr.Reading.Repository;
+using Sporterr.Sorteio.Application.Commands;
+using Sporterr.Sorteio.Application.Commands.Handlers;
 using Sporterr.Sorteio.Data;
 using Sporterr.Sorteio.Data.Repository;
 using Sporterr.Sorteio.Data.Seeds;
 using Sporterr.Sorteio.Domain.Data.Interfaces;
+using Sporterr.Sorteio.Domain.Services;
+using Sporterr.Sorteio.Domain.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sporterr.CliApplication
@@ -61,6 +66,12 @@ namespace Sporterr.CliApplication
                 .AddScoped<INotificationHandler<SolicitacaoLocacaoRecusadaEvent>, SolicitacaoEventHandler>()
                 .AddScoped<INotificationHandler<SolicitacaoLocacaoCanceladaEvent>, SolicitacaoEventHandler>()
 
+                //Perfil
+                .AddScoped<IRequestHandler<AdicionarPerfilHabilidadesCommand, ValidationResult>, PerfilHabilidadesCommandHandler>()
+                .AddScoped<IRequestHandler<VincularEsportePerfilHabilidadesCommand, ValidationResult>, PerfilHabilidadesCommandHandler>()
+                .AddScoped<IRequestHandler<AvaliarHabilidadesUsuarioCommand, ValidationResult>, PerfilHabilidadesCommandHandler>()
+                .AddScoped<IPerfilServices, PerfilServices>()
+
                 //Infra
                 .AddScoped<IEmpresaRepository, EmpresaRepository>()
                 .AddScoped<IUsuarioRepository, UsuarioRepository>()
@@ -84,19 +95,36 @@ namespace Sporterr.CliApplication
 
 
 
-            var mediatr = provider.GetService<IDataSeeder<SorteioContext>>();
+            var seeder = provider.GetService<IDataSeeder<SorteioContext>>();
+            var mediatr = provider.GetService<IMediatrHandler>();
+
+           // Task.Run(() => seeder.Seed()).Wait();
+
+           // Task.Run(() => mediatr.Send(new AdicionarPerfilHabilidadesCommand(Guid.NewGuid()))).Wait();
+
+           // Task.Run(() => mediatr.Send(new VincularEsportePerfilHabilidadesCommand(Guid.Parse("64269af2-4e7a-43c0-9cbd-ac5aef7de41f"), Guid.Parse("690c869a-d79b-4df6-9c00-ea0334036913")))).Wait();
+
+            var avaliacoes = new Dictionary<Guid, double>()
+            {
+                {Guid.Parse("8d02e12e-356a-49bf-b134-146483e2227a"), 8},
+                {Guid.Parse("94dc5530-b8b2-424e-a7f3-2c7170230e8c"), 10},
+                {Guid.Parse("55b37550-ae05-4bec-94c5-f9f65f94564d"), 5}
+            };
+
+            Task.Run(() => mediatr.Send(new AvaliarHabilidadesUsuarioCommand(Guid.Parse("64269af2-4e7a-43c0-9cbd-ac5aef7de41f"), avaliacoes))).Wait();
 
 
-            Task.WaitAll(
-                mediatr.Seed()
-                //mediatr.Send(new AdicionarUsuarioCommand("Andrei Franz Salvador", "andreifs95@gmail.com", "12345678"))
-                //mediatr.Send(new AdicionarEmpresaUsuarioCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), "Andrei LTDA", "516464844684684", DiasSemanaFuncionamento.DiasUteis, TimeSpan.FromHours(8), TimeSpan.FromHours(18)))
-                //mediatr.Send(new AdicionarQuadraEmpresaCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), 150m, TimeSpan.FromHours(1), TipoEsporte.Futebol))
-                //mediatr.Send(new AbrirSolicitacaoLocacaoCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"),
-                //Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d"), DateTime.Today.AddHours(8), DateTime.Today.AddHours(18)))
-                //mediatr.Send(new AprovarSolicitacaoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d")))
-                //mediatr.Send(new SolicitarCancelamentoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("5b4f8c44-0b0c-4e72-88f3-d34bb1d5411c")))
-                );
+
+            //Task.WaitAll(
+            //    seeder.Seed()
+            //    //mediatr.Send(new AdicionarUsuarioCommand("Andrei Franz Salvador", "andreifs95@gmail.com", "12345678"))
+            //    //mediatr.Send(new AdicionarEmpresaUsuarioCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), "Andrei LTDA", "516464844684684", DiasSemanaFuncionamento.DiasUteis, TimeSpan.FromHours(8), TimeSpan.FromHours(18)))
+            //    //mediatr.Send(new AdicionarQuadraEmpresaCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), 150m, TimeSpan.FromHours(1), TipoEsporte.Futebol))
+            //    //mediatr.Send(new AbrirSolicitacaoLocacaoCommand(Guid.Parse("e1dbb799-d9cb-450e-a8b3-214cd0ffb130"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"),
+            //    //Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d"), DateTime.Today.AddHours(8), DateTime.Today.AddHours(18)))
+            //    //mediatr.Send(new AprovarSolicitacaoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("7f4ba969-7fc3-4795-9394-0751e7a09af4"), Guid.Parse("01d75211-46ca-4cd1-9d7e-ab3e00e5758d")))
+            //    //mediatr.Send(new SolicitarCancelamentoLocacaoCommand(Guid.Parse("79461b5a-ca58-427b-a18c-29ee41dbe024"), Guid.Parse("5b4f8c44-0b0c-4e72-88f3-d34bb1d5411c")))
+            //    );
 
         }
     }

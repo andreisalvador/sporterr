@@ -17,7 +17,7 @@ namespace Sporterr.Sorteio.Data.Mapping
             builder.HasOne(h => h.Habilidade);
 
             builder.HasOne(h => h.PerfilHabilidades)
-                .WithMany(p => p.HabilidadesUsario)
+                .WithMany(p => p.HabilidadesUsuario)
                 .HasForeignKey(h => h.PerfilHabilidadesId);
 
             builder.ToTable("HablidadesUsuarios");

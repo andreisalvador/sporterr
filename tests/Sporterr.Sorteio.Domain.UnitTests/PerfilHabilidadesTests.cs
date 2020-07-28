@@ -53,7 +53,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             perfil.AdicionarHabilidadesUsuario(habilidades);
 
             //Assert
-            Assert.Equal(2, perfil.HabilidadesUsario.Count);
+            Assert.Equal(2, perfil.HabilidadesUsuario.Count);
         }
 
         [Fact(DisplayName = "Adiciona uma habilidade ao perfil")]
@@ -68,7 +68,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests
             perfil.AdicionarHabilidadeUsuario(habilidade);
 
             //Assert
-            Assert.Equal(1, perfil.HabilidadesUsario.Count);
+            Assert.Equal(1, perfil.HabilidadesUsuario.Count);
         }
 
         [Fact(DisplayName = "Retorna habilidades procurando por esporte")]

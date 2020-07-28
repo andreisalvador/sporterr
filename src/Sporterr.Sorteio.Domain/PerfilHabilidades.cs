@@ -15,12 +15,12 @@ namespace Sporterr.Sorteio.Domain
 
         public Guid UsuarioId { get; private set; }
         public TipoEsporte EsportesUsuario { get; private set; }
-        public IReadOnlyCollection<HabilidadeUsuario> HabilidadesUsario => _habilidadesUsuario.AsReadOnly();
+        public IReadOnlyCollection<HabilidadeUsuario> HabilidadesUsuario => _habilidadesUsuario.AsReadOnly();
         public bool Ativo { get; private set; }
 
         public PerfilHabilidades(Guid usuarioId)
         {
-            UsuarioId = usuarioId;            
+            UsuarioId = usuarioId;
             _habilidadesUsuario = new List<HabilidadeUsuario>();
             Validate();
             Ativar();
@@ -30,12 +30,12 @@ namespace Sporterr.Sorteio.Domain
         {
             foreach (HabilidadeUsuario habilidade in habilidadesUsuario)
                 AdicionarHabilidadeUsuario(habilidade);
-        }   
+        }
 
         public void AdicionarHabilidadeUsuario(HabilidadeUsuario habilidadeUsuario)
         {
             habilidadeUsuario.AssociarPerfilHabilidadesUsuario(Id);
-            _habilidadesUsuario.Add(habilidadeUsuario);            
+            _habilidadesUsuario.Add(habilidadeUsuario);
         }
 
         public IEnumerable<HabilidadeUsuario> ObterHabilidadesPorEsporte(TipoEsporte esporte)

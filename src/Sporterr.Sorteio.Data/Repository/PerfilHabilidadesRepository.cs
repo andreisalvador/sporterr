@@ -2,6 +2,9 @@
 using Sporterr.Sorteio.Domain;
 using Sporterr.Sorteio.Domain.Data.Interfaces;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sporterr.Sorteio.Data.Repository
@@ -36,12 +39,16 @@ namespace Sporterr.Sorteio.Data.Repository
         {
             return await _context.PerfisHabilidade.FindAsync(perfilId);
         }
-
+        public async Task<PerfilHabilidades> ObterPorIdComHabilidades(Guid perfilId)
+        {
+            return await _context.PerfisHabilidade
+                .Include(p => p.HabilidadesUsuario)
+                .ThenInclude(h => h.Avaliacoes)
+                .SingleOrDefaultAsync(p => p.Id.Equals(perfilId));
+        }
         public void Dispose()
         {
             _context?.Dispose();
         }
-
-        
     }
 }

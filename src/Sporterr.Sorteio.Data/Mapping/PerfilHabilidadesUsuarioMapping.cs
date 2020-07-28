@@ -13,9 +13,11 @@ namespace Sporterr.Sorteio.Data.Mapping
         {
             builder.HasKey(p => p.Id);
 
-            builder.HasMany(p => p.HabilidadesUsario)
+            builder.HasMany(p => p.HabilidadesUsuario)
                 .WithOne(h => h.PerfilHabilidades)
-                .HasForeignKey(h => h.PerfilHabilidadesId);                
+                .HasForeignKey(h => h.PerfilHabilidadesId);
+
+            builder.ToTable("PerfisHabilidadesUsuario");
         }
     }
 }

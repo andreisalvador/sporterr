@@ -6,6 +6,7 @@ using Sporterr.Sorteio.Application.Events;
 using Sporterr.Sorteio.Domain;
 using Sporterr.Sorteio.Domain.Data.Interfaces;
 using Sporterr.Sorteio.Domain.Services.Interfaces;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +14,8 @@ namespace Sporterr.Sorteio.Application.Commands.Handlers
 {
     public class PerfilHabilidadesCommandHandler : CommandHandler<PerfilHabilidades>,
         IRequestHandler<AdicionarPerfilHabilidadesCommand, ValidationResult>,
-        IRequestHandler<VincularEsportePerfilHabilidadesCommand, ValidationResult>
+        IRequestHandler<VincularEsportePerfilHabilidadesCommand, ValidationResult>,
+        IRequestHandler<AvaliarHabilidadesUsuarioCommand, ValidationResult>
     {
         private readonly IPerfilHabilidadesRepository _perfilHabilidadesRepository;
         private readonly IPerfilServices _perfilServices;
@@ -46,6 +48,16 @@ namespace Sporterr.Sorteio.Application.Commands.Handlers
             await _perfilServices.AdicionarNovoEsporte(message.PerfilHabilidadesId, message.EsporteId);
 
             return await PublishEvents(new EsporteVinculadoPerfilHabilidadesEvent(message.PerfilHabilidadesId, message.EsporteId));
+        }
+
+        public async Task<ValidationResult> Handle(AvaliarHabilidadesUsuarioCommand message, CancellationToken cancellationToken)
+        {
+            if (!message.IsValid())
+                return message.ValidationResult;
+
+            await _perfilServices.AvaliarPerfil(message.PerfilHabilidadesId, message.HabilidadesAvaliadas);
+
+            return await PublishEvents(message.HabilidadesAvaliadas.Select(avaliacao => new HabilidadeUsuarioAvaliadaEvent(avaliacao.Key, avaliacao.Value)).ToArray());
         }
     }
 }

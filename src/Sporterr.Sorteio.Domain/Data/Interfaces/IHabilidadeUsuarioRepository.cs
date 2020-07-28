@@ -17,6 +17,7 @@ namespace Sporterr.Sorteio.Domain.Data.Interfaces
         void RemoverHabilidadesUsuario(IEnumerable<HabilidadeUsuario> habilidadesUsuario);
 
         void AdicionarAvaliacaoHabilidade(AvaliacaoHabilidade avaliacaoHabilidade);
+        void AdicionarAvaliacoesHabilidade(IEnumerable<AvaliacaoHabilidade> avaliacaoHabilidade);
 
         Task<HabilidadeUsuario> ObterPorId(Guid habilidadeUsuarioId);
         Task<AvaliacaoHabilidade> ObterAvaliacaoHabilidadePorId(Guid avaliacaoHabilidadeId);

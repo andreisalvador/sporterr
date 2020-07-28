@@ -19,6 +19,11 @@ namespace Sporterr.Sorteio.Data.Repository
             _context.AvaliacoesHabilidade.Add(avaliacaoHabilidade);
         }
 
+        public void AdicionarAvaliacoesHabilidade(IEnumerable<AvaliacaoHabilidade> avaliacaoHabilidade)
+        {
+            _context.AvaliacoesHabilidade.AddRange(avaliacaoHabilidade);
+        }
+
         public void AdicionarHabilidadesUsuario(IEnumerable<HabilidadeUsuario> habilidadesUsuario)
         {
             _context.HabilidadesUsuarios.AddRange(habilidadesUsuario);

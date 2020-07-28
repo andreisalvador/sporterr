@@ -12,6 +12,7 @@ namespace Sporterr.Sorteio.Domain.Data.Interfaces
         void AdicionarPerfilHabilidades(PerfilHabilidades perfilHabilidades);
         void AtualizarPerfilHabilidades(PerfilHabilidades perfilHabilidades);
         Task<PerfilHabilidades> ObterPorId(Guid perfilId);
+        Task<PerfilHabilidades> ObterPorIdComHabilidades(Guid perfilId);
         Task<bool> Existe(Guid perfilId);
     }
 }
