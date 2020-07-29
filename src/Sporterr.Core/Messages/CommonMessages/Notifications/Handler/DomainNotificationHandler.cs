@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Core.Messages.CommonMessages.Notifications.Handler
 {
-    public class DomainNotificationHandler : INotificationHandler<DomainNotification>
+    public class DomainNotificationHandler : IDomainNotificationHandler<DomainNotification>
     {
         private readonly List<DomainNotification> _notifications;
         public IReadOnlyCollection<DomainNotification> Notifications => _notifications.AsReadOnly();

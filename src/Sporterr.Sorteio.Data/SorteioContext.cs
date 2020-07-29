@@ -12,8 +12,8 @@ namespace Sporterr.Sorteio.Data
     public class SorteioContext : DbContext, IDbContext
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=SorteioDb;Integrated Security=true;Pooling=true";
-        private readonly INotificationHandler<DomainNotification> _notificationHandler;
-        public SorteioContext(INotificationHandler<DomainNotification> notificationHandler)
+        private readonly IDomainNotificationHandler<DomainNotification> _notificationHandler;
+        public SorteioContext(IDomainNotificationHandler<DomainNotification> notificationHandler)
         {
             _notificationHandler = notificationHandler;
         }

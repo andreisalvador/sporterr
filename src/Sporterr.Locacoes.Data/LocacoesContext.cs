@@ -13,8 +13,8 @@ namespace Sporterr.Locacoes.Data
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=LocacoesDb;Integrated Security=true;Pooling=true";
 
-        private readonly INotificationHandler<DomainNotification> _notificationHandler;
-        public LocacoesContext(INotificationHandler<DomainNotification> notificationHandler)
+        private readonly IDomainNotificationHandler<DomainNotification> _notificationHandler;
+        public LocacoesContext(IDomainNotificationHandler<DomainNotification> notificationHandler)
         {
             _notificationHandler = notificationHandler;
         }

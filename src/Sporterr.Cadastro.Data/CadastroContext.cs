@@ -13,8 +13,8 @@ namespace Sporterr.Cadastro.Data
     public class CadastroContext : DbContext, IDbContext
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=CadastrosDb;Integrated Security=true;Pooling=true";
-        private readonly INotificationHandler<DomainNotification> _notificationHandler;
-        public CadastroContext(INotificationHandler<DomainNotification> notificationHandler)
+        private readonly IDomainNotificationHandler<DomainNotification> _notificationHandler;
+        public CadastroContext(IDomainNotificationHandler<DomainNotification> notificationHandler)
         {
             _notificationHandler = notificationHandler;
         }

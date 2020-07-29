@@ -12,6 +12,9 @@ using Sporterr.Core.Data;
 using Sporterr.Core.Data.EventSourcing;
 using Sporterr.Core.Data.Reading;
 using Sporterr.Core.Messages.CommonMessages.IntegrationEvents.Solicitacoes;
+using Sporterr.Core.Messages.CommonMessages.Notifications;
+using Sporterr.Core.Messages.CommonMessages.Notifications.Handler;
+using Sporterr.Core.Messages.CommonMessages.Notifications.Interfaces;
 using Sporterr.EventSourcing;
 using Sporterr.EventSourcing.Repository;
 using Sporterr.Locacoes.Application.Commands;
@@ -72,6 +75,9 @@ namespace Sporterr.CliApplication
                 .AddScoped<IRequestHandler<AvaliarHabilidadesUsuarioCommand, ValidationResult>, PerfilHabilidadesCommandHandler>()
                 .AddScoped<IPerfilServices, PerfilServices>()
 
+                //Notification
+                .AddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>()
+
                 //Infra
                 .AddScoped<IEmpresaRepository, EmpresaRepository>()
                 .AddScoped<IUsuarioRepository, UsuarioRepository>()
@@ -98,11 +104,11 @@ namespace Sporterr.CliApplication
             var seeder = provider.GetService<IDataSeeder<SorteioContext>>();
             var mediatr = provider.GetService<IMediatrHandler>();
 
-           // Task.Run(() => seeder.Seed()).Wait();
+            // Task.Run(() => seeder.Seed()).Wait();
 
-           // Task.Run(() => mediatr.Send(new AdicionarPerfilHabilidadesCommand(Guid.NewGuid()))).Wait();
+            // Task.Run(() => mediatr.Send(new AdicionarPerfilHabilidadesCommand(Guid.NewGuid()))).Wait();
 
-           // Task.Run(() => mediatr.Send(new VincularEsportePerfilHabilidadesCommand(Guid.Parse("64269af2-4e7a-43c0-9cbd-ac5aef7de41f"), Guid.Parse("690c869a-d79b-4df6-9c00-ea0334036913")))).Wait();
+            // Task.Run(() => mediatr.Send(new VincularEsportePerfilHabilidadesCommand(Guid.Parse("64269af2-4e7a-43c0-9cbd-ac5aef7de41f"), Guid.Parse("690c869a-d79b-4df6-9c00-ea0334036913")))).Wait();
 
             var avaliacoes = new Dictionary<Guid, double>()
             {
