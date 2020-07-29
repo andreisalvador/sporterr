@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sporterr.Core.Data;
+using Sporterr.Core.Messages.CommonMessages.Notifications;
+using Sporterr.Core.Messages.CommonMessages.Notifications.Interfaces;
 using Sporterr.Sorteio.Domain;
 using System;
 using System.Linq;
@@ -10,7 +12,11 @@ namespace Sporterr.Sorteio.Data
     public class SorteioContext : DbContext, IDbContext
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=SorteioDb;Integrated Security=true;Pooling=true";
-
+        private readonly INotificationHandler<DomainNotification> _notificationHandler;
+        public SorteioContext(INotificationHandler<DomainNotification> notificationHandler)
+        {
+            _notificationHandler = notificationHandler;
+        }
         public DbSet<PerfilHabilidades> PerfisHabilidade { get; set; }
         public DbSet<Esporte> Esportes { get; set; }
         public DbSet<Habilidade> Habilidades { get; set; }
@@ -21,7 +27,7 @@ namespace Sporterr.Sorteio.Data
         {
             optionsBuilder.UseNpgsql(CONNECTION_STRING_POSTGRES);
             base.OnConfiguring(optionsBuilder);
-        }        
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,20 +37,22 @@ namespace Sporterr.Sorteio.Data
 
         public async Task<bool> CommitAsync()
         {
-            foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCriacao") != null))
+            if (!_notificationHandler.HasNotifications())
             {
-                if (entry.State == EntityState.Added)
-                    entry.Property("DataCriacao").CurrentValue = DateTime.Now;
+                foreach (var entry in ChangeTracker.Entries().Where(entry => entry.Entity.GetType().GetProperty("DataCriacao") != null))
+                {
+                    if (entry.State == EntityState.Added)
+                        entry.Property("DataCriacao").CurrentValue = DateTime.Now;
 
-                if (entry.State == EntityState.Modified)
-                    entry.Property("DataCriacao").IsModified = false;
+                    if (entry.State == EntityState.Modified)
+                        entry.Property("DataCriacao").IsModified = false;
+                }
+
+                var sucesso = await base.SaveChangesAsync() > 0;
+                //if (sucesso) await _mediatorHandler.PublicarEventos(this);
+                return sucesso;
             }
-
-            var sucesso = await base.SaveChangesAsync() > 0;
-            //if (sucesso) await _mediatorHandler.PublicarEventos(this);
-
-            return sucesso;
-
+            return false;
         }
     }
 }

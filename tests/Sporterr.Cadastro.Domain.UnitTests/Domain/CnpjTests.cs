@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using FluentAssertions;
+using System.Diagnostics;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -27,7 +28,6 @@ namespace Sporterr.Cadastro.Domain.UnitTests.Domain
             stopwatch.Stop();
 
             testOutputHelper.WriteLine($"Time: {stopwatch.ElapsedMilliseconds}");
-
         }
     }
 }
