@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using FluentValidation;
+using Sporterr.Sorteio.Domain.Data.Interfaces;
 using Sporterr.Sorteio.Domain.UnitTests.Fixtures;
 using System;
 using System.Collections.Generic;
