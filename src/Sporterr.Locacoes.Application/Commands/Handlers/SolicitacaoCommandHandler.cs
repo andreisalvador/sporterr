@@ -47,7 +47,7 @@ namespace Sporterr.Locacoes.Application.Commands.Handlers
 
             Solicitacao solicitacaoParaCancelar = await _solicitacaoRepository.ObterPorId(message.SolicitacaoId);
 
-            if (solicitacaoParaCancelar == null) return await NotifyAndReturn("Solicitação não encontrada.");
+            if (solicitacaoParaCancelar is null) return await NotifyAndReturn("Solicitação não encontrada.");
 
             solicitacaoParaCancelar.AguardarCancelamento();
             

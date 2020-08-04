@@ -34,7 +34,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Empresa empresa = await _empresaRepository.ObterEmpresaPorId(message.EmpresaId);
 
-            if (empresa == null) return await NotifyAndReturn("Empresa não encontrada.");
+            if (empresa is null) return await NotifyAndReturn("Empresa não encontrada.");
 
             Quadra novaQuadra = new Quadra(message.TipoEsporteQuadra, message.TempoLocacao, message.ValorPorTempoLocado);
 
@@ -52,19 +52,14 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Empresa empresa = await _empresaRepository.ObterEmpresaComQuadrasPorId(message.EmpresaId);
 
-            if (empresa == null) return await NotifyAndReturn("Empresa não encontrada.");
+            if (empresa is null) return await NotifyAndReturn("Empresa não encontrada.");
 
             Quadra quadraQueSeraLocada = empresa.Quadras.SingleOrDefault(q => q.Id.Equals(message.QuadraId));
 
-            if (quadraQueSeraLocada == null) return await NotifyAndReturn($"Quadra não encontrada na empresa '{empresa.RazaoSocial}'.");
+            if (quadraQueSeraLocada is null) return await NotifyAndReturn($"Quadra não encontrada na empresa '{empresa.RazaoSocial}'.");
 
-            InformacoesTempoQuadra informacoesTempoQuadra = new InformacoesTempoQuadra
-            {
-                TempoLocacaoQuadra = quadraQueSeraLocada.TempoLocacao,
-                ValorPorTempoLocadoQuadra = quadraQueSeraLocada.ValorPorTempoLocado
-            };
-
-            return await PublishEvents(new SolicitacaoLocacaoAprovadaEvent(message.SolicitacaoId, empresa.Id, message.QuadraId, informacoesTempoQuadra));
+            return await PublishEvents(new SolicitacaoLocacaoAprovadaEvent(message.SolicitacaoId, empresa.Id, message.QuadraId,
+                new InformacoesTempoQuadra(quadraQueSeraLocada.ValorPorTempoLocado, quadraQueSeraLocada.TempoLocacao)));
         }
 
         public async Task<ValidationResult> Handle(RecusarSolicitacaoLocacaoCommand message, CancellationToken cancellationToken)
@@ -87,11 +82,11 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Empresa empresa = await _empresaRepository.ObterEmpresaPorId(message.EmpresaId);
 
-            if (empresa == null) return await NotifyAndReturn("Empresa não encontrada.");
+            if (empresa is null) return await NotifyAndReturn("Empresa não encontrada.");
 
             Quadra quadraParaInativar = await _empresaRepository.ObterQuadraPorId(message.QuadraId);
 
-            if (quadraParaInativar == null) return await NotifyAndReturn($"Quadra não encontrada na empresa {empresa.RazaoSocial}.");
+            if (quadraParaInativar is null) return await NotifyAndReturn($"Quadra não encontrada na empresa {empresa.RazaoSocial}.");
 
             try
             {
@@ -100,13 +95,13 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
                 _empresaRepository.AtualizarQuadra(quadraParaInativar);
 
                 _empresaRepository.AtualizarEmpresa(empresa);
+
+                return await SaveAndPublish(new QuadraInativadaEmpresaEvent(quadraParaInativar.Id, empresa.Id));
             }
             catch (DomainException exception)
             {
                 return await NotifyAndReturn(exception.Message);
             }
-
-            return await SaveAndPublish(new QuadraInativadaEmpresaEvent(quadraParaInativar.Id, empresa.Id));
         }
     }
 }

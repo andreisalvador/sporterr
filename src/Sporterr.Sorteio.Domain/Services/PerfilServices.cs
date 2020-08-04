@@ -29,12 +29,12 @@ namespace Sporterr.Sorteio.Domain.Services
         {
             PerfilHabilidades perfil = await Repository.ObterPorId(perfilId);
 
-            if (perfil == null)
+            if (perfil is null)
                 await Notify("O perfil informado não foi encontrado na base de dados.");
 
             Esporte esporte = await _esporteRepository.ObterEsporteComHabilidadesPorId(esporteId);
 
-            if (esporte == null)
+            if (esporte is null)
                 await Notify("O esporte informado não foi encontrado na base de dados.");
 
             if (perfil != null && esporte != null)
@@ -60,7 +60,7 @@ namespace Sporterr.Sorteio.Domain.Services
         {
             PerfilHabilidades perfil = await Repository.ObterPorIdComHabilidades(perfilId);
 
-            if (perfil == null)
+            if (perfil is null)
                 await Notify("O perfil informado não foi encontrado na base de dados.");
 
             if (perfil != null)

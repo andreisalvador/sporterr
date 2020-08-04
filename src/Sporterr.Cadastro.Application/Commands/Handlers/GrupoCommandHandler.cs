@@ -26,7 +26,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Grupo grupo = await _repository.ObterGrupoPorId(message.GrupoId);
 
-            if (grupo == null) return await NotifyAndReturn("Grupo não encontrado.");
+            if (grupo is null) return await NotifyAndReturn("Grupo não encontrado.");
 
             Membro novoMembro = new Membro(message.UsuarioMembroId);
 
@@ -45,11 +45,11 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Grupo grupo = await _repository.ObterGrupoPorId(message.GrupoId);
 
-            if (grupo == null) return await NotifyAndReturn("Grupo não encontrado.");
+            if (grupo is null) return await NotifyAndReturn("Grupo não encontrado.");
 
             Membro membro = await _repository.ObterMembroPorId(message.MembroId);
 
-            if (membro == null) return await NotifyAndReturn("Membro não encontrado.");
+            if (membro is null) return await NotifyAndReturn("Membro não encontrado.");
 
             grupo.RemoverMembro(membro);
 

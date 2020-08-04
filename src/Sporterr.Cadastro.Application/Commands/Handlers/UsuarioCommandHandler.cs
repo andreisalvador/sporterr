@@ -42,7 +42,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Usuario proprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioProprietarioId);
 
-            if (proprietarioEmpresa == null) return await NotifyAndReturn("Usuário não encontrado.");
+            if (proprietarioEmpresa is null) return await NotifyAndReturn("Usuário não encontrado.");
 
             Empresa novaEmpresa = new Empresa(message.RazaoSocial, message.Cnpj, message.HorarioAbertura, message.HorarioFechamento);
 
@@ -60,7 +60,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Usuario proprietarioGrupo = await _repository.ObterUsuarioPorId(message.UsuarioCriadorId);
 
-            if (proprietarioGrupo == null) return await NotifyAndReturn("Usuário não encontrado.");
+            if (proprietarioGrupo is null) return await NotifyAndReturn("Usuário não encontrado.");
 
             Grupo novoGrupo = new Grupo(message.NomeGrupo, message.NumeroMaximoMembros);
 
@@ -79,11 +79,11 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
 
             Usuario usuarioProprietarioEmpresa = await _repository.ObterUsuarioPorId(message.UsuarioProprietarioEmpresaId);
 
-            if (usuarioProprietarioEmpresa == null) return await NotifyAndReturn("Usuário não encontrado.");
+            if (usuarioProprietarioEmpresa is null) return await NotifyAndReturn("Usuário não encontrado.");
 
             Empresa empresaParaInativar = await _repository.ObterEmpresaPorId(message.EmpresaId);
 
-            if (empresaParaInativar == null) return await NotifyAndReturn("Empresa não encontrada.");
+            if (empresaParaInativar is null) return await NotifyAndReturn("Empresa não encontrada.");
 
             try
             {

@@ -4,8 +4,8 @@ namespace Sporterr.Cadastro.Domain
 {
     public struct Cnpj
     {
-        private static readonly int[] multiplicador1 = new int[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
-        private static readonly int[] multiplicador2 = new int[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+        private static readonly byte[] multiplicador1 = new byte[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+        private static readonly byte[] multiplicador2 = new byte[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
         public string Value { get; private set; }
 
         private Cnpj(string value)
@@ -44,19 +44,19 @@ namespace Sporterr.Cadastro.Domain
             int soma;
             int resto;
             int digito;
-            Span<char> numerosCnpj;
+            ReadOnlySpan<char> numerosCnpj;
 
             if (HasMask(cnpj))
-                numerosCnpj = RemoveMask(ref cnpj);
+                numerosCnpj = RemoveMask(cnpj);
             else
-                numerosCnpj = cnpj.ToCharArray();
+                numerosCnpj = cnpj.AsSpan();
 
             if (numerosCnpj.Length != 14)
                 return false;
 
             soma = 0;
 
-            for (int i = 0; i < 12; i++)
+            for (byte i = 0; i < 12; i++)
                 soma += (numerosCnpj[i] - '0') * multiplicador1[i];
 
             resto = (soma % 11);
@@ -69,7 +69,7 @@ namespace Sporterr.Cadastro.Domain
 
             soma = 0;
 
-            for (int i = 0; i < 13; i++)
+            for (byte i = 0; i < 13; i++)
                 soma += (i == 12 ? digito : (numerosCnpj[i] - '0')) * multiplicador2[i];
 
             resto = (soma % 11);
@@ -78,20 +78,23 @@ namespace Sporterr.Cadastro.Domain
                 resto = 0;
             else
                 resto = 11 - resto;
-            
+
             return numerosCnpj[12] - '0' == digito && numerosCnpj[13] - '0' == resto;
         }
-
-        private static Span<char> RemoveMask(ref string cnpj)
+        private static Span<char> RemoveMask(string cnpj)
         {
-            Span<char> cnpjNumbers = stackalloc char[14];
+            Span<char> cnpjNumbers = new char[14];
             int index = 0;
 
             for (int i = 0; i < cnpj.Length; i++)
-                if (char.IsNumber(cnpj[i]))
-                    cnpjNumbers[index++] = cnpj[i];
+            {
+                int digit = cnpj[i] - '0';
 
-            return cnpjNumbers.ToArray();
+                if (digit >= 0 && digit <= 9)
+                    cnpjNumbers[index++] = cnpj[i];
+            }
+
+            return cnpjNumbers;
         }
 
         private static bool HasMask(string value) => value.Contains('.');

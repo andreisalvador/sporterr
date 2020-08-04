@@ -11,8 +11,6 @@ using Sporterr.Sorteio.Domain.UnitTests.Fixtures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sporterr.Sorteio.Domain.UnitTests.Services
@@ -44,7 +42,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests.Services
                 .ReturnsAsync(perfil);
 
             _fixtureWrapper.Mocker.GetMock<IEsporteRepository>().Setup(r => r.ObterEsporteComHabilidadesPorId(esporteId))
-                .ReturnsAsync(esporte);           
+                .ReturnsAsync(esporte);
 
             //Act
             perfilServices.AdicionarNovoEsporte(perfilId, esporteId);
@@ -73,7 +71,7 @@ namespace Sporterr.Sorteio.Domain.UnitTests.Services
         {
             //Arrange
             IPerfilServices perfilServices = _perfilService;
-          
+
             //Act
             perfilServices.AdicionarNovoEsporte(Guid.NewGuid(), Guid.NewGuid());
 
