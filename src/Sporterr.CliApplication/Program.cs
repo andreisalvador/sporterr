@@ -76,7 +76,7 @@ namespace Sporterr.CliApplication
                 .AddScoped<IPerfilServices, PerfilServices>()
 
                 //Notification
-                .AddScoped<IDomainNotificationHandler<DomainNotification>, DomainNotificationHandler>()
+                .AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>()
 
                 //Infra
                 .AddScoped<IEmpresaRepository, EmpresaRepository>()
@@ -96,7 +96,7 @@ namespace Sporterr.CliApplication
                 .AddDbContext<SorteioContext>()
                 .AddTransient<IDataSeeder<SorteioContext>, SorteioDataSeeder>()
                 .AddScoped<IMediatrHandler, MediatrHandler>()
-                .AddMediatR(typeof(Program))
+                //.AddMediatR(typeof(Program))
                 .BuildServiceProvider();
 
 

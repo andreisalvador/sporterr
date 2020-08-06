@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Sporterr.Core.Data;
 using Sporterr.Core.Messages.CommonMessages.Notifications;
+using Sporterr.Core.Messages.CommonMessages.Notifications.Handler;
 using Sporterr.Core.Messages.CommonMessages.Notifications.Interfaces;
 using Sporterr.Sorteio.Domain;
 using System;
@@ -10,24 +12,19 @@ using System.Threading.Tasks;
 namespace Sporterr.Sorteio.Data
 {
     public class SorteioContext : DbContext, IDbContext
-    {
-        private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=SorteioDb;Integrated Security=true;Pooling=true";
-        private readonly IDomainNotificationHandler<DomainNotification> _notificationHandler;
-        public SorteioContext(IDomainNotificationHandler<DomainNotification> notificationHandler)
+    {        
+        private readonly DomainNotificationHandler _notificationHandler;
+
+        public SorteioContext(INotificationHandler<DomainNotification> notificationHandler, DbContextOptions<SorteioContext> options) : base(options)
         {
-            _notificationHandler = notificationHandler;
+            _notificationHandler = (DomainNotificationHandler)notificationHandler;
         }
+
         public DbSet<PerfilHabilidades> PerfisHabilidade { get; set; }
         public DbSet<Esporte> Esportes { get; set; }
         public DbSet<Habilidade> Habilidades { get; set; }
         public DbSet<HabilidadeUsuario> HabilidadesUsuarios { get; set; }
-        public DbSet<AvaliacaoHabilidade> AvaliacoesHabilidade { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(CONNECTION_STRING_POSTGRES);
-            base.OnConfiguring(optionsBuilder);
-        }
+        public DbSet<AvaliacaoHabilidade> AvaliacoesHabilidade { get; set; }       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

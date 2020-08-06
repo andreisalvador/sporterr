@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 using Sporterr.Core.Messages;
 
 namespace Sporterr.EventSourcing
@@ -6,9 +7,9 @@ namespace Sporterr.EventSourcing
     public class EventStoreContext
     {
         private readonly IMongoDatabase _context;
-        public EventStoreContext()
-        {
-            IMongoClient client = new MongoClient("mongodb://andrei.salvador:mongopass@localhost:27017");
+        public EventStoreContext(IConfiguration configuration)
+        {            
+            IMongoClient client = new MongoClient(configuration.GetConnectionString("DefaultEventStoreConnection"));
             _context = client.GetDatabase("event-store");
         }
 

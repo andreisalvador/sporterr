@@ -13,20 +13,13 @@ namespace Sporterr.Locacoes.UnitTests.Fixtures
     {
         public Locacao CriarLocacaoValida()
         {
-            return new Locacao(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), TimeSpan.FromHours(1), new Core.DomainObjects.DTO.InformacoesTempoQuadra
-            {
-                TempoLocacaoQuadra = TimeSpan.FromMinutes(15),
-                ValorPorTempoLocadoQuadra = 150
-            });
+            return new Locacao(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), TimeSpan.FromHours(1),
+                new Core.DomainObjects.DTO.InformacoesTempoQuadra(150, TimeSpan.FromMinutes(15)));
         }
 
         public Locacao CriarLocacaoInvalida()
         {
-            return new Locacao(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, TimeSpan.MinValue, new Core.DomainObjects.DTO.InformacoesTempoQuadra
-            {
-                TempoLocacaoQuadra = TimeSpan.MinValue,
-                ValorPorTempoLocadoQuadra = 0m
-            });
+            return new Locacao(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, TimeSpan.MinValue, new Core.DomainObjects.DTO.InformacoesTempoQuadra(0m, TimeSpan.MinValue));
         }
     }
 }

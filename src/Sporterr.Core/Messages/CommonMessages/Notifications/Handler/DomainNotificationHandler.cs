@@ -1,4 +1,5 @@
-﻿using Sporterr.Core.Messages.CommonMessages.Notifications.Interfaces;
+﻿using MediatR;
+using Sporterr.Core.Messages.CommonMessages.Notifications.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sporterr.Core.Messages.CommonMessages.Notifications.Handler
 {
-    public class DomainNotificationHandler : IDomainNotificationHandler<DomainNotification>
+    public class DomainNotificationHandler : INotificationHandler<DomainNotification>, IDomainNotificationHandler<DomainNotification>
     {
         private readonly List<DomainNotification> _notifications;
         public IReadOnlyCollection<DomainNotification> Notifications => _notifications.AsReadOnly();
