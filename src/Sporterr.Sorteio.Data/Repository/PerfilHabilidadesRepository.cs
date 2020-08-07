@@ -35,6 +35,11 @@ namespace Sporterr.Sorteio.Data.Repository
             return await _context.PerfisHabilidade.AnyAsync(p => p.Id.Equals(perfilId));
         }
 
+        public async Task<bool> ExisteParaUsuario(Guid usuarioId)
+        {
+            return await _context.PerfisHabilidade.AnyAsync(p => p.UsuarioId.Equals(usuarioId));
+        }
+
         public async Task<PerfilHabilidades> ObterPorId(Guid perfilId)
         {
             return await _context.PerfisHabilidade.FindAsync(perfilId);

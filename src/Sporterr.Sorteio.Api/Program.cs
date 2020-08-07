@@ -17,7 +17,7 @@ namespace Sporterr.Sorteio.Api
         public static async Task Main(string[] args)
         {
             IHost host = CreateHostBuilder(args).Build();
-
+                        
             using (IServiceScope scope = host.Services.CreateScope())
                 await scope.ServiceProvider.GetRequiredService<IDataSeeder<SorteioContext>>().Seed();
 

@@ -30,7 +30,7 @@ namespace Sporterr.Sorteio.Application.Commands.Handlers
             if (!message.IsValid())
                 return message.ValidationResult;
 
-            if (await _perfilHabilidadesRepository.Existe(message.UsuarioId))
+            if (await _perfilHabilidadesRepository.ExisteParaUsuario(message.UsuarioId))
                 return await NotifyAndReturn("Perfil já existente.");
 
             PerfilHabilidades novoPerfil = new PerfilHabilidades(message.UsuarioId);

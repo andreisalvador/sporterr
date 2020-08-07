@@ -14,5 +14,6 @@ namespace Sporterr.Sorteio.Domain.Data.Interfaces
         Task<PerfilHabilidades> ObterPorId(Guid perfilId);
         Task<PerfilHabilidades> ObterPorIdComHabilidades(Guid perfilId);
         Task<bool> Existe(Guid perfilId);
+        Task<bool> ExisteParaUsuario(Guid usuarioId);
     }
 }

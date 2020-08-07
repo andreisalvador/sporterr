@@ -3,12 +3,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Data;
 using Sporterr.Core.Data.EventSourcing;
 using Sporterr.Core.Messages.CommonMessages.Notifications;
 using Sporterr.Core.Messages.CommonMessages.Notifications.Handler;
-using Sporterr.Core.Messages.CommonMessages.Notifications.Interfaces;
 using Sporterr.EventSourcing;
 using Sporterr.EventSourcing.Repository;
 using Sporterr.Sorteio.Application.Commands;
@@ -19,19 +19,14 @@ using Sporterr.Sorteio.Data.Seeds;
 using Sporterr.Sorteio.Domain.Data.Interfaces;
 using Sporterr.Sorteio.Domain.Services;
 using Sporterr.Sorteio.Domain.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sporterr.Sorteio.Api.Extensions
 {
     public static class ServicesCollectionExtensions
     {
-        public static void AddServices(this IServiceCollection services, IConfiguration configuration)
+        public static void AddServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment hostEnvironment)
         {
-            AddContexts(services, configuration);
-
+            AddContexts(services, configuration, hostEnvironment);
             AddRepositories(services);
             AddDomainServices(services);
             AddMessaging(services);
@@ -40,12 +35,20 @@ namespace Sporterr.Sorteio.Api.Extensions
             AddSeeds(services);
         }
 
-        private static void AddContexts(IServiceCollection services, IConfiguration configuration)
+        private static void AddContexts(IServiceCollection services, IConfiguration configuration, IHostEnvironment hostEnvironment)
         {
-            services.AddDbContext<SorteioContext>(options =>
-                            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            if (hostEnvironment.IsEnvironment("Testing"))
+            {
+                services.AddDbContext<SorteioContext>(options =>
+                         options.UseInMemoryDatabase("SorteioTestingDb"));
+            }
+            else
+            {
+                services.AddDbContext<SorteioContext>(options =>
+                         options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<SorteioContext>();
+                services.AddScoped<SorteioContext>();
+            }
         }
 
         private static void AddSeeds(IServiceCollection services)
