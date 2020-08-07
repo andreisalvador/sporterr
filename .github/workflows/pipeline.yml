@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore ./Sporterr/Sporterr.sln
+      run: dotnet restore ./Sporterr/*.sln
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build ./Sporterr/*.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test ./tests/*.UnitTests.csproj --no-restore --verbosity normal
