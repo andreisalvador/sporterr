@@ -23,3 +23,7 @@ jobs:
       run: dotnet build ./Sporterr/*.sln --configuration Release --no-restore
     - name: Unit tests
       run: dotnet test ./Sporterr/*.sln --filter FullyQualifiedName~.UnitTests --no-restore --verbosity normal
+    - name: Ensure integration environment
+      run: docker-compose up mongo-eventstore --verbose normal
+    - name: Integration tests
+      run: dotnet test ./Sporterr/*.sln --filter FullyQualifiedName~.IntegrationTests --no-restore --verbosity normal
