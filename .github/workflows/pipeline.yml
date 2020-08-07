@@ -22,4 +22,4 @@ jobs:
     - name: Build
       run: dotnet build ./Sporterr/*.sln --configuration Release --no-restore
     - name: Test
-      run: dotnet test ./tests/*.UnitTests.csproj --no-restore --verbosity normal
+      run: dotnet test ./tests/*.UnitTests --no-restore --verbosity normal
