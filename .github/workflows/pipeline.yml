@@ -18,12 +18,12 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore $SOLUTIOH_PATH
+      run: dotnet restore $SOLUTION_PATH
     - name: Build
-      run: dotnet build $SOLUTIOH_PATH --configuration Release --no-restore
+      run: dotnet build $SOLUTION_PATH --configuration Release --no-restore
     - name: Unit tests
-      run: dotnet test $SOLUTIOH_PATH --filter FullyQualifiedName~.UnitTests --no-restore --verbosity normal
+      run: dotnet test $SOLUTION_PATH --filter FullyQualifiedName~.UnitTests --no-restore --verbosity normal
     - name: Run docker containers
       run: docker-compose up -d $CONTAINERS
     - name: Integration tests
-      run: dotnet test $SOLUTIOH_PATH --filter FullyQualifiedName~.IntegrationTests --no-restore --verbosity normal
+      run: dotnet test $SOLUTION_PATH --filter FullyQualifiedName~.IntegrationTests --no-restore --verbosity normal
