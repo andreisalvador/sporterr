@@ -18,12 +18,12 @@ jobs:
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
-      run: dotnet restore ./Sporterr/*.sln
+      run: dotnet restore $SOLUTIOH_PATH
     - name: Build
-      run: dotnet build ./Sporterr/*.sln --configuration Release --no-restore
+      run: dotnet build $SOLUTIOH_PATH --configuration Release --no-restore
     - name: Unit tests
-      run: dotnet test ./Sporterr/*.sln --filter FullyQualifiedName~.UnitTests --no-restore --verbosity normal
+      run: dotnet test $SOLUTIOH_PATH --filter FullyQualifiedName~.UnitTests --no-restore --verbosity normal
     - name: Run docker containers
-      run: docker-compose up -d mongo-eventstore
+      run: docker-compose up -d $CONTAINERS
     - name: Integration tests
-      run: dotnet test ./Sporterr/*.sln --filter FullyQualifiedName~.IntegrationTests --no-restore --verbosity normal
+      run: dotnet test $SOLUTIOH_PATH --filter FullyQualifiedName~.IntegrationTests --no-restore --verbosity normal
