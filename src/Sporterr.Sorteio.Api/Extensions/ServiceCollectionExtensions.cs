@@ -22,7 +22,7 @@ using Sporterr.Sorteio.Domain.Services.Interfaces;
 
 namespace Sporterr.Sorteio.Api.Extensions
 {
-    public static class ServicesCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
         public static void AddServices(this IServiceCollection services, IConfiguration configuration, IHostEnvironment hostEnvironment)
         {

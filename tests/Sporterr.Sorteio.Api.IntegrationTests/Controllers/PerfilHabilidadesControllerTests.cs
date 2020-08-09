@@ -27,7 +27,7 @@ namespace Sporterr.Sorteio.Api.IntegrationTests.Controllers
             HttpResponseMessage response = await _fixtureWrapper.Client
                 .SendAsync(new System.Net.Http.HttpRequestMessage(httpMethod, $"/api/PerfilHabilidades/Novo/{Guid.NewGuid()}"));
 
-            response.IsSuccessStatusCode.Should().BeTrue();
+            response.EnsureSuccessStatusCode();
             response.Content.ReadAsStringAsync().Result.Should().Be("Novo usuario criado com sucesso");
         }
     }

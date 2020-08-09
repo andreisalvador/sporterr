@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sporterr.Core\Sporterr.Core.csproj" />
+    <ProjectReference Include="..\Sporterr.EventSourcing\Sporterr.EventSourcing.csproj" />
+    <ProjectReference Include="..\Sporterr.Locacoes.Application\Sporterr.Locacoes.Application.csproj" />
+    <ProjectReference Include="..\Sporterr.Locacoes.Data\Sporterr.Locacoes.Data.csproj" />
+  </ItemGroup>
+
+
+</Project>

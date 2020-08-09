@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sporterr.Cadastro.Application\Sporterr.Cadastro.Application.csproj" />
+    <ProjectReference Include="..\Sporterr.Cadastro.Data\Sporterr.Cadastro.Data.csproj" />
+    <ProjectReference Include="..\Sporterr.Core\Sporterr.Core.csproj" />
+    <ProjectReference Include="..\Sporterr.EventSourcing\Sporterr.EventSourcing.csproj" />
+  </ItemGroup>
+
+
+</Project>

@@ -14,7 +14,7 @@ namespace Sporterr.Cadastro.Data
     {
         private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=CadastrosDb;Integrated Security=true;Pooling=true";
         private readonly IDomainNotificationHandler<DomainNotification> _notificationHandler;
-        public CadastroContext(IDomainNotificationHandler<DomainNotification> notificationHandler)
+        public CadastroContext(IDomainNotificationHandler<DomainNotification> notificationHandler, DbContextOptions<CadastroContext> options) : base(options)
         {
             _notificationHandler = notificationHandler;
         }
@@ -24,7 +24,7 @@ namespace Sporterr.Cadastro.Data
         public DbSet<Grupo> Grupos { get; set; }
         public DbSet<Membro> Membros { get; set; }
         public DbSet<Quadra> Quadras { get; set; }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(CONNECTION_STRING_POSTGRES);

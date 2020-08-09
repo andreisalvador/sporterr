@@ -53,6 +53,7 @@ namespace Sporterr.Sorteio.Api.Controllers
             {
                 _logger.LogInformation($"Incluindo novo perfil para o usuario de guid {usuarioId}.");
 
+                
                 _ = await _mediatr.Send(new AdicionarPerfilHabilidadesCommand(usuarioId));
 
                 if (_notifications.HasNotifications())
