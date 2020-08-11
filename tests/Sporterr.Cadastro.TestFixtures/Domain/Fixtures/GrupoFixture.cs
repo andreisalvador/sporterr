@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Sporterr.Cadastro.UnitTests.Fixtures
+namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
     [CollectionDefinition(nameof(GrupoFixtureCollection))]
     public class GrupoFixtureCollection : ICollectionFixture<GrupoFixture> { }

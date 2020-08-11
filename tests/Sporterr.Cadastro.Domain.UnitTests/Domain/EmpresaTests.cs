@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using FluentValidation;
 using Sporterr.Cadastro.Domain;
-using Sporterr.Cadastro.UnitTests.Fixtures;
+using Sporterr.Cadastro.TestFixtures.Domain;
 using Sporterr.Core.DomainObjects.Exceptions;
 using Sporterr.Core.Enums;
 using System;
@@ -10,12 +10,10 @@ using Xunit;
 
 namespace Sporterr.Cadastro.UnitTests.Domain
 {
-
-    [Collection(nameof(FixtureWrapper))]
-    public class EmpresaTests
+    public class EmpresaTests : IClassFixture<DomainFixtures>
     {
-        private readonly FixtureWrapper _fixtureWrapper;
-        public EmpresaTests(FixtureWrapper fixtureWrapper)
+        private readonly DomainFixtures _fixtureWrapper;
+        public EmpresaTests(DomainFixtures fixtureWrapper)
         {
             _fixtureWrapper = fixtureWrapper;
         }

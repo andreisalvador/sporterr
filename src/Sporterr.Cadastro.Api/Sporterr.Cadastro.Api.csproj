@@ -17,5 +17,9 @@
     <ProjectReference Include="..\Sporterr.EventSourcing\Sporterr.EventSourcing.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 
 </Project>

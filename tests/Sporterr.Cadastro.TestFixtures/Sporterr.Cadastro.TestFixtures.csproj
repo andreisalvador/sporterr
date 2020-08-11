@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="30.0.2" />
+    <PackageReference Include="Moq.AutoMock" Version="2.0.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Sporterr.Cadastro.Application\Sporterr.Cadastro.Application.csproj" />
+    <ProjectReference Include="..\..\src\Sporterr.Cadastro.Domain\Sporterr.Cadastro.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -6,7 +6,7 @@ using System.Text;
 using Xunit;
 using static Bogus.DataSets.Name;
 
-namespace Sporterr.Cadastro.UnitTests.Fixtures
+namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
     [CollectionDefinition(nameof(UsuarioFixtureCollection))]
     public class UsuarioFixtureCollection : ICollectionFixture<UsuarioFixture> { }

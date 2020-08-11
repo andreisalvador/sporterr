@@ -1,22 +1,19 @@
 ﻿using FluentAssertions;
 using FluentValidation;
 using Sporterr.Cadastro.Domain;
-using Sporterr.Cadastro.UnitTests.Fixtures;
+using Sporterr.Cadastro.TestFixtures.Domain;
 using Sporterr.Core.DomainObjects.Exceptions;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Sporterr.Cadastro.UnitTests.Domain
 {
-    [Collection(nameof(FixtureWrapper))]
-    public class UsuarioTests
-    {
-        private readonly FixtureWrapper _fixtureWrapper;
 
-        public UsuarioTests(FixtureWrapper fixturesWrapper)
+    public class UsuarioTests : IClassFixture<DomainFixtures>
+    {
+        private readonly DomainFixtures _fixtureWrapper;
+
+        public UsuarioTests(DomainFixtures fixturesWrapper)
         {
             _fixtureWrapper = fixturesWrapper;
         }

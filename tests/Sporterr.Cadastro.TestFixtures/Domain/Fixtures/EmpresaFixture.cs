@@ -5,7 +5,7 @@ using Sporterr.Core.Enums;
 using System;
 using Xunit;
 
-namespace Sporterr.Cadastro.UnitTests.Fixtures
+namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
 
     [CollectionDefinition(nameof(EmpresaFixtureCollection))]

@@ -66,7 +66,7 @@ namespace Sporterr.Cadastro.Application.Commands.Handlers
         {
             if (!message.IsValid()) return message.ValidationResult;
 
-            return await SaveAndPublish(new SolicitacaoLocacaoRecusadaEvent(message.SolicitacaoId, message.Motivo));
+            return await PublishEvents(new SolicitacaoLocacaoRecusadaEvent(message.SolicitacaoId, message.Motivo));
         }
 
         public async Task<ValidationResult> Handle(CancelarSolicitacaoLocacaoEmpresaCommand message, CancellationToken cancellationToken)
