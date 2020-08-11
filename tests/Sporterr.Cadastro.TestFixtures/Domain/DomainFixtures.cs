@@ -1,6 +1,5 @@
 ﻿using Sporterr.Cadastro.TestFixtures.Domain.Fixtures;
 using System;
-using Xunit;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain
 {

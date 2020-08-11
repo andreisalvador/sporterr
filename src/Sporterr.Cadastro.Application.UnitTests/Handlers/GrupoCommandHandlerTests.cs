@@ -74,9 +74,10 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
             Membro membro = _domainFixtures.Membro.CriarMembroValido();
             Grupo grupo = _domainFixtures.Grupo.CriarGrupoValido();
 
-            _applicationFixtures.Mocker.GetMock<IGrupoRepository>().Setup(r => r.ObterMembroPorId(removerMembroGrupoCommand.MembroId)).ReturnsAsync(membro);
-            _applicationFixtures.Mocker.GetMock<IGrupoRepository>().Setup(r => r.ObterGrupoPorId(removerMembroGrupoCommand.GrupoId)).ReturnsAsync(grupo);
-            _applicationFixtures.Mocker.GetMock<IGrupoRepository>().Setup(r => r.Commit()).ReturnsAsync(true);
+            Mock<IGrupoRepository> grupoRepositoryMock = _applicationFixtures.Mocker.GetMock<IGrupoRepository>();
+            grupoRepositoryMock.Setup(r => r.ObterMembroPorId(removerMembroGrupoCommand.MembroId)).ReturnsAsync(membro);
+            grupoRepositoryMock.Setup(r => r.ObterGrupoPorId(removerMembroGrupoCommand.GrupoId)).ReturnsAsync(grupo);
+            grupoRepositoryMock.Setup(r => r.Commit()).ReturnsAsync(true);
 
             grupo.AdicionarMembro(membro);
 

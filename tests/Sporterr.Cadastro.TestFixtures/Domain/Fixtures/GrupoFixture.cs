@@ -2,15 +2,9 @@
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-    [CollectionDefinition(nameof(GrupoFixtureCollection))]
-    public class GrupoFixtureCollection : ICollectionFixture<GrupoFixture> { }
-
     public class GrupoFixture : IDisposable
     {
         public Grupo CriarGrupoValido(byte quantidadeMaximaMembros = 2)

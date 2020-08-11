@@ -1,12 +1,8 @@
 ﻿using Sporterr.Cadastro.Domain;
 using System;
-using Xunit;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-    [CollectionDefinition(nameof(MembroFixtureCollection))]
-    public class MembroFixtureCollection : ICollectionFixture<MembroFixture> { }
-
     public class MembroFixture : IDisposable
     {
         public Membro CriarMembroValido()

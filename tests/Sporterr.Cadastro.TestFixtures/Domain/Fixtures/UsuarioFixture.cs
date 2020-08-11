@@ -1,16 +1,10 @@
 ﻿using Bogus;
 using Sporterr.Cadastro.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
 using static Bogus.DataSets.Name;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-    [CollectionDefinition(nameof(UsuarioFixtureCollection))]
-    public class UsuarioFixtureCollection : ICollectionFixture<UsuarioFixture> { }
-
     public class UsuarioFixture : IDisposable
     {
         public Usuario CriarUsuarioValido()

@@ -3,14 +3,9 @@ using Bogus.Extensions.Brazil;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
 using System;
-using Xunit;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-
-    [CollectionDefinition(nameof(EmpresaFixtureCollection))]
-    public class EmpresaFixtureCollection : ICollectionFixture<EmpresaFixture> { }
-
     public class EmpresaFixture : IDisposable
     {
         public Empresa CriarEmpresaValida()

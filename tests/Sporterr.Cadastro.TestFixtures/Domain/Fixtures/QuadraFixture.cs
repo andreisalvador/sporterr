@@ -2,13 +2,9 @@
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
 using System;
-using Xunit;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-    [CollectionDefinition(nameof(QuadraFixtureCollection))]
-    public class QuadraFixtureCollection : ICollectionFixture<QuadraFixture> { }
-
     public class QuadraFixture : IDisposable
     {
         public Quadra CriarQuadraValida()
