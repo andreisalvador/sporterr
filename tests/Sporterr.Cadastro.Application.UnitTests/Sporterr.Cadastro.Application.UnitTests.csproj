@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Sporterr.Cadastro.Application\Sporterr.Cadastro.Application.csproj" />
     <ProjectReference Include="..\..\tests\Sporterr.Cadastro.TestFixtures\Sporterr.Cadastro.TestFixtures.csproj" />
-    <ProjectReference Include="..\Sporterr.Cadastro.Application\Sporterr.Cadastro.Application.csproj" />
   </ItemGroup>
 
 </Project>
