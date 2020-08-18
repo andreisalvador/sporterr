@@ -32,7 +32,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Adiciona novo membro ao grupo e dispara evento")]
-        [Trait("Application", "Grupo Command Handler")]
+        [Trait("Application", "Testes Grupo Command Handler")]
         public async Task GrupoCommandHandler_Handle_AdicionarMembroCommand_DeveAdicionarNovoMembroAoGrupo()
         {
             //Arrange             
@@ -52,7 +52,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Nao adiciona novo membro ao grupo e dispara evento de falha")]
-        [Trait("Application", "Grupo Command Handler")]
+        [Trait("Application", "Testes Grupo Command Handler")]
         public async Task GrupoCommandHandler_Handle_AdicionarMembroCommand_NaoDeveAdicionarNovoMembroAoGrupo()
         {
             //Arrange             
@@ -66,7 +66,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Remove membro do grupo e dispara evento")]
-        [Trait("Application", "Grupo Command Handler")]
+        [Trait("Application", "Testes Grupo Command Handler")]
         public async Task GrupoCommandHandler_Handle_RemoverMembroGrupoCommand_DeveRemoverMembroDoGrupo() 
         {
             //Arrange
@@ -92,7 +92,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Nao remove membro do grupo e dispara evento de falha")]
-        [Trait("Application", "Grupo Command Handler")]
+        [Trait("Application", "Testes Grupo Command Handler")]
         public async Task GrupoCommandHandler_Handle_RemoverMembroGrupoCommand_NaoDeveRemoverMembroDoGrupo()
         {
             //Arrange             

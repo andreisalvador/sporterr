@@ -30,7 +30,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Adiciona nova quadra na empresa")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_AdicionarQuadraCommand_DeverAdicionarNovaQuadraNaEmpresa()
         {
             //Arrange
@@ -49,7 +49,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Não adiciona nova quadra na empresa")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_AdicionarQuadraCommand_NaoDeveAdicionarNovaQuadraNaEmpresaPoisEmpresaNaoFoiEncontrada()
         {
             //Arrange
@@ -63,7 +63,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Disparar evento de solicitação de locação aprovada")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_AprovarSolicitacaoLocacaoCommand_DeveDispararEventoDeSolicitacaoAprovada()
         {
             //Arrange
@@ -84,7 +84,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Não dispara evento de solicitação de locação aprovada")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_AprovarSolicitacaoLocacaoCommand_NaoDeveDispararEventoDeSolicitacaoAprovada()
         {
             //Arrange
@@ -98,7 +98,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Dispara evento de solicitação de locação recusada")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_RecusarSolicitacaoLocacaoCommand_DeveDispararEventoDeSolicitacaoRecusada()
         {
             //Arrange
@@ -112,7 +112,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Dispara evento de solicitação de locação cancelada")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_RecusarSolicitacaoLocacaoCommand_DeveDispararEventoDeSolicitacaoCancelada()
         {
             //Arrange
@@ -126,7 +126,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Inativa quadra da empresa e dispara evento")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_InativarQuadraCommand_DeveInativarQuadraDaEmpresa()
         {
             //Arrange
@@ -149,7 +149,7 @@ namespace Sporterr.Cadastro.Application.UnitTests.Handlers
         }
 
         [Fact(DisplayName = "Não inativa quadra da empresa e dispara evento de falha")]
-        [Trait("Application", "Empresa Command Handler")]
+        [Trait("Application", "Testes Empresa Command Handler")]
         public async Task EmpresaCommandHandler_Handle_InativarQuadraCommand_NaoDeveInativarQuadraDaEmpresa()
         {
             //Arrange
