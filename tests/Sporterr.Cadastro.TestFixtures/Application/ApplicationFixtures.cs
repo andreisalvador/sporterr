@@ -12,9 +12,11 @@ namespace Sporterr.Cadastro.TestFixtures.Application
         public static readonly CancellationToken CancellationToken = new CancellationToken();
         private readonly Lazy<EmpresaCommandHandlerFixture> _empresaCommandHandlerFixture;
         private readonly Lazy<GrupoCommandHandlerFixture> _grupoCommandHandlerFixture;
+        private readonly Lazy<UsuarioCommandHandlerFixture> _usuarioCommandHandlerFixture;
 
         public GrupoCommandHandlerFixture GrupoCommandHandler => _grupoCommandHandlerFixture.Value;
         public EmpresaCommandHandlerFixture EmpresaCommandHandler => _empresaCommandHandlerFixture.Value;
+        public UsuarioCommandHandlerFixture UsuarioCommandHandler => _usuarioCommandHandlerFixture.Value;
         public AutoMocker Mocker { get; private set; }
 
         public ApplicationFixtures()
@@ -22,6 +24,7 @@ namespace Sporterr.Cadastro.TestFixtures.Application
             Mocker = new AutoMocker();
             _empresaCommandHandlerFixture = new Lazy<EmpresaCommandHandlerFixture>();
             _grupoCommandHandlerFixture = new Lazy<GrupoCommandHandlerFixture>();
+            _usuarioCommandHandlerFixture = new Lazy<UsuarioCommandHandlerFixture>();
         }
 
 

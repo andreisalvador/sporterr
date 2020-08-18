@@ -8,13 +8,6 @@ namespace Sporterr.Cadastro.TestFixtures.Application.Fixtures
 {
     public class GrupoCommandHandlerFixture
     {
-        private readonly Faker _faker;
-
-        public GrupoCommandHandlerFixture()
-        {
-            _faker = new Faker("pt_BR");
-        }
-
         public AdicionarMembroCommand CriarAdicionarMembroCommandValido()
             => new AdicionarMembroCommand(Guid.NewGuid(), Guid.NewGuid());
 
