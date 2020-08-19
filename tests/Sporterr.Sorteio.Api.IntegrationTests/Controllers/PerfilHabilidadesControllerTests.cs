@@ -27,7 +27,7 @@ namespace Sporterr.Sorteio.Api.IntegrationTests.Controllers
                 .SendAsync(new HttpRequestMessage(httpMethod, $"/api/PerfilHabilidades/Novo/{Guid.NewGuid()}"));
 
             response.EnsureSuccessStatusCode();
-            response.Content.ReadAsStringAsync().Result.Should().Be("Novo perfil de habilidades de usuário criado com sucesso");
+            response.Content.ReadAsStringAsync().Result.Should().Be("Novo perfil de habilidades de usuário criado com sucessos");
         }
     }
 }
