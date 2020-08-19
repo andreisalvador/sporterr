@@ -1,25 +1,20 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Net.Http;
-using Xunit;
 
-namespace Sporterr.Sorteio.Api.IntegrationTests.Fixtures
+namespace Sporterr.Cadastro.TestFixtures.Api
 {
-    [CollectionDefinition(nameof(FixtureWrapper))]
-    public class FixtureWrapperCollection : ICollectionFixture<FixtureWrapper> { }
-
-    public class FixtureWrapper : IDisposable
+    public class ApiFixtures<TStartup> : IDisposable where TStartup : class
     {
-        public HttpClient Client { get; }
+        public System.Net.Http.HttpClient Client { get; }
 
-        public FixtureWrapper()
+        public ApiFixtures()
         {
             Client = new TestServer(new WebHostBuilder()
                     .ConfigureAppConfiguration(config => config.AddJsonFile("appsettings.Testing.json"))
                     .UseEnvironment("Testing")
-                    .UseStartup<Startup>())
+                    .UseStartup<TStartup>())
                     .CreateClient();
         }
 

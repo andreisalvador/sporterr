@@ -64,7 +64,7 @@ namespace Sporterr.Sorteio.Api.Controllers
                 return StatusCode(500, except.Message);
             }
 
-            return Ok("Novo usuario criado com sucesso");
+            return Ok("Novo perfil de habilidades de usuário criado com sucesso");
         }
 
         [HttpPost("VincularEsporte/{perfilId:guid}/{esporteId:guid}")]

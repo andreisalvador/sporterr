@@ -2,7 +2,7 @@
 
 namespace Sporterr.Cadastro.Domain
 {
-    public struct Cnpj
+    public class Cnpj
     {
         private static readonly byte[] multiplicador1 = new byte[12] { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
         private static readonly byte[] multiplicador2 = new byte[13] { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };

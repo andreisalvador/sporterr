@@ -15,11 +15,10 @@ namespace Sporterr.Cadastro.Data.Mappings
                    .WithMany(e => e.Empresas)
                    .HasForeignKey(e => e.UsuarioProprietarioId);
 
-            builder.Property(e => e.Cnpj).HasConversion(new ValueConverter<Cnpj, string>(
-                x => x.Value,
-                x => Cnpj.Parse(x)
-                )).HasColumnName("Cnpj");
-            
+            builder.OwnsOne(e => e.Cnpj, c => {
+                c.Property(cnpj => cnpj.Value).HasColumnName("Cnpj");
+            });
+
             builder.ToTable("Empresas");
         }
     }

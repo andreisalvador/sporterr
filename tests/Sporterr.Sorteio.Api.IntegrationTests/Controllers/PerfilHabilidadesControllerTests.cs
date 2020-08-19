@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Sporterr.Sorteio.Api.IntegrationTests.Fixtures;
 using System;
 using System.Net.Http;
@@ -22,13 +21,13 @@ namespace Sporterr.Sorteio.Api.IntegrationTests.Controllers
         [Trait("Api", "Testes do Sorteio Api")]
         public async Task PerfilHabilidadesController_Novo_DeveCriarNovoPerfilParaOUsuarioERetornarStatus200()
         {
-            var httpMethod = new System.Net.Http.HttpMethod("POST");
+            var httpMethod = new HttpMethod("POST");
 
             HttpResponseMessage response = await _fixtureWrapper.Client
-                .SendAsync(new System.Net.Http.HttpRequestMessage(httpMethod, $"/api/PerfilHabilidades/Novo/{Guid.NewGuid()}"));
+                .SendAsync(new HttpRequestMessage(httpMethod, $"/api/PerfilHabilidades/Novo/{Guid.NewGuid()}"));
 
             response.EnsureSuccessStatusCode();
-            response.Content.ReadAsStringAsync().Result.Should().Be("Novo usuario criado com sucesso");
+            response.Content.ReadAsStringAsync().Result.Should().Be("Novo perfil de habilidades de usuário criado com sucesso");
         }
     }
 }

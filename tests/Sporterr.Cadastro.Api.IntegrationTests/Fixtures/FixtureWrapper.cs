@@ -5,7 +5,7 @@ using System;
 using System.Net.Http;
 using Xunit;
 
-namespace Sporterr.Sorteio.Api.IntegrationTests.Fixtures
+namespace Sporterr.Cadastro.Api.IntegrationTests.Fixtures
 {
     [CollectionDefinition(nameof(FixtureWrapper))]
     public class FixtureWrapperCollection : ICollectionFixture<FixtureWrapper> { }

@@ -25,6 +25,8 @@ namespace Sporterr.Cadastro.Domain
         //Ef Rel.
         public Usuario UsuarioProprietario { get; set; }
 
+        //Ef core
+        protected Empresa() { }
 
         public Empresa(string razaoSocial,
                        string cnpj,
@@ -139,14 +141,14 @@ namespace Sporterr.Cadastro.Domain
             quadra.TornarQuadraProntaPraUso();
         }
 
-        public bool PossuiQuadras() => _quadras.Count > 0;        
+        public bool PossuiQuadras() => _quadras.Count > 0;
         public bool QuadraPertenceEmpresa(Quadra quadra) => _quadras.Any(q => q.Equals(quadra));
 
         private void ValidarSeQuadraPertenceEmpresa(Quadra quadra)
         {
             if (!QuadraPertenceEmpresa(quadra))
                 throw new DomainException($"A quadra informada não pertence a empresa '{RazaoSocial}'.");
-        }      
+        }
         public void Ativar()
         {
             Ativo = true;

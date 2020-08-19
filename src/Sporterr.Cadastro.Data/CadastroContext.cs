@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Data;
 using Sporterr.Core.Messages.CommonMessages.Notifications;
+using Sporterr.Core.Messages.CommonMessages.Notifications.Handler;
 using Sporterr.Core.Messages.CommonMessages.Notifications.Interfaces;
 using System;
 using System.Linq;
@@ -11,12 +13,11 @@ using System.Threading.Tasks;
 namespace Sporterr.Cadastro.Data
 {
     public class CadastroContext : DbContext, IDbContext
-    {
-        private const string CONNECTION_STRING_POSTGRES = "User ID = user;Password=pass;Server=localhost;Port=5432;Database=CadastrosDb;Integrated Security=true;Pooling=true";
-        private readonly IDomainNotificationHandler<DomainNotification> _notificationHandler;
-        public CadastroContext(IDomainNotificationHandler<DomainNotification> notificationHandler, DbContextOptions<CadastroContext> options) : base(options)
+    {        
+        private readonly DomainNotificationHandler _notificationHandler;
+        public CadastroContext(INotificationHandler<DomainNotification> notificationHandler, DbContextOptions<CadastroContext> options) : base(options)
         {
-            _notificationHandler = notificationHandler;
+            _notificationHandler = (DomainNotificationHandler)notificationHandler;
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
@@ -24,12 +25,6 @@ namespace Sporterr.Cadastro.Data
         public DbSet<Grupo> Grupos { get; set; }
         public DbSet<Membro> Membros { get; set; }
         public DbSet<Quadra> Quadras { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(CONNECTION_STRING_POSTGRES);
-            base.OnConfiguring(optionsBuilder);
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
