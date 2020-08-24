@@ -9,10 +9,6 @@ using Sporterr.Cadastro.TestFixtures.Domain;
 using Sporterr.Core.Communication.Mediator;
 using Sporterr.Core.Messages;
 using Sporterr.Core.Messages.CommonMessages.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

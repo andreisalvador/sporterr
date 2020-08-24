@@ -6,8 +6,6 @@ using Xunit;
 
 namespace Sporterr.Sorteio.Domain.UnitTests.Fixtures
 {
-    [CollectionDefinition(nameof(HabilidadeUsuarioFixtureCollection))]
-    public class HabilidadeUsuarioFixtureCollection : ICollectionFixture<HabilidadeUsuarioFixture> { }
     public class HabilidadeUsuarioFixture : IDisposable
     {
         public HabilidadeUsuario CriarHabilidadeUsuarioValido()

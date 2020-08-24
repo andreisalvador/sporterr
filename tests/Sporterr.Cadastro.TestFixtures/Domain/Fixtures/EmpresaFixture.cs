@@ -1,16 +1,16 @@
-﻿using Bogus;
-using Bogus.Extensions.Brazil;
+﻿using Bogus.Extensions.Brazil;
 using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
+using Sporterr.Tests.Common.Fixtures;
 using System;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-    public class EmpresaFixture : IDisposable
+    public class EmpresaFixture : BaseFixture, IDisposable
     {
         public Empresa CriarEmpresaValida()
         {
-            return new Faker<Empresa>("pt_BR")
+            return NewFakerInstance<Empresa>()
                 .CustomInstantiator(e => new Empresa(e.Company.CompanyName(), e.Company.Cnpj(), TimeSpan.FromHours(8), TimeSpan.FromHours(18), DiasSemanaFuncionamento.DiasUteis));
         }
 

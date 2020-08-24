@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="30.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.7" />
     <PackageReference Include="Moq.AutoMock" Version="2.0.1" />
@@ -14,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Sporterr.Cadastro.Application\Sporterr.Cadastro.Application.csproj" />
     <ProjectReference Include="..\..\src\Sporterr.Cadastro.Domain\Sporterr.Cadastro.Domain.csproj" />
+    <ProjectReference Include="..\Sporterr.Tests.Common\Sporterr.Tests.Common.csproj" />
   </ItemGroup>
 
 </Project>

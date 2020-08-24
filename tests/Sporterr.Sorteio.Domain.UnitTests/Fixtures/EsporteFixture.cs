@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using Sporterr.Core.Enums;
+using Sporterr.Tests.Common.Fixtures;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,13 +8,11 @@ using Xunit;
 
 namespace Sporterr.Sorteio.Domain.UnitTests.Fixtures
 {
-    [CollectionDefinition(nameof(EsporteFixtureCollection))]
-    public class EsporteFixtureCollection : ICollectionFixture<EsporteFixture> { }
-    public class EsporteFixture : IDisposable
+    public class EsporteFixture : BaseFixture, IDisposable
     {
         public Esporte CriarEsporteValido()
         {
-            return new Faker<Esporte>("pt_BR")
+            return NewFakerInstance<Esporte>()
                 .CustomInstantiator(e => new Esporte(e.PickRandom<TipoEsporte>().ToString(), e.PickRandom<TipoEsporte>()));
         }
 

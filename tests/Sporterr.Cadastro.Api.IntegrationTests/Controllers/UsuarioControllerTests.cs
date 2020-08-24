@@ -1,40 +1,38 @@
 ﻿using FluentAssertions;
-using Newtonsoft.Json;
-using Sporterr.Cadastro.Api.IntegrationTests.Fixtures;
 using Sporterr.Cadastro.Api.Models;
+using Sporterr.Tests.Common.Api;
+using Sporterr.Tests.Common.Extensions;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Sporterr.Cadastro.Api.IntegrationTests.Controllers
-{    
-    public class UsuarioControllerTests : IClassFixture<TestFixtures.Api.ApiFixtures<Startup>>
+{
+    public class UsuarioControllerTests : IClassFixture<LocalTestServer<Startup>>
     {
-        private readonly TestFixtures.Api.ApiFixtures<Startup> _apiFixtures;
+        private readonly LocalTestServer<Startup> _localTesteServer;
 
-        public UsuarioControllerTests(TestFixtures.Api.ApiFixtures<Startup> apiFixtures)
+        public UsuarioControllerTests(LocalTestServer<Startup> localTestServer)
         {
-            _apiFixtures = apiFixtures;
+            _localTesteServer = localTestServer;
         }
 
         [Fact(DisplayName = "Adiciona novo usuário")]
         [Trait("Api", "Testes do Cadastro Api")]
         public async Task PerfilHabilidadesController_Novo_DeveCriarNovoPerfilParaOUsuarioERetornarStatus200()
         {
-            var httpMethod = new HttpMethod("POST");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/api/Usuario/Novo");
 
-            HttpRequestMessage request = new HttpRequestMessage(httpMethod, "/api/Usuario/Novo")
+            var usuario = new UsuarioModel
             {
-                Content = new StringContent(JsonConvert.SerializeObject(new UsuarioModel
-                {
-                    Nome = "Andrei",
-                    Email = "andreifs@uol.coom",
-                    Senha = "senhaaquixx"
-                }), Encoding.UTF8, "application/json")
+                Nome = "Andrei",
+                Email = "andreifs@uol.coom",
+                Senha = "senhaaquixx"
             };
 
-            HttpResponseMessage response = await _apiFixtures.Client.SendAsync(request);
+            request.Content = usuario.ToStringContent();
+
+            HttpResponseMessage response = await _localTesteServer.Client.SendAsync(request);
 
             response.EnsureSuccessStatusCode();
             response.Content.ReadAsStringAsync().Result.Should().Be("Novo usuário criado com sucesso");

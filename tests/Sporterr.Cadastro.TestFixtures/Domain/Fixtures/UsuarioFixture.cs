@@ -1,16 +1,15 @@
-﻿using Bogus;
-using Sporterr.Cadastro.Domain;
+﻿using Sporterr.Cadastro.Domain;
+using Sporterr.Tests.Common.Fixtures;
 using System;
-using static Bogus.DataSets.Name;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-    public class UsuarioFixture : IDisposable
+    public class UsuarioFixture : BaseFixture, IDisposable
     {
         public Usuario CriarUsuarioValido()
         {
-            return new Faker<Usuario>("pt_BR")
-                .CustomInstantiator(u => new Usuario(u.Name.FirstName(u.PickRandom<Gender>()), u.Internet.Email(), u.Internet.Password(20)));
+            return NewFakerInstance<Usuario>()
+                .CustomInstantiator(u => new Usuario(u.Name.FirstName(u.PickRandom<Bogus.DataSets.Name.Gender>()), u.Internet.Email(), u.Internet.Password(20)));
         }
 
         public Usuario CriarUsuarioInvalido()

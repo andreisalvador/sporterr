@@ -1,15 +1,15 @@
-﻿using Bogus;
-using Sporterr.Cadastro.Domain;
+﻿using Sporterr.Cadastro.Domain;
 using Sporterr.Core.Enums;
+using Sporterr.Tests.Common.Fixtures;
 using System;
 
 namespace Sporterr.Cadastro.TestFixtures.Domain.Fixtures
 {
-    public class QuadraFixture : IDisposable
+    public class QuadraFixture : BaseFixture, IDisposable
     {
         public Quadra CriarQuadraValida()
         {
-            return new Faker<Quadra>("pt_BR").CustomInstantiator(q => new Quadra(q.PickRandom<TipoEsporte>(), TimeSpan.FromHours(1), q.Random.Decimal(100, 150)));
+            return NewFakerInstance<Quadra>().CustomInstantiator(q => new Quadra(q.PickRandom<TipoEsporte>(), TimeSpan.FromHours(1), q.Random.Decimal(100, 150)));
         }
 
         public Quadra CriarQuadraInvalida()
