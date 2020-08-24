@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Sporterr.Sorteio.Api.IntegrationTests.Fixtures;
+using Sporterr.Tests.Common.Api;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,23 +9,21 @@ using Xunit;
 namespace Sporterr.Sorteio.Api.IntegrationTests.Controllers
 {
     [Collection(nameof(FixtureWrapper))]
-    public class PerfilHabilidadesControllerTests
+    public class PerfilHabilidadesControllerTests : IClassFixture<LocalTestServer<Startup>>
     {
-        private readonly FixtureWrapper _fixtureWrapper;
+        private readonly LocalTestServer<Startup> _localTesteServer;
 
-        public PerfilHabilidadesControllerTests(FixtureWrapper fixtureWrapper)
+        public PerfilHabilidadesControllerTests(LocalTestServer<Startup> localTestServer)
         {
-            _fixtureWrapper = fixtureWrapper;
+            _localTesteServer = localTestServer;
         }
 
         [Fact(DisplayName = "Adiciona novo perfil de habilidades")]
         [Trait("Api", "Testes do Sorteio Api")]
         public async Task PerfilHabilidadesController_Novo_DeveCriarNovoPerfilParaOUsuarioERetornarStatus200()
         {
-            var httpMethod = new HttpMethod("POST");
-
-            HttpResponseMessage response = await _fixtureWrapper.Client
-                .SendAsync(new HttpRequestMessage(httpMethod, $"/api/PerfilHabilidades/Novo/{Guid.NewGuid()}"));
+            HttpResponseMessage response = await _localTesteServer.Client
+                .SendAsync(new HttpRequestMessage(HttpMethod.Post, $"/api/PerfilHabilidades/Novo/{Guid.NewGuid()}"));
 
             response.EnsureSuccessStatusCode();
             response.Content.ReadAsStringAsync().Result.Should().Be("Novo perfil de habilidades de usuário criado com sucesso");
