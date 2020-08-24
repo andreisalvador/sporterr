@@ -8,7 +8,6 @@ using Xunit;
 
 namespace Sporterr.Sorteio.Api.IntegrationTests.Controllers
 {
-    [Collection(nameof(FixtureWrapper))]
     public class PerfilHabilidadesControllerTests : IClassFixture<LocalTestServer<Startup>>
     {
         private readonly LocalTestServer<Startup> _localTesteServer;
